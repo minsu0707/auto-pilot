@@ -16,11 +16,12 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
-استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الوحيدة.
+استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الأساسية.
 بعد التثبيت، أعد تشغيل Codex مرة واحدة حتى يصبح slash command متاحًا.
 بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
+بعد إعادة التشغيل يمكنك أيضًا استخدام الاختصار الطبيعي `Build a budgeting app for freelancers ap`.
 
-يحتوي هذا المجلد على الحزمة الأولية من مستندات إضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.
+هذا المجلد هو الجذر الرسمي لإضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.
 
 ## Files
 
@@ -45,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 
 ## Current Status
 
-هذا المجلد هو plugin root. يتم ربط repo-local marketplace عبر [marketplace.json](../../../.agents/plugins/marketplace.json).
+هذا المجلد هو جذر الإضافة وجذر الوثائق والمكان المرجعي لسكربتات التثبيت.
 
 ## Usage
 
@@ -54,6 +55,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
+- `Build a budgeting app for freelancers ap`
 
 في المشاريع الجديدة يتبع intake هذا النمط:
 

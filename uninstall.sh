@@ -2,36 +2,17 @@
 
 set -euo pipefail
 
-INSTALL_DIR="${AUTO_PILOT_INSTALL_DIR:-$HOME/plugins/auto-pilot}"
-MARKETPLACE_PATH="${AUTO_PILOT_MARKETPLACE_PATH:-$HOME/.agents/plugins/marketplace.json}"
+REPO_SLUG="${AUTO_PILOT_REPO_SLUG:-minsu0707/auto-pilot}"
+REPO_REF="${AUTO_PILOT_REPO_REF:-main}"
+SCRIPT_URL="https://raw.githubusercontent.com/${REPO_SLUG}/${REPO_REF}/auto-pilot/uninstall.sh"
+SCRIPT_SOURCE="${BASH_SOURCE[0]:-}"
 
-rm -rf "${INSTALL_DIR}"
+if [[ -n "${SCRIPT_SOURCE}" && "${SCRIPT_SOURCE}" != "bash" && "${SCRIPT_SOURCE}" != "-" ]]; then
+  SCRIPT_DIR="$(cd "$(dirname "${SCRIPT_SOURCE}")" && pwd)"
+  LOCAL_SCRIPT="${SCRIPT_DIR}/auto-pilot/uninstall.sh"
+  if [[ -f "${LOCAL_SCRIPT}" ]]; then
+    exec bash "${LOCAL_SCRIPT}"
+  fi
+fi
 
-python3 - "${MARKETPLACE_PATH}" <<'PY'
-import json
-import pathlib
-import sys
-
-marketplace_path = pathlib.Path(sys.argv[1]).expanduser()
-if not marketplace_path.exists():
-    raise SystemExit(0)
-
-with marketplace_path.open("r", encoding="utf-8") as handle:
-    data = json.load(handle)
-
-plugins = data.get("plugins")
-if isinstance(plugins, list):
-    data["plugins"] = [
-        plugin
-        for plugin in plugins
-        if not (isinstance(plugin, dict) and plugin.get("name") == "auto-pilot")
-    ]
-
-marketplace_path.write_text(
-    json.dumps(data, indent=2, ensure_ascii=False) + "\n",
-    encoding="utf-8",
-)
-PY
-
-echo "Auto Pilot removed from ${INSTALL_DIR}"
-echo "Marketplace updated: ${MARKETPLACE_PATH}"
+curl -fsSL "${SCRIPT_URL}" | bash

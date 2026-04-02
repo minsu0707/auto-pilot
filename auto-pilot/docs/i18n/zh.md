@@ -16,11 +16,12 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
-公开入口只需要使用 `/auto-pilot:autopilot`。
+公开主入口是 `/auto-pilot:autopilot`。
 安装后请重启一次 Codex，让 slash command 被正确加载。
 安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。
+重启后，也可以使用 `Build a budgeting app for freelancers ap` 这样的自然语言快捷写法。
 
-此文件夹包含 `Auto Pilot` Codex 插件的初始文档包。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
+此文件夹是 `Auto Pilot` Codex 插件的正式根目录。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
 
 ## Files
 
@@ -45,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 
 ## Current Status
 
-此文件夹就是 plugin root。repo-local marketplace 通过 [marketplace.json](../../../.agents/plugins/marketplace.json) 连接。
+此文件夹就是插件根目录、文档根目录和安装脚本的基准位置。
 
 ## Usage
 
@@ -54,6 +55,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
+- `Build a budgeting app for freelancers ap`
 
 新项目的 intake 遵循以下 UX：
 

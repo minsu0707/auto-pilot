@@ -27,6 +27,8 @@ Choose exactly one path:
 1. **New project**: no saved state exists
    - Use the slash command arguments as the initial product prompt
    - Route into the intake-first Auto Pilot workflow
+   - Ask one question at a time by default
+   - Start implementation automatically after the project contract is locked
 2. **Existing project**: saved state exists
    - Read the saved state files
    - Resume from the highest-priority unfinished task
@@ -42,14 +44,14 @@ Follow the existing Auto Pilot skill behavior rather than inventing new runtime 
 - Use the project prompt from `$ARGUMENTS`
 - Apply the workflow defined in `skills/autopilot/SKILL.md`
 - Use the intake behavior from `skills/autopilot-intake/SKILL.md`
-- Collect the minimum required project contract
+- Collect the minimum required project contract one question at a time
 - Write:
   - `docs/spec.md`
   - `docs/progress.md`
   - `docs/next.md`
   - `autopilot/state.json`
   - `autopilot/blockers.json`
-- Start implementation immediately after the spec is locked
+- Start implementation immediately after the spec is locked without waiting for extra user confirmation
 
 ### Resume path
 

@@ -16,11 +16,12 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
-Use `/auto-pilot:autopilot` as the single public entry point.
+Use `/auto-pilot:autopilot` as the primary public entry point.
 Restart Codex once after installation so the slash command is loaded.
 Install once, then route to intake for new projects and resume automatically for existing ones.
+After restart, you can also use the natural-language shortcut `Build a budgeting app for freelancers ap`.
 
-This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
+This folder is the canonical home for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
 
 ## Files
 
@@ -45,7 +46,7 @@ This folder contains the initial documentation package for the `Auto Pilot` Code
 
 ## Current Status
 
-This folder is the plugin root. The repo-local marketplace is wired through [marketplace.json](../.agents/plugins/marketplace.json).
+This folder is the canonical plugin root, docs home, and installer home.
 
 ## Usage
 
@@ -54,6 +55,7 @@ You can ask for:
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
+- `Build a budgeting app for freelancers ap`
 
 For new projects, intake follows this UX:
 

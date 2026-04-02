@@ -16,11 +16,12 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
-공개 진입점은 `/auto-pilot:autopilot` 하나로 보면 됩니다.
+공개 기본 진입점은 `/auto-pilot:autopilot`입니다.
 설치 후에는 slash command가 보이도록 Codex를 한 번 다시 시작하면 됩니다.
 한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
+재시작 후에는 `Build a budgeting app for freelancers ap` 같은 자연어 숏컷도 사용할 수 있습니다.
 
-이 폴더는 `Auto Pilot` Codex 플러그인의 초기 문서 패키지를 담고 있습니다. 이 플러그인은 짧은 프로젝트 요청을 intake 기반 장기 자율 실행 워크플로우로 바꿉니다.
+이 폴더는 `Auto Pilot` Codex 플러그인의 정식 루트입니다. 이 플러그인은 짧은 프로젝트 요청을 intake 기반 장기 자율 실행 워크플로우로 바꿉니다.
 
 ## Files
 
@@ -45,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 
 ## Current Status
 
-이 폴더는 plugin root입니다. repo-local marketplace는 [marketplace.json](../../../.agents/plugins/marketplace.json)을 통해 연결됩니다.
+이 폴더가 플러그인 루트이자 문서 루트, 설치 스크립트 기준 위치입니다.
 
 ## Usage
 
@@ -54,6 +55,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
+- `Build a budgeting app for freelancers ap`
 
 새 프로젝트에서는 intake가 아래 UX를 따릅니다.
 

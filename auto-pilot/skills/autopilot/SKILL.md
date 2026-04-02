@@ -8,30 +8,29 @@ metadata:
     phrases:
       - "오토파일럿"
       - "autopilot"
-      - "한번만 물어보고 계속"
-      - "중간에 묻지 말고 끝까지"
       - "24시간 계속"
-      - "brief once"
-      - "ask once"
-      - "keep building"
-      - "keep shipping"
-      - "계속 진행해줘"
+      - "with ap"
+      - "using ap"
     allOf:
-      - [한번만, 물어보고, 계속]
-      - [중간에, 묻지, 말고]
-      - [ask, once]
-      - [keep, building]
+      - [ap, build]
+      - [build, ap]
+      - [ap, make]
+      - [make, ap]
+      - [ap, create]
+      - [create, ap]
+      - [ap, app]
+      - [app, ap]
+      - [ap, 만들어줘]
+      - [만들어줘, ap]
     anyOf:
       - "오토파일럿"
       - "autopilot"
-      - "계속"
-      - "끝까지"
-      - "24시간"
-    minScore: 5
+    minScore: 7
 retrieval:
   aliases:
     - 오토파일럿
     - autopilot mode
+    - with ap
     - intake first execution
     - continuous project execution
   intents:
@@ -98,7 +97,8 @@ Ask for only the minimum complete project contract:
 - blocker policy
 - definition of done
 
-Keep the intake compact. Prefer one grouped message instead of repeated back-and-forth.
+Keep the intake compact, but ask exactly one question at a time.
+Treat one-question-at-a-time intake as the default behavior, not an optional preference.
 For the exact interaction format, follow `../autopilot-intake/SKILL.md`.
 
 ## Execution Rules
@@ -107,7 +107,8 @@ For the exact interaction format, follow `../autopilot-intake/SKILL.md`.
 2. Prefer working software over broad scaffolding with no validation.
 3. Run relevant verification after each meaningful change.
 4. Update progress and next-step files after each loop.
-5. Ask the user only when:
+5. Continue automatically after intake unless a true `human-required` blocker is active.
+6. Ask the user only when:
    - secrets are required
    - external account setup is required
    - payment or production deployment approval is required

@@ -16,11 +16,12 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
-公開エントリーポイントは `/auto-pilot:autopilot` ひとつで十分です。
+公開の基本エントリーポイントは `/auto-pilot:autopilot` です。
 インストール後は slash command を読み込むために Codex を一度再起動してください。
 一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
+再起動後は `Build a budgeting app for freelancers ap` のような自然言語ショートカットも使えます。
 
-このフォルダには `Auto Pilot` Codex プラグインの初期ドキュメントパッケージが含まれています。このプラグインは短いプロジェクト依頼を intake-driven の長時間自律実行ワークフローに変換します。
+このフォルダは `Auto Pilot` Codex プラグインの正式なルートです。このプラグインは短いプロジェクト依頼を intake-driven の長時間自律実行ワークフローに変換します。
 
 ## Files
 
@@ -45,7 +46,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 
 ## Current Status
 
-このフォルダは plugin root です。repo-local marketplace は [marketplace.json](../../../.agents/plugins/marketplace.json) で接続されています。
+このフォルダがプラグインルート兼ドキュメントルート兼インストーラの基準位置です。
 
 ## Usage
 
@@ -54,6 +55,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
+- `Build a budgeting app for freelancers ap`
 
 新しいプロジェクトでは intake は次の UX に従います。
 
