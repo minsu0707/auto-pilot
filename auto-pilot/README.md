@@ -25,7 +25,7 @@ This folder contains the initial documentation package for the `Auto Pilot` Code
 
 ## Current Status
 
-This folder is the plugin root. The repo-local marketplace is wired through [marketplace.json](/Users/minsu/Documents/Codex/.agents/plugins/marketplace.json).
+This folder is the plugin root. The repo-local marketplace is wired through [marketplace.json](../.agents/plugins/marketplace.json).
 
 ## Usage
 
@@ -45,15 +45,15 @@ For new projects, intake follows this UX:
 ## Script Example
 
 ```bash
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py start \
+python3 scripts/autopilot.py start \
   --workspace /path/to/project \
   --prompt "Build a budgeting app for freelancers"
 
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py answer \
+python3 scripts/autopilot.py answer \
   --workspace /path/to/project \
   --text "Freelancers and solo business owners"
 
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py status \
+python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 

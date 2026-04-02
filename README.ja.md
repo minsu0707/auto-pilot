@@ -6,8 +6,8 @@
 
 ## 内容
 
-- [Auto Pilot プラグインルート](/Users/minsu/Documents/Codex/auto-pilot)
-- [リポジトリローカル marketplace 設定](/Users/minsu/Documents/Codex/.agents/plugins/marketplace.json)
+- [Auto Pilot プラグインルート](./auto-pilot)
+- [リポジトリローカル marketplace 設定](./.agents/plugins/marketplace.json)
 - intake、状態生成、再開フロー用スクリプト
 
 ## 主な機能

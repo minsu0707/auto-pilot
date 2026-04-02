@@ -6,8 +6,8 @@
 
 ## 内容
 
-- [Auto Pilot 插件根目录](/Users/minsu/Documents/Codex/auto-pilot)
-- [仓库本地 marketplace 配置](/Users/minsu/Documents/Codex/.agents/plugins/marketplace.json)
+- [Auto Pilot 插件根目录](./auto-pilot)
+- [仓库本地 marketplace 配置](./.agents/plugins/marketplace.json)
 - 用于 intake、状态生成和恢复流程的脚本
 
 ## 核心功能

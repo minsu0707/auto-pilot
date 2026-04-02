@@ -6,8 +6,8 @@
 
 ## المحتويات
 
-- [جذر إضافة Auto Pilot](/Users/minsu/Documents/Codex/auto-pilot)
-- [إعداد marketplace المحلي للمستودع](/Users/minsu/Documents/Codex/.agents/plugins/marketplace.json)
+- [جذر إضافة Auto Pilot](./auto-pilot)
+- [إعداد marketplace المحلي للمستودع](./.agents/plugins/marketplace.json)
 - سكربتات لإدارة intake وإنشاء الحالة والاستئناف
 
 ## الميزات الأساسية

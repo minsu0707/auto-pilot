@@ -6,8 +6,8 @@ Local Codex plugin repository for `Auto Pilot`.
 
 ## Contents
 
-- [Auto Pilot plugin root](/Users/minsu/Documents/Codex/auto-pilot)
-- [Repo-local marketplace config](/Users/minsu/Documents/Codex/.agents/plugins/marketplace.json)
+- [Auto Pilot plugin root](./auto-pilot)
+- [Repo-local marketplace config](./.agents/plugins/marketplace.json)
 - Scripts for intake, state generation, and resume flow
 
 ## Core Features
@@ -21,7 +21,7 @@ Local Codex plugin repository for `Auto Pilot`.
 ## Quick Start
 
 ```bash
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py start \
+python3 auto-pilot/scripts/autopilot.py start \
   --workspace /tmp/my-project \
   --prompt "Build a budgeting app for freelancers"
 ```
@@ -29,7 +29,7 @@ python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py start \
 Then answer one question at a time.
 
 ```bash
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py answer \
+python3 auto-pilot/scripts/autopilot.py answer \
   --workspace /tmp/my-project \
   --text "Freelancers and solo business owners"
 ```
@@ -37,6 +37,6 @@ python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py answer \
 Check status:
 
 ```bash
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/autopilot.py status \
+python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
 ```

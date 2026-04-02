@@ -6,8 +6,8 @@
 
 ## 포함 내용
 
-- [오토파일럿 플러그인 루트](/Users/minsu/Documents/Codex/auto-pilot)
-- [repo-local marketplace 설정](/Users/minsu/Documents/Codex/.agents/plugins/marketplace.json)
+- [오토파일럿 플러그인 루트](./auto-pilot)
+- [repo-local marketplace 설정](./.agents/plugins/marketplace.json)
 - intake, 상태 생성, 재개 흐름용 스크립트
 
 ## 핵심 기능
