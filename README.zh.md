@@ -1,14 +1,8 @@
 # auto-pilot
 
+[English](./README.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md) | 中文 | [العربية](./README.ar.md)
+
 这是 `Auto Pilot` 的本地 Codex 插件仓库。
-
-## 语言
-
-- English: [`README.md`](/Users/minsu/Documents/Codex/README.md)
-- 한국어: [`README.ko.md`](/Users/minsu/Documents/Codex/README.ko.md)
-- 日本語: [`README.ja.md`](/Users/minsu/Documents/Codex/README.ja.md)
-- 中文: `README.zh.md`
-- العربية: [`README.ar.md`](/Users/minsu/Documents/Codex/README.ar.md)
 
 ## 内容
 

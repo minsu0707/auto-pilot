@@ -1,14 +1,8 @@
 # auto-pilot
 
+[English](./README.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | العربية
+
 هذا هو مستودع Codex المحلي للإضافة `Auto Pilot`.
-
-## اللغات
-
-- English: [`README.md`](/Users/minsu/Documents/Codex/README.md)
-- 한국어: [`README.ko.md`](/Users/minsu/Documents/Codex/README.ko.md)
-- 日本語: [`README.ja.md`](/Users/minsu/Documents/Codex/README.ja.md)
-- 中文: [`README.zh.md`](/Users/minsu/Documents/Codex/README.zh.md)
-- العربية: `README.ar.md`
 
 ## المحتويات
 

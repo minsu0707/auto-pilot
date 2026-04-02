@@ -1,14 +1,8 @@
 # auto-pilot
 
+[English](./README.md) | 한국어 | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
+
 `오토파일럿` 로컬 Codex 플러그인 저장소입니다.
-
-## 언어
-
-- English: [`README.md`](/Users/minsu/Documents/Codex/README.md)
-- 한국어: `README.ko.md`
-- 日本語: [`README.ja.md`](/Users/minsu/Documents/Codex/README.ja.md)
-- 中文: [`README.zh.md`](/Users/minsu/Documents/Codex/README.zh.md)
-- العربية: [`README.ar.md`](/Users/minsu/Documents/Codex/README.ar.md)
 
 ## 포함 내용
 

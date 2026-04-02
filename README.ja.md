@@ -1,14 +1,8 @@
 # auto-pilot
 
+[English](./README.md) | [한국어](./README.ko.md) | 日本語 | [中文](./README.zh.md) | [العربية](./README.ar.md)
+
 `Auto Pilot` のローカル Codex プラグインリポジトリです。
-
-## 言語
-
-- English: [`README.md`](/Users/minsu/Documents/Codex/README.md)
-- 한국어: [`README.ko.md`](/Users/minsu/Documents/Codex/README.ko.md)
-- 日本語: `README.ja.md`
-- 中文: [`README.zh.md`](/Users/minsu/Documents/Codex/README.zh.md)
-- العربية: [`README.ar.md`](/Users/minsu/Documents/Codex/README.ar.md)
 
 ## 内容
 

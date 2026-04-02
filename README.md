@@ -1,14 +1,8 @@
 # auto-pilot
 
+English | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
+
 Local Codex plugin repository for `Auto Pilot`.
-
-## Languages
-
-- English: `README.md`
-- Korean: [`README.ko.md`](/Users/minsu/Documents/Codex/README.ko.md)
-- Japanese: [`README.ja.md`](/Users/minsu/Documents/Codex/README.ja.md)
-- Chinese: [`README.zh.md`](/Users/minsu/Documents/Codex/README.zh.md)
-- Arabic: [`README.ar.md`](/Users/minsu/Documents/Codex/README.ar.md)
 
 ## Contents
 

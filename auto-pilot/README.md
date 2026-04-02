@@ -1,14 +1,8 @@
 # Auto Pilot Docs
 
+English | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
+
 This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
-
-## Languages
-
-- English: `README.md`
-- Korean: [`README.ko.md`](/Users/minsu/Documents/Codex/auto-pilot/README.ko.md)
-- Japanese: [`README.ja.md`](/Users/minsu/Documents/Codex/auto-pilot/README.ja.md)
-- Chinese: [`README.zh.md`](/Users/minsu/Documents/Codex/auto-pilot/README.zh.md)
-- Arabic: [`README.ar.md`](/Users/minsu/Documents/Codex/auto-pilot/README.ar.md)
 
 ## Files
 
