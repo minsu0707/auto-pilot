@@ -4,6 +4,12 @@
 
 English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md) | [中文](./docs/i18n/zh.md) | [العربية](./docs/i18n/ar.md)
 
+## Start in One Line
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
 
 ## Files
@@ -58,14 +64,6 @@ python3 scripts/autopilot.py answer \
 
 python3 scripts/autopilot.py status \
   --workspace /path/to/project
-```
-
-## Start in One Line
-
-For a copy-paste friendly start command, use:
-
-```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
 ```
 
 After the final answer, the plugin generates:

@@ -4,6 +4,12 @@
 
 [English](../../README.md) | [한국어](./ko.md) | 日本語 | [中文](./zh.md) | [العربية](./ar.md)
 
+## 1行ですぐ始める
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 このフォルダには `Auto Pilot` Codex プラグインの初期ドキュメントパッケージが含まれています。このプラグインは短いプロジェクト依頼を intake-driven の長時間自律実行ワークフローに変換します。
 
 ## Files
@@ -58,14 +64,6 @@ python3 scripts/autopilot.py answer \
 
 python3 scripts/autopilot.py status \
   --workspace /path/to/project
-```
-
-## Start in One Line
-
-そのままコピーして始めたい場合は、次の 1 行コマンドを使えます。
-
-```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
 ```
 
 最後の回答後、次のファイルが生成されます。

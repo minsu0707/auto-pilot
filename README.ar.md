@@ -9,6 +9,12 @@
 
 [English](./README.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | العربية
 
+## ابدأ فورًا بسطر واحد
+
+```bash
+python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+```
+
 Auto Pilot هو إضافة Codex محلية تحول طلباً قصيراً مثل `Build me a budgeting app` إلى سير تنفيذ يعتمد على intake-first.
 
 بدلاً من التوقف كل بضع خطوات لطلب سياق إضافي، يقوم Auto Pilot بما يلي:
@@ -62,14 +68,6 @@ python3 auto-pilot/scripts/autopilot.py answer \
 ```bash
 python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
-```
-
-## Start in One Line
-
-إذا كنت تريد أمراً واحداً جاهزاً للنسخ واللصق، فاستخدم هذا:
-
-```bash
-python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
 ```
 
 بعد الإجابة الأخيرة، يقوم Auto Pilot بإنشاء:

@@ -9,6 +9,12 @@
 
 [English](./README.md) | 한국어 | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
 
+## 한줄로 바로 시작하기
+
+```bash
+python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+```
+
 Auto Pilot은 `가계부 앱 만들어줘` 같은 짧은 요청을 intake 우선 실행 흐름으로 바꾸는 로컬 Codex 플러그인입니다.
 
 Auto Pilot은 중간중간 멈춰서 컨텍스트를 다시 묻는 대신:
@@ -62,14 +68,6 @@ python3 auto-pilot/scripts/autopilot.py answer \
 ```bash
 python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
-```
-
-## Start in One Line
-
-바로 복붙해서 시작하려면 아래 한 줄 명령을 사용하면 됩니다.
-
-```bash
-python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
 ```
 
 마지막 답변이 들어가면 Auto Pilot은 아래 파일을 생성합니다.

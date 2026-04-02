@@ -4,6 +4,12 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | 中文 | [العربية](./ar.md)
 
+## 一行立即开始
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 此文件夹包含 `Auto Pilot` Codex 插件的初始文档包。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
 
 ## Files
@@ -58,14 +64,6 @@ python3 scripts/autopilot.py answer \
 
 python3 scripts/autopilot.py status \
   --workspace /path/to/project
-```
-
-## Start in One Line
-
-如果你想直接复制粘贴开始，可以使用这一行命令：
-
-```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
 ```
 
 最后一个回答提交后，会生成以下文件：

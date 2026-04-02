@@ -4,6 +4,12 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | [中文](./zh.md) | العربية
 
+## ابدأ فورًا بسطر واحد
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 يحتوي هذا المجلد على الحزمة الأولية من مستندات إضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.
 
 ## Files
@@ -58,14 +64,6 @@ python3 scripts/autopilot.py answer \
 
 python3 scripts/autopilot.py status \
   --workspace /path/to/project
-```
-
-## Start in One Line
-
-إذا كنت تريد أمراً واحداً جاهزاً للنسخ واللصق، فاستخدم هذا:
-
-```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
 ```
 
 بعد الإجابة الأخيرة، يقوم Auto Pilot بإنشاء الملفات التالية:

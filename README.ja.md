@@ -9,6 +9,12 @@
 
 [English](./README.md) | [한국어](./README.ko.md) | 日本語 | [中文](./README.zh.md) | [العربية](./README.ar.md)
 
+## 1行ですぐ始める
+
+```bash
+python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+```
+
 Auto Pilot は、`Build me a budgeting app` のような短い依頼を intake-first の実行フローへ変換するローカル Codex プラグインです。
 
 途中で何度も止まって不足情報を聞き直す代わりに、Auto Pilot は:
@@ -62,14 +68,6 @@ python3 auto-pilot/scripts/autopilot.py answer \
 ```bash
 python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
-```
-
-## Start in One Line
-
-そのままコピーして始めたい場合は、次の 1 行コマンドを使えます。
-
-```bash
-python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
 ```
 
 最後の回答後、Auto Pilot は次のファイルを生成します。

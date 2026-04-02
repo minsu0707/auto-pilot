@@ -9,6 +9,12 @@
 
 English | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
 
+## Start in One Line
+
+```bash
+python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+```
+
 Auto Pilot is a local Codex plugin that turns a short request like `Build me a budgeting app` into an intake-first execution workflow.
 
 Instead of stopping every few steps to ask for missing context, Auto Pilot:
@@ -62,14 +68,6 @@ Check the current mode and status:
 ```bash
 python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
-```
-
-## Start in One Line
-
-If you want a copy-paste friendly command, use this:
-
-```bash
-python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
 ```
 
 After the final answer, Auto Pilot generates:

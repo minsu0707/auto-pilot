@@ -9,6 +9,12 @@
 
 [English](./README.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md) | 中文 | [العربية](./README.ar.md)
 
+## 一行立即开始
+
+```bash
+python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+```
+
 Auto Pilot 是一个本地 Codex 插件，可以把 `Build me a budgeting app` 这样的简短请求转换为 intake-first 执行流程。
 
 Auto Pilot 不会每走几步就停下来重新追问上下文，而是会：
@@ -62,14 +68,6 @@ python3 auto-pilot/scripts/autopilot.py answer \
 ```bash
 python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
-```
-
-## Start in One Line
-
-如果你想直接复制粘贴开始，可以使用这一行命令：
-
-```bash
-python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
 ```
 
 最后一个回答提交后，Auto Pilot 会生成：
