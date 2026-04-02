@@ -1,0 +1,22 @@
+{
+  "project_summary": "",
+  "answers": {
+    "product_summary": "",
+    "target_user": "",
+    "core_features": "",
+    "non_goals": "",
+    "stack_preferences": "",
+    "auth_mode": "",
+    "payments_mode": "",
+    "admin_required": "",
+    "deploy_target": "",
+    "data_store": "",
+    "design_direction": "",
+    "definition_of_done": "",
+    "blocker_policy": "retry technical failures automatically, defer low-risk polish, ask only for secrets, approvals, payments, OAuth, and production launch"
+  },
+  "questionProgress": {
+    "currentIndex": 1,
+    "remaining": 12
+  }
+}
