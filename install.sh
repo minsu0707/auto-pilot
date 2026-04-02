@@ -115,5 +115,5 @@ echo "Plugin path: ${INSTALL_DIR}"
 echo "Marketplace: ${MARKETPLACE_PATH}"
 echo "Marketplace source path: ${MARKETPLACE_SOURCE_PATH}"
 echo
-echo "Open Codex and run:"
+echo "Restart Codex, then run:"
 echo "/auto-pilot:autopilot Build a budgeting app for freelancers"

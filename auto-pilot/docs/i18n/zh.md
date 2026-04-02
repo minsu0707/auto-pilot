@@ -17,6 +17,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 公开入口只需要使用 `/auto-pilot:autopilot`。
+安装后请重启一次 Codex，让 slash command 被正确加载。
 安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。
 
 此文件夹包含 `Auto Pilot` Codex 插件的初始文档包。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
@@ -29,6 +30,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
+- `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
@@ -89,4 +91,4 @@ python3 scripts/autopilot.py status \
 - `record_answer.py`
 - `status.py`
 
-面对普通用户，推荐流程是先用 one-line installer 安装，再在 Codex 中使用 `/auto-pilot:autopilot`。
+面对普通用户，推荐流程是先用 one-line installer 安装，重启一次 Codex，再在 Codex 中使用 `/auto-pilot:autopilot`。

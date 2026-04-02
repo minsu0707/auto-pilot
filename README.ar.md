@@ -22,6 +22,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الوحيدة.
+بعد التثبيت، أعد تشغيل Codex مرة واحدة حتى يصبح slash command متاحًا.
 بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
 
 Auto Pilot هو إضافة Codex محلية تحول طلباً قصيراً مثل `Build me a budgeting app` إلى سير تنفيذ يعتمد على intake-first.

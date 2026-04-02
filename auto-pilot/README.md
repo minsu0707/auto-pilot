@@ -17,6 +17,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 Use `/auto-pilot:autopilot` as the single public entry point.
+Restart Codex once after installation so the slash command is loaded.
 Install once, then route to intake for new projects and resume automatically for existing ones.
 
 This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
@@ -29,6 +30,7 @@ This folder contains the initial documentation package for the `Auto Pilot` Code
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
+- `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
@@ -89,4 +91,4 @@ Lower-level scripts remain available:
 - `record_answer.py`
 - `status.py`
 
-For end users, the recommended flow is the one-line installer followed by `/auto-pilot:autopilot` inside Codex.
+For end users, the recommended flow is the one-line installer, one Codex restart, then `/auto-pilot:autopilot` inside Codex.

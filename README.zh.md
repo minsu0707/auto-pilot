@@ -22,6 +22,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 公开入口只需要使用 `/auto-pilot:autopilot`。
+安装后请重启一次 Codex，让 slash command 被正确加载。
 安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。
 
 Auto Pilot 是一个本地 Codex 插件，可以把 `Build me a budgeting app` 这样的简短请求转换为 intake-first 执行流程。

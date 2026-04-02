@@ -22,6 +22,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 Use `/auto-pilot:autopilot` as the single public entry point.
+Restart Codex once after installation so the slash command is available.
 Install once, then route to intake for new projects and resume automatically for existing ones.
 
 Auto Pilot is a local Codex plugin that turns a short request like `Build me a budgeting app` into an intake-first execution workflow.

@@ -22,6 +22,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 公開エントリーポイントは `/auto-pilot:autopilot` ひとつで十分です。
+インストール後は slash command を読み込むために Codex を一度再起動してください。
 一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
 
 Auto Pilot は、`Build me a budgeting app` のような短い依頼を intake-first の実行フローへ変換するローカル Codex プラグインです。

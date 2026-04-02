@@ -17,6 +17,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 공개 진입점은 `/auto-pilot:autopilot` 하나로 보면 됩니다.
+설치 후에는 slash command가 보이도록 Codex를 한 번 다시 시작하면 됩니다.
 한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
 
 이 폴더는 `Auto Pilot` Codex 플러그인의 초기 문서 패키지를 담고 있습니다. 이 플러그인은 짧은 프로젝트 요청을 intake 기반 장기 자율 실행 워크플로우로 바꿉니다.
@@ -29,6 +30,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
+- `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
@@ -89,4 +91,4 @@ python3 scripts/autopilot.py status \
 - `record_answer.py`
 - `status.py`
 
-일반 유저 기준 추천 흐름은 one-line installer로 설치한 뒤 Codex에서 `/auto-pilot:autopilot`을 사용하는 것입니다.
+일반 유저 기준 추천 흐름은 one-line installer로 설치한 뒤 Codex를 한 번 재시작하고 `/auto-pilot:autopilot`을 사용하는 것입니다.

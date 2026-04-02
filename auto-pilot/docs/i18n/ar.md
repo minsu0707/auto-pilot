@@ -17,6 +17,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ```
 
 استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الوحيدة.
+بعد التثبيت، أعد تشغيل Codex مرة واحدة حتى يصبح slash command متاحًا.
 بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
 
 يحتوي هذا المجلد على الحزمة الأولية من مستندات إضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.
@@ -29,6 +30,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
+- `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
@@ -89,4 +91,4 @@ python3 scripts/autopilot.py status \
 - `record_answer.py`
 - `status.py`
 
-بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم استخدام `/auto-pilot:autopilot` داخل Codex.
+بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم إعادة تشغيل Codex مرة واحدة وبعدها استخدام `/auto-pilot:autopilot` داخل Codex.
