@@ -9,14 +9,20 @@
 
 [English](./README.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | العربية
 
-## ابدأ مباشرة داخل Codex
+## ثبّت بسطر واحد
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## شغّل داخل Codex
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الوحيدة.
-إذا كان المشروع جديدًا فسيبدأ intake تلقائيًا، وإذا كان موجودًا فسيتم الاستئناف تلقائيًا.
+بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
 
 Auto Pilot هو إضافة Codex محلية تحول طلباً قصيراً مثل `Build me a budgeting app` إلى سير تنفيذ يعتمد على intake-first.
 
@@ -99,11 +105,10 @@ python3 auto-pilot/scripts/autopilot.py status \
 
 ## Current Status
 
-يركّز هذا المستودع حالياً على:
+يوفّر هذا المستودع حالياً:
 
+- one-line installer لتثبيت الإضافة على مستوى home-level
 - intake UX
 - bootstrapping لملفات spec و state
 - resume-friendly file structure
 - multilingual README entry points
-
-الخطوة المنطقية التالية هي توفير one-command installer يقوم بتسجيل الإضافة تلقائياً في home-level marketplace.

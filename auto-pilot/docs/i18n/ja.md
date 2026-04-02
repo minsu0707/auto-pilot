@@ -4,14 +4,20 @@
 
 [English](../../README.md) | [한국어](./ko.md) | 日本語 | [中文](./zh.md) | [العربية](./ar.md)
 
-## Codex ですぐ始める
+## 1行でインストール
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## Codex で実行
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 公開エントリーポイントは `/auto-pilot:autopilot` ひとつで十分です。
-新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
+一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
 
 このフォルダには `Auto Pilot` Codex プラグインの初期ドキュメントパッケージが含まれています。このプラグインは短いプロジェクト依頼を intake-driven の長時間自律実行ワークフローに変換します。
 
@@ -83,4 +89,4 @@ python3 scripts/autopilot.py status \
 - `record_answer.py`
 - `status.py`
 
-現在のセッションではプラグイン一覧がすぐには更新されないことがあります。新しいセッションで workspace を再度開くのが plugin discovery を反映する最も安全な方法です。
+一般ユーザー向けの推奨フローは、one-line installer で導入してから Codex 内で `/auto-pilot:autopilot` を使うことです。

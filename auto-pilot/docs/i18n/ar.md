@@ -4,14 +4,20 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | [中文](./zh.md) | العربية
 
-## ابدأ مباشرة داخل Codex
+## ثبّت بسطر واحد
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## شغّل داخل Codex
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الوحيدة.
-إذا كان المشروع جديدًا فسيبدأ intake تلقائيًا، وإذا كان موجودًا فسيتم الاستئناف تلقائيًا.
+بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
 
 يحتوي هذا المجلد على الحزمة الأولية من مستندات إضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.
 
@@ -83,4 +89,4 @@ python3 scripts/autopilot.py status \
 - `record_answer.py`
 - `status.py`
 
-قد لا تقوم الجلسة الحالية بتحديث قائمة الإضافات فوراً. أكثر طريقة أماناً لفرض plugin discovery هي إعادة فتح الـ workspace في جلسة جديدة.
+بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم استخدام `/auto-pilot:autopilot` داخل Codex.

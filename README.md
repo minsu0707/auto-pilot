@@ -9,14 +9,20 @@
 
 English | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
 
-## Start in Codex
+## Install in One Line
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## Run in Codex
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 Use `/auto-pilot:autopilot` as the single public entry point.
-It will route to intake for new projects and resume automatically for existing ones.
+Install once, then route to intake for new projects and resume automatically for existing ones.
 
 Auto Pilot is a local Codex plugin that turns a short request like `Build me a budgeting app` into an intake-first execution workflow.
 
@@ -99,11 +105,10 @@ After the final answer, Auto Pilot generates:
 
 ## Current Status
 
-This repository currently focuses on:
+This repository currently ships:
 
+- one-line installation for home-level plugin setup
 - intake UX
 - spec and state bootstrapping
 - resume-friendly file structure
 - multilingual README entry points
-
-The next logical step is a one-command installer that places the plugin into a home-level marketplace automatically.

@@ -9,14 +9,20 @@
 
 [English](./README.md) | [한국어](./README.ko.md) | 日本語 | [中文](./README.zh.md) | [العربية](./README.ar.md)
 
-## Codex ですぐ始める
+## 1行でインストール
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## Codex で実行
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 公開エントリーポイントは `/auto-pilot:autopilot` ひとつで十分です。
-新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
+一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
 
 Auto Pilot は、`Build me a budgeting app` のような短い依頼を intake-first の実行フローへ変換するローカル Codex プラグインです。
 
@@ -99,11 +105,10 @@ python3 auto-pilot/scripts/autopilot.py status \
 
 ## Current Status
 
-現在このリポジトリは次の点に集中しています。
+現在このリポジトリは次のものを提供しています。
 
+- home-level プラグイン導入用の one-line installer
 - intake UX
 - spec と state の bootstrapping
 - resume-friendly file structure
 - multilingual README entry points
-
-次の自然なステップは、プラグインを home-level marketplace に自動登録する one-command installer です。

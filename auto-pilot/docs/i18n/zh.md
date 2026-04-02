@@ -4,14 +4,20 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | 中文 | [العربية](./ar.md)
 
-## 在 Codex 中立即开始
+## 一行安装
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## 在 Codex 中运行
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 公开入口只需要使用 `/auto-pilot:autopilot`。
-新项目会自动进入 intake，已有项目会自动走 resume 流程。
+安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。
 
 此文件夹包含 `Auto Pilot` Codex 插件的初始文档包。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
 
@@ -83,4 +89,4 @@ python3 scripts/autopilot.py status \
 - `record_answer.py`
 - `status.py`
 
-当前会话可能不会立即刷新插件列表。最稳妥的方式是在新会话中重新打开该 workspace，以强制触发 plugin discovery。
+面对普通用户，推荐流程是先用 one-line installer 安装，再在 Codex 中使用 `/auto-pilot:autopilot`。

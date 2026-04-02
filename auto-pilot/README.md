@@ -4,14 +4,20 @@
 
 English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md) | [中文](./docs/i18n/zh.md) | [العربية](./docs/i18n/ar.md)
 
-## Start in Codex
+## Install in One Line
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## Run in Codex
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 Use `/auto-pilot:autopilot` as the single public entry point.
-It will route to intake for new projects and resume automatically for existing ones.
+Install once, then route to intake for new projects and resume automatically for existing ones.
 
 This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
 
@@ -83,4 +89,4 @@ Lower-level scripts remain available:
 - `record_answer.py`
 - `status.py`
 
-The current session may not refresh the plugin list immediately. Reopening the workspace in a new session is the safest way to force plugin discovery.
+For end users, the recommended flow is the one-line installer followed by `/auto-pilot:autopilot` inside Codex.

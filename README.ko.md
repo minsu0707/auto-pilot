@@ -9,14 +9,20 @@
 
 [English](./README.md) | 한국어 | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
 
-## Codex에서 바로 시작하기
+## 한줄로 설치하기
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## Codex에서 실행하기
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 공개 진입점은 `/auto-pilot:autopilot` 하나로 보면 됩니다.
-새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
+한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
 
 Auto Pilot은 `가계부 앱 만들어줘` 같은 짧은 요청을 intake 우선 실행 흐름으로 바꾸는 로컬 Codex 플러그인입니다.
 
@@ -99,11 +105,10 @@ python3 auto-pilot/scripts/autopilot.py status \
 
 ## Current Status
 
-현재 이 저장소는 아래 항목에 집중하고 있습니다.
+현재 이 저장소는 아래 항목을 제공합니다.
 
+- home-level 플러그인 설치용 one-line installer
 - intake UX
 - spec 및 state bootstrapping
 - resume-friendly file structure
 - multilingual README entry points
-
-다음으로 가장 자연스러운 단계는 플러그인을 home-level marketplace에 자동 등록하는 one-command installer입니다.

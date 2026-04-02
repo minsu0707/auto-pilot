@@ -4,14 +4,20 @@
 
 [English](../../README.md) | 한국어 | [日本語](./ja.md) | [中文](./zh.md) | [العربية](./ar.md)
 
-## Codex에서 바로 시작하기
+## 한줄로 설치하기
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+```
+
+## Codex에서 실행하기
+
+```text
 /auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 공개 진입점은 `/auto-pilot:autopilot` 하나로 보면 됩니다.
-새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
+한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
 
 이 폴더는 `Auto Pilot` Codex 플러그인의 초기 문서 패키지를 담고 있습니다. 이 플러그인은 짧은 프로젝트 요청을 intake 기반 장기 자율 실행 워크플로우로 바꿉니다.
 
@@ -83,4 +89,4 @@ python3 scripts/autopilot.py status \
 - `record_answer.py`
 - `status.py`
 
-현재 세션은 플러그인 목록을 즉시 갱신하지 않을 수 있습니다. 새 세션에서 workspace를 다시 여는 것이 plugin discovery를 강제로 반영하는 가장 안전한 방법입니다.
+일반 유저 기준 추천 흐름은 one-line installer로 설치한 뒤 Codex에서 `/auto-pilot:autopilot`을 사용하는 것입니다.
