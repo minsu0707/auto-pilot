@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-INSTALL_DIR="${AUTO_PILOT_INSTALL_DIR:-$HOME/.codex/plugins/auto-pilot}"
+INSTALL_DIR="${AUTO_PILOT_INSTALL_DIR:-$HOME/plugins/auto-pilot}"
 MARKETPLACE_PATH="${AUTO_PILOT_MARKETPLACE_PATH:-$HOME/.agents/plugins/marketplace.json}"
 
 rm -rf "${INSTALL_DIR}"

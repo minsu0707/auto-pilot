@@ -4,8 +4,9 @@ set -euo pipefail
 
 REPO_SLUG="${AUTO_PILOT_REPO_SLUG:-minsu0707/auto-pilot}"
 REPO_REF="${AUTO_PILOT_REPO_REF:-main}"
-INSTALL_DIR="${AUTO_PILOT_INSTALL_DIR:-$HOME/.codex/plugins/auto-pilot}"
+INSTALL_DIR="${AUTO_PILOT_INSTALL_DIR:-$HOME/plugins/auto-pilot}"
 MARKETPLACE_PATH="${AUTO_PILOT_MARKETPLACE_PATH:-$HOME/.agents/plugins/marketplace.json}"
+MARKETPLACE_SOURCE_PATH="${AUTO_PILOT_SOURCE_PATH:-./plugins/auto-pilot}"
 TMP_ROOT="${TMPDIR:-/tmp}"
 WORK_DIR="$(mktemp -d "${TMP_ROOT%/}/auto-pilot-install.XXXXXX")"
 ARCHIVE_URL="https://github.com/${REPO_SLUG}/archive/refs/heads/${REPO_REF}.tar.gz"
@@ -41,19 +42,24 @@ if [[ -z "${SOURCE_PLUGIN_DIR}" ]]; then
   exit 1
 fi
 
+if [[ ! -f "${SOURCE_PLUGIN_DIR}/.codex-plugin/plugin.json" ]]; then
+  echo "Downloaded archive does not contain a valid Codex plugin manifest." >&2
+  exit 1
+fi
+
 mkdir -p "$(dirname "${INSTALL_DIR}")"
 rm -rf "${INSTALL_DIR}"
 cp -R "${SOURCE_PLUGIN_DIR}" "${INSTALL_DIR}"
 
 mkdir -p "$(dirname "${MARKETPLACE_PATH}")"
 
-python3 - "${MARKETPLACE_PATH}" "${INSTALL_DIR}" <<'PY'
+python3 - "${MARKETPLACE_PATH}" "${MARKETPLACE_SOURCE_PATH}" <<'PY'
 import json
 import pathlib
 import sys
 
 marketplace_path = pathlib.Path(sys.argv[1]).expanduser()
-install_dir = str(pathlib.Path(sys.argv[2]).expanduser().resolve())
+source_path = sys.argv[2]
 
 if marketplace_path.exists():
     with marketplace_path.open("r", encoding="utf-8") as handle:
@@ -79,7 +85,7 @@ entry = {
     "name": "auto-pilot",
     "source": {
         "source": "local",
-        "path": install_dir,
+        "path": source_path,
     },
     "policy": {
         "installation": "AVAILABLE",
@@ -107,6 +113,7 @@ PY
 echo "Auto Pilot installed."
 echo "Plugin path: ${INSTALL_DIR}"
 echo "Marketplace: ${MARKETPLACE_PATH}"
+echo "Marketplace source path: ${MARKETPLACE_SOURCE_PATH}"
 echo
 echo "Open Codex and run:"
 echo "/auto-pilot:autopilot Build a budgeting app for freelancers"
