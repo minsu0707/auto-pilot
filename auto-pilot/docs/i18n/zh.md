@@ -1,10 +1,10 @@
 # Auto Pilot Docs
 
-> Ask once. Lock the brief. Keep shipping.
+> 一次提问，锁定简报，然后持续构建。
 
-English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md) | [中文](./docs/i18n/zh.md) | [العربية](./docs/i18n/ar.md)
+[English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | 中文 | [العربية](./ar.md)
 
-This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
+此文件夹包含 `Auto Pilot` Codex 插件的初始文档包。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
 
 ## Files
 
@@ -28,22 +28,22 @@ This folder contains the initial documentation package for the `Auto Pilot` Code
 
 ## Current Status
 
-This folder is the plugin root. The repo-local marketplace is wired through [marketplace.json](../.agents/plugins/marketplace.json).
+此文件夹就是 plugin root。repo-local marketplace 通过 [marketplace.json](../../../.agents/plugins/marketplace.json) 连接。
 
 ## Usage
 
-You can ask for:
+可以这样发起请求：
 
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
 
-For new projects, intake follows this UX:
+新项目的 intake 遵循以下 UX：
 
-- show one question at a time
-- use the `1. Question` format
-- show `Questions remaining: N` on the next line
-- summarize the captured contract, lock the spec, and start execution after the last answer
+- 每次只显示一个问题
+- 使用 `1. Question` 格式
+- 下一行显示 `Questions remaining: N`
+- 最后一个回答后总结契约，并开始 spec lock 与执行
 
 ## Script Example
 
@@ -60,7 +60,7 @@ python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 
-After the final answer, the plugin generates:
+最后一个回答提交后，会生成以下文件：
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -68,10 +68,10 @@ After the final answer, the plugin generates:
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 
-Lower-level scripts remain available:
+底层脚本仍然可用：
 
 - `init_intake.py`
 - `record_answer.py`
 - `status.py`
 
-The current session may not refresh the plugin list immediately. Reopening the workspace in a new session is the safest way to force plugin discovery.
+当前会话可能不会立即刷新插件列表。最稳妥的方式是在新会话中重新打开该 workspace，以强制触发 plugin discovery。

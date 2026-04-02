@@ -1,10 +1,10 @@
 # Auto Pilot Docs
 
-> Ask once. Lock the brief. Keep shipping.
+> اسأل مرة واحدة، ثبّت الملخص، واستمر في البناء.
 
-English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md) | [中文](./docs/i18n/zh.md) | [العربية](./docs/i18n/ar.md)
+[English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | [中文](./zh.md) | العربية
 
-This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
+يحتوي هذا المجلد على الحزمة الأولية من مستندات إضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.
 
 ## Files
 
@@ -28,22 +28,22 @@ This folder contains the initial documentation package for the `Auto Pilot` Code
 
 ## Current Status
 
-This folder is the plugin root. The repo-local marketplace is wired through [marketplace.json](../.agents/plugins/marketplace.json).
+هذا المجلد هو plugin root. يتم ربط repo-local marketplace عبر [marketplace.json](../../../.agents/plugins/marketplace.json).
 
 ## Usage
 
-You can ask for:
+يمكنك طلب ما يلي:
 
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
 
-For new projects, intake follows this UX:
+في المشاريع الجديدة يتبع intake هذا النمط:
 
-- show one question at a time
-- use the `1. Question` format
-- show `Questions remaining: N` on the next line
-- summarize the captured contract, lock the spec, and start execution after the last answer
+- عرض سؤال واحد فقط في كل مرة
+- استخدام تنسيق `1. Question`
+- عرض `Questions remaining: N` في السطر التالي
+- بعد الإجابة الأخيرة يتم تلخيص العقد ثم يبدأ spec lock والتنفيذ
 
 ## Script Example
 
@@ -60,7 +60,7 @@ python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 
-After the final answer, the plugin generates:
+بعد الإجابة الأخيرة، يقوم Auto Pilot بإنشاء الملفات التالية:
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -68,10 +68,10 @@ After the final answer, the plugin generates:
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 
-Lower-level scripts remain available:
+تبقى السكربتات منخفضة المستوى متاحة أيضاً:
 
 - `init_intake.py`
 - `record_answer.py`
 - `status.py`
 
-The current session may not refresh the plugin list immediately. Reopening the workspace in a new session is the safest way to force plugin discovery.
+قد لا تقوم الجلسة الحالية بتحديث قائمة الإضافات فوراً. أكثر طريقة أماناً لفرض plugin discovery هي إعادة فتح الـ workspace في جلسة جديدة.

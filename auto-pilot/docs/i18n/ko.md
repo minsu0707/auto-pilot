@@ -1,10 +1,10 @@
 # Auto Pilot Docs
 
-> Ask once. Lock the brief. Keep shipping.
+> 한 번 묻고, 브리프를 잠그고, 계속 만들어갑니다.
 
-English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md) | [中文](./docs/i18n/zh.md) | [العربية](./docs/i18n/ar.md)
+[English](../../README.md) | 한국어 | [日本語](./ja.md) | [中文](./zh.md) | [العربية](./ar.md)
 
-This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
+이 폴더는 `Auto Pilot` Codex 플러그인의 초기 문서 패키지를 담고 있습니다. 이 플러그인은 짧은 프로젝트 요청을 intake 기반 장기 자율 실행 워크플로우로 바꿉니다.
 
 ## Files
 
@@ -28,22 +28,22 @@ This folder contains the initial documentation package for the `Auto Pilot` Code
 
 ## Current Status
 
-This folder is the plugin root. The repo-local marketplace is wired through [marketplace.json](../.agents/plugins/marketplace.json).
+이 폴더는 plugin root입니다. repo-local marketplace는 [marketplace.json](../../../.agents/plugins/marketplace.json)을 통해 연결됩니다.
 
 ## Usage
 
-You can ask for:
+다음과 같이 요청할 수 있습니다.
 
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
 
-For new projects, intake follows this UX:
+새 프로젝트에서는 intake가 아래 UX를 따릅니다.
 
-- show one question at a time
-- use the `1. Question` format
-- show `Questions remaining: N` on the next line
-- summarize the captured contract, lock the spec, and start execution after the last answer
+- 질문을 한 번에 하나씩 표시
+- `1. Question` 형식 사용
+- 다음 줄에 `Questions remaining: N` 표시
+- 마지막 답변 후 계약을 요약하고 spec lock 및 실행 시작
 
 ## Script Example
 
@@ -60,7 +60,7 @@ python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 
-After the final answer, the plugin generates:
+마지막 답변 후 아래 파일이 생성됩니다.
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -68,10 +68,10 @@ After the final answer, the plugin generates:
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 
-Lower-level scripts remain available:
+하위 스크립트도 그대로 사용할 수 있습니다.
 
 - `init_intake.py`
 - `record_answer.py`
 - `status.py`
 
-The current session may not refresh the plugin list immediately. Reopening the workspace in a new session is the safest way to force plugin discovery.
+현재 세션은 플러그인 목록을 즉시 갱신하지 않을 수 있습니다. 새 세션에서 workspace를 다시 여는 것이 plugin discovery를 강제로 반영하는 가장 안전한 방법입니다.
