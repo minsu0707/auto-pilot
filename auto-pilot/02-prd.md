@@ -1,106 +1,106 @@
-# 오토파일럿 PRD
+# Auto Pilot PRD
 
-## 제품 목표
+## Product Goal
 
-사용자가 짧은 한 줄 요청으로 0에서 1까지의 소프트웨어 프로젝트를 시작하고, 한 번의 구조화된 intake 이후에는 Codex가 최소한의 인간 개입으로 계속 진행하게 한다.
+Let a user start a 0-to-1 software project from a short one-line request and, after a single structured intake, let Codex continue with minimal human intervention.
 
-## 해결해야 할 사용자 작업
+## User Jobs To Be Done
 
-1. 내가 간단하게 제품을 설명하면 시스템이 그것을 실제 개발 계획으로 바꿔야 한다.
-2. 내가 자리를 비운 동안에도 시스템은 불필요한 질문 없이 계속 진척을 내야 한다.
-3. 시스템이 막혔을 때는 가장 작은 추가 결정만 요청해야 한다.
-4. 다시 돌아왔을 때는 무엇이 끝났고 무엇이 남았는지 빠르게 알아볼 수 있어야 한다.
+1. When I describe a product in simple language, the system should convert it into a real build plan.
+2. When I am away, the system should keep making progress without avoidable questions.
+3. When the system is blocked, it should ask only for the smallest missing decision.
+4. When I come back, I should be able to see what is done and what is left at a glance.
 
-## 비목표
+## Non-Goals
 
-- 모든 인간 승인 절차를 제거하는 것
-- 비밀값, OAuth, 결제 승인, 배포 권한을 우회하는 것
-- 완료 기준 없이 무한 실행하는 것
-- 사용자 방향성 없이 제품 판단을 끝까지 대체하는 것
+- Remove all human approval steps from the platform
+- Bypass secrets, OAuth setup, payment approval, or deployment permissions
+- Run forever without a definition of done
+- Replace product judgment completely when the user has provided no direction
 
-## 제품 원칙
+## Product Principles
 
-- 질문은 시작 전에 몰아서 하고 반복하지 않는다
-- 저위험 영역에서는 기본값을 적극 사용한다
-- 의미 있는 단계마다 상태를 저장한다
-- 멈추기보다 placeholder로 전진한다
-- 고위험 blocker가 아니면 계속 진행한다
-- 진행 상황은 소수의 파일로 명확히 보이게 한다
+- Ask once at the beginning, not repeatedly
+- Use strong defaults in low-risk areas
+- Save state after every meaningful step
+- Prefer moving forward with placeholders over stopping
+- Keep going unless the blocker is truly high risk
+- Make progress visible through a small set of files
 
-## 사용자 흐름
+## User Flow
 
-### 1. 짧은 요청 입력
+### 1. Short Request
 
-예시:
+Example:
 
-`프리랜서를 위한 가계부 앱 만들어줘`
+`Build a budgeting app for freelancers`
 
-### 2. 구조화된 intake
+### 2. Structured Intake
 
-플러그인은 장기 실행에 필요한 최소 정보만 수집한다.
+The plugin collects the minimum data required for long-running execution.
 
-- 제품 종류
-- 타겟 사용자
-- 핵심 기능
-- 이번 버전에서 제외할 기능
-- 선호 스택 또는 기본값 사용 여부
-- 인증 필요 여부
-- 결제 필요 여부
-- 관리자 기능 필요 여부
-- 배포 대상
-- 데이터 저장소
-- 디자인 방향
-- blocker 처리 정책
-- 완료 기준
+- product type
+- target user
+- core features
+- out-of-scope items for this version
+- preferred stack or permission to use defaults
+- auth requirement
+- payment requirement
+- admin requirement
+- deploy target
+- data store
+- design direction
+- blocker policy
+- definition of done
 
-### 3. 명세 확정
+### 3. Spec Lock
 
-플러그인은 프로젝트 브리프와 실행 계약을 파일로 저장한다.
+The plugin writes a project brief and execution contract to disk.
 
-### 4. 실행 루프
+### 4. Execution Loop
 
-플러그인은 반복적으로:
+The plugin repeatedly:
 
-1. 가장 우선순위 높은 미완료 작업 선택
-2. 가장 작은 배포 가능 단위 구현
-3. 검증 실행
-4. 진행 상황 기록
-5. 다음 작업 선택
+1. chooses the highest-priority unfinished task
+2. implements the smallest shippable slice
+3. runs validation
+4. records progress
+5. chooses the next task
 
-### 5. blocker 처리
+### 5. Blocker Handling
 
-막힘은 아래 세 분류로 나눈다.
+Blockers are classified into:
 
 - `retryable`
 - `deferable`
 - `human-required`
 
-### 6. 종료
+### 6. Stop Condition
 
-정의된 완료 기준을 모두 만족하면 멈춘다.
+The plugin stops when the full definition of done has been satisfied.
 
-## MVP 범위
+## MVP Scope
 
-### 필수
+### Required
 
 - intake flow
-- 프로젝트 브리프 생성
-- 작업 분해 생성
-- 저장형 진행 상태
-- 중단 후 재개
-- blocker 분류
-- definition-of-done 추적
+- project brief generation
+- task breakdown generation
+- persisted runtime state
+- resume after interruption
+- blocker classification
+- definition-of-done tracking
 
-### 강력 권장
+### Strongly Recommended
 
-- GitHub 연동
-- 배포 대상 연동
-- 알림 채널 연동
-- preview 환경 검증
+- GitHub integration
+- deployment target integration
+- notification channel integration
+- preview environment verification
 
-## 시스템 출력 파일
+## System Output Files
 
-항상 최신 상태를 유지해야 하는 파일:
+Files that should always be kept up to date:
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -108,105 +108,105 @@
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 
-## 기능 요구사항
+## Functional Requirements
 
 ### Intake
 
-- 짧은 요청을 intake 세션으로 전환한다
-- 가능한 항목은 기본값을 추론한다
-- 고위험 항목만 명시 입력을 강제한다
-- 수집된 브리프를 저장한다
+- convert a short request into an intake session
+- infer defaults where possible
+- require explicit input only for high-risk decisions
+- persist the captured brief
 
 ### Planning
 
-- 마일스톤을 만든다
-- 마일스톤을 실행 가능한 작업으로 쪼갠다
-- 의존성과 가치 기준으로 작업 순서를 정한다
+- create milestones
+- break milestones into executable tasks
+- order tasks by dependency and value
 
 ### Execution
 
-- 행동 전 항상 현재 상태를 읽는다
-- 다음 작업을 하나 이상 선택한다
-- 코드, 문서, 설정을 함께 갱신한다
-- 테스트, 린트, 빌드, 브라우저 검증을 적절히 수행한다
-- 각 루프 종료 시 상태를 저장한다
+- always read current state before acting
+- select one or more next tasks
+- update code, docs, and config together
+- run tests, lint, builds, and browser verification where appropriate
+- save state at the end of each loop
 
 ### Recovery
 
-- 중단 후 이전 상태에서 재개한다
-- 반복 실패를 감지한다
-- 재시도 예산을 초과한 경우에만 escalation 한다
+- resume from saved state after interruption
+- detect repeated failures
+- escalate only after the retry budget has been exhausted
 
 ### Communication
 
-- 상태를 사람이 읽기 쉬운 형태로 요약한다
-- 전체 실행 로그 대신 현재 blocker만 표면화한다
+- summarize status in a human-readable format
+- surface the current blocker instead of full execution logs
 
-## blocker 정책
+## Blocker Policy
 
 ### Retryable
 
-- 의존성 설치 실패
+- dependency install failure
 - flaky test
 - build misconfiguration
-- 작은 런타임 버그
+- small runtime bug
 
-동작:
+Behavior:
 
-- 자동 재시도
-- 대안 수정 시도
-- 재시도 예산이 남아 있으면 사용자에게 묻지 않음
+- retry automatically
+- try alternative fixes
+- do not ask the user while retry budget remains
 
 ### Deferable
 
-- placeholder 카피
-- 아이콘 선택
-- 세부 시각 polish
-- 선택적 analytics
+- placeholder copy
+- icon choice
+- detailed visual polish
+- optional analytics
 
-동작:
+Behavior:
 
-- 안전한 기본값으로 계속 진행
-- `docs/next.md`에 deferred 결정으로 남김
+- continue with safe defaults
+- record deferred decisions in `docs/next.md`
 
 ### Human-Required
 
-- API 키
-- OAuth 앱 등록
-- 결제 설정
-- 도메인 구매
-- 프로덕션 배포 승인
+- API keys
+- OAuth app registration
+- payment setup
+- domain purchase
+- production deployment approval
 
-동작:
+Behavior:
 
-- 막힌 경로만 일시 중지
-- 필요한 행동을 최소 단위로 요청
+- pause only the blocked path
+- request the smallest necessary action
 
-## 완료 기준
+## Definition of Done
 
-모든 프로젝트는 명시적 definition of done을 가져야 한다. 예시:
+Every project must have an explicit definition of done. Example:
 
-- 랜딩 페이지 존재
-- 인증 동작
-- 핵심 기능 A 동작
-- 핵심 기능 B 동작
-- 관리자 페이지 존재
-- 테스트 통과
-- 앱 빌드 성공
-- 배포 대상 구성 완료
-- README에 로컬 실행/배포 설명 존재
+- landing page exists
+- authentication works
+- core feature A works
+- core feature B works
+- admin page exists
+- tests pass
+- app build succeeds
+- deploy target is configured
+- README explains local run and deployment
 
-## 핵심 리스크
+## Key Risks
 
-- 사용자가 완료 기준을 충분히 정의하지 않을 수 있음
-- intake 질문 설계가 나쁘면 오히려 과도한 질문이 발생함
-- 상태 파일이 약하면 자율 루프가 drift 할 수 있음
-- 외부 승인 지점은 여전히 완전 자동화를 깨뜨릴 수 있음
+- users may not define done clearly enough
+- poor intake design may cause unnecessary questions
+- weak state files may cause the autonomous loop to drift
+- external approvals still break the illusion of full autonomy
 
-## MVP 성공 지표
+## MVP Success Metrics
 
-- 추가 재작업 없이 spec lock에 도달한 세션 비율
-- 사람 수정 없이 blocker 분류가 맞은 비율
-- 중단 후 재개 성공 비율
-- 프로젝트당 평균 인간 개입 횟수
-- 추가 prompting 없이 완료된 정의 작업 비율
+- percent of sessions that reach spec lock without rework
+- percent of blockers classified correctly without human correction
+- percent of successful resumes after interruption
+- median number of human interventions per project
+- percent of defined tasks completed without additional prompting

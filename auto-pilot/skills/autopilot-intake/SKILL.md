@@ -1,6 +1,6 @@
 ---
 name: autopilot-intake
-description: Structured one-question-at-a-time intake for 오토파일럿. Use when a new autopilot project starts and the required setup information has not been collected yet.
+description: Structured one-question-at-a-time intake for Auto Pilot. Use when a new autopilot project starts and the required setup information has not been collected yet.
 summary: Ask one numbered question at a time, show remaining count, then lock the spec.
 metadata:
   priority: 9
@@ -59,12 +59,12 @@ Every intake question must follow this format:
 
 Then on the next line:
 
-`남은 질문: {remaining}개`
+`Questions remaining: {remaining}`
 
 Example:
 
-`1. 어떤 제품을 만들고 싶은가요?`
-`남은 질문: 11개`
+`1. What do you want to build?`
+`Questions remaining: 11`
 
 ### Keep each question short
 
@@ -126,7 +126,7 @@ Store answers into the intake record with these keys:
 
 ## Default Handling
 
-If the user says "기본값으로 해줘" or equivalent:
+If the user says "use the defaults" or an equivalent phrase:
 
 - frontend: Next.js
 - backend: Next.js route handlers or simple managed backend

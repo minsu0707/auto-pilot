@@ -15,9 +15,9 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "오토파일럿",
-    "shortDescription": "한 번 브리핑하고 계속 진행하는 Codex 실행 레이어",
-    "longDescription": "짧은 프로젝트 요청을 intake, spec lock, blocker triage, resume 가능한 실행 루프로 바꾸는 로컬 Codex 플러그인입니다.",
+    "displayName": "Auto Pilot",
+    "shortDescription": "Ask once, lock the brief, and keep building",
+    "longDescription": "Local Codex plugin that turns a short project request into an intake-first execution loop with spec lock, blocker triage, and resume support.",
     "developerName": "Minsu",
     "category": "Coding",
     "capabilities": [
@@ -25,9 +25,9 @@
       "Write"
     ],
     "defaultPrompt": [
-      "오토파일럿으로 SaaS MVP를 시작해줘",
-      "짧은 요구사항으로 intake부터 실행까지 이어가줘",
-      "이 프로젝트를 오토파일럿으로 계속 진행해줘"
+      "Start a SaaS MVP with Auto Pilot",
+      "Turn this short brief into an intake-first execution flow",
+      "Continue this project with Auto Pilot"
     ],
     "brandColor": "#0F766E",
     "composerIcon": "./assets/icon.svg",

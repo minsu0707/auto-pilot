@@ -4,69 +4,69 @@
     {
       "index": 1,
       "key": "product_summary",
-      "label": "어떤 제품을 만들고 싶은가요?"
+      "label": "What do you want to build?"
     },
     {
       "index": 2,
       "key": "target_user",
-      "label": "누가 주로 사용할 제품인가요?"
+      "label": "Who is the primary user?"
     },
     {
       "index": 3,
       "key": "core_features",
-      "label": "이번 버전에 꼭 들어갈 핵심 기능은 무엇인가요?"
+      "label": "What core features must be in the first version?"
     },
     {
       "index": 4,
       "key": "non_goals",
-      "label": "이번 버전에서 제외할 기능은 무엇인가요?"
+      "label": "What should be out of scope for this version?"
     },
     {
       "index": 5,
       "key": "stack_preferences",
-      "label": "원하는 기술 스택이 있나요, 아니면 기본값으로 갈까요?"
+      "label": "Do you have a preferred tech stack, or should I use the default stack?"
     },
     {
       "index": 6,
       "key": "auth_mode",
-      "label": "로그인이나 인증이 필요한가요?"
+      "label": "Do you need login or authentication?"
     },
     {
       "index": 7,
       "key": "payments_mode",
-      "label": "결제 기능이 필요한가요?"
+      "label": "Do you need payments?"
     },
     {
       "index": 8,
       "key": "admin_required",
-      "label": "관리자 페이지나 운영 기능이 필요한가요?"
+      "label": "Do you need an admin or operations page?"
     },
     {
       "index": 9,
       "key": "deploy_target",
-      "label": "어디에 배포할 예정인가요?"
+      "label": "Where should this be deployed?"
     },
     {
       "index": 10,
       "key": "data_store",
-      "label": "데이터는 어디에 저장할까요?"
+      "label": "Where should the data be stored?"
     },
     {
       "index": 11,
       "key": "design_direction",
-      "label": "원하는 디자인 방향이나 레퍼런스가 있나요?"
+      "label": "Do you have a preferred design direction or reference?"
     },
     {
       "index": 12,
       "key": "definition_of_done",
-      "label": "어디까지 되면 이 프로젝트를 완료로 볼까요?"
+      "label": "What counts as done for this project?"
     }
   ],
   "optionalQuestions": [
     {
       "index": 13,
       "key": "blocker_policy",
-      "label": "막히는 일이 생기면 기본값으로 계속 진행할까요, 아니면 바로 물어볼까요?"
+      "label": "If something blocks progress, should I continue with defaults or ask you right away?"
     }
   ]
 }

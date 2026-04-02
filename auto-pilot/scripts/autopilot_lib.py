@@ -16,6 +16,18 @@ DEFAULT_BLOCKER_POLICY = (
     "ask only for secrets, approvals, payments, OAuth, and production launch"
 )
 
+DEFAULT_STACK_SENTINELS = {
+    "",
+    "default",
+    "use defaults",
+    "use the defaults",
+    "go with defaults",
+    "just use the defaults",
+    "기본값",
+    "기본값으로",
+    "기본값으로 해줘",
+}
+
 
 @dataclass(frozen=True)
 class Question:
@@ -124,9 +136,9 @@ def remaining_questions(state: dict[str, Any], current_question: dict[str, Any] 
 def format_question(state: dict[str, Any]) -> str:
     question = find_current_question(state)
     if question is None:
-        return "모든 필수 질문이 끝났습니다."
+        return "All required intake questions are complete."
     remaining = remaining_questions(state, question)
-    return f"{question['index']}. {question['label']}\n남은 질문: {remaining}개"
+    return f"{question['index']}. {question['label']}\nQuestions remaining: {remaining}"
 
 
 def record_answer(workspace: Path, answer: str) -> dict[str, Any]:
@@ -160,7 +172,7 @@ def normalize_bool_like(answer: str) -> str:
 def derive_defaults(answers: dict[str, str]) -> dict[str, str]:
     resolved = dict(answers)
     stack_pref = resolved.get("stack_preferences", "").strip()
-    if stack_pref in {"", "기본값", "기본값으로", "기본값으로 해줘"}:
+    if stack_pref.lower() in DEFAULT_STACK_SENTINELS or stack_pref in DEFAULT_STACK_SENTINELS:
         resolved["stack_preferences"] = "Next.js + TypeScript + Tailwind CSS"
 
     if not resolved.get("deploy_target", "").strip():
@@ -183,96 +195,96 @@ def derive_defaults(answers: dict[str, str]) -> dict[str, str]:
 def bool_label(value: str) -> str:
     normalized = normalize_bool_like(value)
     if normalized == "yes":
-        return "필요"
+        return "Required"
     if normalized == "no":
-        return "불필요"
-    return value or "미정"
+        return "Not required"
+    return value or "TBD"
 
 
 def create_spec_markdown(answers: dict[str, str]) -> str:
-    return f"""# 프로젝트 명세
+    return f"""# Project Spec
 
-## 제품 요약
+## Product Summary
 
 {answers['product_summary']}
 
-## 타겟 사용자
+## Target User
 
 {answers['target_user']}
 
-## 핵심 기능
+## Core Features
 
 {answers['core_features']}
 
-## 이번 버전 제외 범위
+## Out of Scope for This Version
 
 {answers['non_goals']}
 
-## 기술 스택
+## Tech Stack
 
 {answers['stack_preferences']}
 
-## 운영 제약
+## Operating Constraints
 
-- 인증: {bool_label(answers['auth_mode'])}
-- 결제: {bool_label(answers['payments_mode'])}
-- 관리자 기능: {bool_label(answers['admin_required'])}
-- 배포 대상: {answers['deploy_target']}
-- 데이터 저장소: {answers['data_store']}
+- Authentication: {bool_label(answers['auth_mode'])}
+- Payments: {bool_label(answers['payments_mode'])}
+- Admin: {bool_label(answers['admin_required'])}
+- Deploy Target: {answers['deploy_target']}
+- Data Store: {answers['data_store']}
 
-## 디자인 방향
+## Design Direction
 
 {answers['design_direction']}
 
-## blocker 정책
+## Blocker Policy
 
 {answers['blocker_policy']}
 
-## 완료 기준
+## Definition of Done
 
 {answers['definition_of_done']}
 """
 
 
 def create_progress_markdown(answers: dict[str, str]) -> str:
-    return f"""# 진행 상황
+    return f"""# Progress
 
-## 현재 상태
+## Current Status
 
-- intake 완료
-- 명세 작성 완료
-- 자율 실행 준비 완료
+- Intake completed
+- Spec written
+- Autonomous execution ready
 
-## 최근 완료 작업
+## Recently Completed
 
-- 초기 프로젝트 브리프 확정
-- Definition of Done 확정
-- 상태 파일 초기화
+- Locked the initial project brief
+- Locked the definition of done
+- Initialized runtime state files
 
-## 메모
+## Notes
 
-- 제품 요약: {answers['product_summary']}
-- 타겟 사용자: {answers['target_user']}
+- Product summary: {answers['product_summary']}
+- Target user: {answers['target_user']}
 """
 
 
 def create_next_markdown(answers: dict[str, str]) -> str:
-    return f"""# 다음 작업
+    return f"""# Next Steps
 
-## 즉시 수행
+## Immediate
 
-1. 프로젝트 초기 구조 생성
-2. 핵심 기능을 기준으로 MVP 마일스톤 분해
-3. 첫 번째 배포 가능 단위 구현
+1. Create the initial project structure
+2. Break the MVP into milestones based on the core features
+3. Implement the first shippable slice
 
-## 유의 사항
+## Constraints
 
-- 인증: {bool_label(answers['auth_mode'])}
-- 결제: {bool_label(answers['payments_mode'])}
-- 관리자 기능: {bool_label(answers['admin_required'])}
-- blocker 정책: {answers['blocker_policy']}
+- Authentication: {bool_label(answers['auth_mode'])}
+- Payments: {bool_label(answers['payments_mode'])}
+- Admin: {bool_label(answers['admin_required'])}
+- Blocker policy: {answers['blocker_policy']}
 
-## 완료 기준 참조
+## Definition of Done Reference
 
 {answers['definition_of_done']}
 """

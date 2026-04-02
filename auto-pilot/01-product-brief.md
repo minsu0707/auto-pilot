@@ -1,37 +1,37 @@
-# 오토파일럿
+# Auto Pilot
 
-## 한 줄 설명
+## One-Line Summary
 
-오토파일럿은 `뭐 만들어줘` 같은 짧은 요청을 받아, 필요한 정보만 한 번 수집한 뒤 Codex가 장시간 자율적으로 프로젝트를 진행하도록 만드는 플러그인입니다.
+Auto Pilot is a Codex plugin that turns a short request such as "build me an app" into a long-running autonomous project workflow after collecting the minimum required setup details once.
 
-## 핵심 아이디어
+## Core Idea
 
-사용자는 긴 기술 명세를 직접 쓰고 싶어 하지 않습니다. 원하는 것은 짧게 요청하고, 시작 전에 필요한 정보만 빠르게 입력한 뒤, 이후에는 Codex가 계속 구현과 검증을 이어가는 경험입니다.
+Most users do not want to write a long technical spec themselves. They want to make a short request, answer a small set of startup questions, and then let Codex keep implementing and validating the project with minimal interruption.
 
-## 해결하려는 문제
+## Problem Statement
 
-- 짧은 프롬프트만으로는 장시간 자율 실행에 필요한 정보가 부족함
-- Codex가 진행 중간에 너무 자주 멈추고 질문함
-- 대부분의 멈춤은 초반 요구사항 누락, 기본값 부재, blocker 정책 부재에서 발생함
-- 사용자는 Codex를 채팅 도우미가 아니라 실질적인 프로젝트 실행기처럼 쓰고 싶어 함
+- A short prompt does not contain enough structure for long autonomous execution
+- Codex often stops too early and asks too many follow-up questions
+- Most interruptions are caused by missing requirements, weak defaults, or no blocker policy
+- Users want Codex to behave like a project executor, not only a chat assistant
 
-## 제품 약속
+## Product Promise
 
-오토파일럿은 시작 전에 최소한의 핵심 정보를 입력받고, 이를 바탕으로 명세와 완료 기준을 고정한 뒤 다음 둘 중 하나가 될 때까지 계속 진행합니다.
+Auto Pilot collects the minimum required project inputs at the start, locks the spec and the definition of done, and keeps moving until one of these is true:
 
-- 정의된 완료 기준을 충족함
-- 사람만 해결 가능한 blocker에 도달함
+- the definition of done has been satisfied
+- a truly human-only blocker has been reached
 
-## 주요 사용자
+## Primary Users
 
-- 1인 창업자
-- 비개발 운영자
-- PM 성향의 빌더
-- Codex를 장기 실행형 프로젝트 도구로 쓰고 싶은 개발자
+- solo founders
+- non-technical operators
+- product-minded builders
+- developers who want Codex to run as a long-duration project system
 
-## 성공 기준
+## Success Criteria
 
-- 짧은 요청이 하나의 intake 세션으로 확장된다
-- 한 번 정리된 상태를 바탕으로 세션 종료 후에도 재개된다
-- 사람 개입은 비밀키, 승인, 결제, OAuth, 배포 같은 고위험 작업으로 제한된다
-- 사용자는 복잡한 로그 없이도 현재 상태와 다음 작업을 파악할 수 있다
+- a short request expands into a structured intake session
+- execution can resume after the session ends because the state is saved
+- human intervention is limited to secrets, approvals, payments, OAuth, and deployment
+- users can understand current state and next steps without reading raw execution logs

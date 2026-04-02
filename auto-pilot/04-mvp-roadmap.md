@@ -1,60 +1,60 @@
-# 오토파일럿 MVP 로드맵
+# Auto Pilot MVP Roadmap
 
-## Phase 1: 문서 고정
+## Phase 1: Lock the Docs
 
-- 제품명 확정
-- PRD 고정
-- intake 스키마 정의
-- 상태 파일 정의
-- blocker 정책 정의
+- finalize the product name
+- lock the PRD
+- define the intake schema
+- define the state files
+- define the blocker policy
 
-## Phase 2: 플러그인 스캐폴드
+## Phase 2: Plugin Scaffold
 
-- `plugins/auto-pilot/` 생성
-- `plugin.json` 작성
-- skill 폴더 추가
-- script placeholder 추가
-- 필요 시 marketplace entry 추가
+- create `plugins/auto-pilot/`
+- write `plugin.json`
+- add skill folders
+- add script placeholders
+- add a marketplace entry if needed
 
-## Phase 3: Intake 엔진
+## Phase 3: Intake Engine
 
-- 프로젝트형 프롬프트 감지
-- 최소 intake 질문 실행
-- `docs/spec.md` 작성
-- 초기 `autopilot/state.json` 작성
+- detect project-style prompts
+- run the minimum intake questions
+- write `docs/spec.md`
+- write the initial `autopilot/state.json`
 
-## Phase 4: Execution 엔진
+## Phase 4: Execution Engine
 
-- 현재 상태에서 다음 작업 선택
-- 구현 루프 실행
-- `docs/progress.md` 갱신
-- `docs/next.md` 갱신
+- choose the next task from current state
+- run the implementation loop
+- update `docs/progress.md`
+- update `docs/next.md`
 
-## Phase 5: Recovery 와 알림
+## Phase 5: Recovery and Alerts
 
-- 이전 상태에서 재개
-- blocker 분류
-- human-required 행동만 사용자에게 알림
+- resume from prior state
+- classify blockers
+- notify the user only for human-required actions
 
-## Phase 6: 실제 프로젝트 검증
+## Phase 6: Real Project Validation
 
-- 실제 0 to 1 프로젝트 하나로 검증
-- 중단 횟수 측정
-- intake와 blocker 정책 보정
+- test on one real 0-to-1 project
+- measure interruption count
+- refine intake and blocker policy
 
-## 권장 구현 순서
+## Recommended Build Order
 
 1. Intake
-2. 상태 파일
-3. next-task selector
-4. blocker classifier
-5. resume flow
-6. notifications
-7. deploy integration
+2. State files
+3. Next-task selector
+4. Blocker classifier
+5. Resume flow
+6. Notifications
+7. Deploy integration
 
-## MVP 종료 기준
+## MVP Exit Criteria
 
-- 짧은 요청이 저장 가능한 프로젝트 브리프로 바뀜
-- 플러그인이 저장 상태에서 재개 가능
-- 제한된 인간 개입만으로 현실적인 프로젝트 하나를 끝까지 밀어봄
-- 남은 중단이 대부분 고위험 외부 작업임
+- a short request becomes a saved project brief
+- the plugin can resume from saved state
+- one realistic project can be pushed through with limited human intervention
+- most remaining interruptions are high-risk external actions
