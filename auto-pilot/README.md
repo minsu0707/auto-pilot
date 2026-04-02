@@ -60,6 +60,14 @@ python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 
+## Start in One Line
+
+For a copy-paste friendly start command, use:
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 After the final answer, the plugin generates:
 
 - `docs/spec.md`

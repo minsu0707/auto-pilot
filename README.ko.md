@@ -64,6 +64,14 @@ python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
 ```
 
+## Start in One Line
+
+바로 복붙해서 시작하려면 아래 한 줄 명령을 사용하면 됩니다.
+
+```bash
+python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+```
+
 마지막 답변이 들어가면 Auto Pilot은 아래 파일을 생성합니다.
 
 - `docs/spec.md`

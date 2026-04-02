@@ -60,6 +60,14 @@ python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 
+## Start in One Line
+
+إذا كنت تريد أمراً واحداً جاهزاً للنسخ واللصق، فاستخدم هذا:
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 بعد الإجابة الأخيرة، يقوم Auto Pilot بإنشاء الملفات التالية:
 
 - `docs/spec.md`

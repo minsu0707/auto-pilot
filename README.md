@@ -64,6 +64,14 @@ python3 auto-pilot/scripts/autopilot.py status \
   --workspace /tmp/my-project
 ```
 
+## Start in One Line
+
+If you want a copy-paste friendly command, use this:
+
+```bash
+python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+```
+
 After the final answer, Auto Pilot generates:
 
 - `docs/spec.md`

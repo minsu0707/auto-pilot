@@ -60,6 +60,14 @@ python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 
+## Start in One Line
+
+如果你想直接复制粘贴开始，可以使用这一行命令：
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 最后一个回答提交后，会生成以下文件：
 
 - `docs/spec.md`

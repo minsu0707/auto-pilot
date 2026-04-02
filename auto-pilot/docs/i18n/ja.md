@@ -60,6 +60,14 @@ python3 scripts/autopilot.py status \
   --workspace /path/to/project
 ```
 
+## Start in One Line
+
+そのままコピーして始めたい場合は、次の 1 行コマンドを使えます。
+
+```bash
+python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+```
+
 最後の回答後、次のファイルが生成されます。
 
 - `docs/spec.md`
