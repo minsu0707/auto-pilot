@@ -8,9 +8,10 @@
 
 ```bash
 /auto-pilot:autopilot Build a budgeting app for freelancers
-/auto-pilot:autopilot-intake Build a budgeting app for freelancers
-/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
+
+公开入口只需要使用 `/auto-pilot:autopilot`。
+新项目会自动进入 intake，已有项目会自动走 resume 流程。
 
 此文件夹包含 `Auto Pilot` Codex 插件的初始文档包。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
 

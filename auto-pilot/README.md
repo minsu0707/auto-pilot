@@ -8,9 +8,10 @@ English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md) | [中
 
 ```bash
 /auto-pilot:autopilot Build a budgeting app for freelancers
-/auto-pilot:autopilot-intake Build a budgeting app for freelancers
-/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
+
+Use `/auto-pilot:autopilot` as the single public entry point.
+It will route to intake for new projects and resume automatically for existing ones.
 
 This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.
 

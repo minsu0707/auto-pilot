@@ -13,9 +13,10 @@ English | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](.
 
 ```bash
 /auto-pilot:autopilot Build a budgeting app for freelancers
-/auto-pilot:autopilot-intake Build a budgeting app for freelancers
-/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
+
+Use `/auto-pilot:autopilot` as the single public entry point.
+It will route to intake for new projects and resume automatically for existing ones.
 
 Auto Pilot is a local Codex plugin that turns a short request like `Build me a budgeting app` into an intake-first execution workflow.
 

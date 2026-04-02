@@ -13,9 +13,10 @@
 
 ```bash
 /auto-pilot:autopilot Build a budgeting app for freelancers
-/auto-pilot:autopilot-intake Build a budgeting app for freelancers
-/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
+
+公開エントリーポイントは `/auto-pilot:autopilot` ひとつで十分です。
+新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
 
 Auto Pilot は、`Build me a budgeting app` のような短い依頼を intake-first の実行フローへ変換するローカル Codex プラグインです。
 

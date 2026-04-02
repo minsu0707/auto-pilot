@@ -13,9 +13,10 @@
 
 ```bash
 /auto-pilot:autopilot Build a budgeting app for freelancers
-/auto-pilot:autopilot-intake Build a budgeting app for freelancers
-/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
+
+공개 진입점은 `/auto-pilot:autopilot` 하나로 보면 됩니다.
+새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
 
 Auto Pilot은 `가계부 앱 만들어줘` 같은 짧은 요청을 intake 우선 실행 흐름으로 바꾸는 로컬 Codex 플러그인입니다.
 

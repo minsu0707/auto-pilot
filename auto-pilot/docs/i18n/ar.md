@@ -8,9 +8,10 @@
 
 ```bash
 /auto-pilot:autopilot Build a budgeting app for freelancers
-/auto-pilot:autopilot-intake Build a budgeting app for freelancers
-/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
+
+استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الوحيدة.
+إذا كان المشروع جديدًا فسيبدأ intake تلقائيًا، وإذا كان موجودًا فسيتم الاستئناف تلقائيًا.
 
 يحتوي هذا المجلد على الحزمة الأولية من مستندات إضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.
 
