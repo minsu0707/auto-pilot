@@ -4,10 +4,12 @@
 
 English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md) | [中文](./docs/i18n/zh.md) | [العربية](./docs/i18n/ar.md)
 
-## Start in One Line
+## Start in Codex
 
 ```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+/auto-pilot:autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot-intake Build a budgeting app for freelancers
+/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
 
 This folder contains the initial documentation package for the `Auto Pilot` Codex plugin. The plugin turns a short project request into an intake-driven, long-running autonomous execution workflow.

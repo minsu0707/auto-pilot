@@ -9,10 +9,12 @@
 
 [English](./README.md) | [한국어](./README.ko.md) | [日本語](./README.ja.md) | [中文](./README.zh.md) | العربية
 
-## ابدأ فورًا بسطر واحد
+## ابدأ مباشرة داخل Codex
 
 ```bash
-python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+/auto-pilot:autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot-intake Build a budgeting app for freelancers
+/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
 
 Auto Pilot هو إضافة Codex محلية تحول طلباً قصيراً مثل `Build me a budgeting app` إلى سير تنفيذ يعتمد على intake-first.

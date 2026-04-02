@@ -4,10 +4,12 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | 中文 | [العربية](./ar.md)
 
-## 一行立即开始
+## 在 Codex 中立即开始
 
 ```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+/auto-pilot:autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot-intake Build a budgeting app for freelancers
+/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
 
 此文件夹包含 `Auto Pilot` Codex 插件的初始文档包。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。

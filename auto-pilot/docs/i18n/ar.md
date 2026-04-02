@@ -4,10 +4,12 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | [中文](./zh.md) | العربية
 
-## ابدأ فورًا بسطر واحد
+## ابدأ مباشرة داخل Codex
 
 ```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+/auto-pilot:autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot-intake Build a budgeting app for freelancers
+/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
 
 يحتوي هذا المجلد على الحزمة الأولية من مستندات إضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب مشروع قصير إلى سير تنفيذ طويل المدى يعتمد على intake-driven.

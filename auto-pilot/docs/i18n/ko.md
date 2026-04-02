@@ -4,10 +4,12 @@
 
 [English](../../README.md) | 한국어 | [日本語](./ja.md) | [中文](./zh.md) | [العربية](./ar.md)
 
-## 한줄로 바로 시작하기
+## Codex에서 바로 시작하기
 
 ```bash
-python3 scripts/autopilot.py start --workspace /path/to/project --prompt "Build a budgeting app for freelancers"
+/auto-pilot:autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot-intake Build a budgeting app for freelancers
+/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
 
 이 폴더는 `Auto Pilot` Codex 플러그인의 초기 문서 패키지를 담고 있습니다. 이 플러그인은 짧은 프로젝트 요청을 intake 기반 장기 자율 실행 워크플로우로 바꿉니다.

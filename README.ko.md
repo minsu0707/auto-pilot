@@ -9,10 +9,12 @@
 
 [English](./README.md) | 한국어 | [日本語](./README.ja.md) | [中文](./README.zh.md) | [العربية](./README.ar.md)
 
-## 한줄로 바로 시작하기
+## Codex에서 바로 시작하기
 
 ```bash
-python3 auto-pilot/scripts/autopilot.py start --workspace /tmp/my-project --prompt "Build a budgeting app for freelancers"
+/auto-pilot:autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot-intake Build a budgeting app for freelancers
+/auto-pilot:autopilot-resume Continue this project with Auto Pilot
 ```
 
 Auto Pilot은 `가계부 앱 만들어줘` 같은 짧은 요청을 intake 우선 실행 흐름으로 바꾸는 로컬 Codex 플러그인입니다.
