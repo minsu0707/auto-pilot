@@ -8,7 +8,7 @@
 
 > 一度だけ聞いて、ブリーフを固定し、そのまま作り続ける。
 
-このマスコットは、oh-my-codex の創設者が作ったヒーローアイコンのスタイルに着想を得て制作しました。
+このマスコットは、[oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex) の創設者が作ったヒーローアイコンのスタイルに着想を得て制作しました。
 
 ![GitHub stars](https://img.shields.io/github/stars/minsu0707/auto-pilot?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/minsu0707/auto-pilot?style=flat-square)

@@ -8,7 +8,7 @@
 
 > Ask once. Lock the brief. Keep shipping.
 
-The mascot was created with inspiration from the hero icon style introduced by the creator of oh-my-codex.
+The mascot was created with inspiration from the hero icon style introduced by the creator of [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex).
 
 ![GitHub stars](https://img.shields.io/github/stars/minsu0707/auto-pilot?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/minsu0707/auto-pilot?style=flat-square)
