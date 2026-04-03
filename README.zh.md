@@ -3,6 +3,7 @@
 正式文档和插件主体现在都在仓库根目录下。
 
 - 完整文档: [README.md](./README.md)
+- 详细使用指南: [docs/06-usage-guide.md](./docs/06-usage-guide.md)
 - 한국어: [README.ko.md](./README.ko.md)
 - 日本語: [README.ja.md](./README.ja.md)
 - 中文: [docs/i18n/zh.md](./docs/i18n/zh.md)

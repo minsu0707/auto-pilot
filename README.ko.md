@@ -117,6 +117,7 @@ python3 scripts/autopilot.py status \
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/05-how-it-works.md`: intake, state, resume 흐름을 그림으로 정리한 문서
+- `docs/06-usage-guide.md`: 설치, 실행, resume, CLI, 팀 오케스트레이션 사용법 가이드
 - `docs/i18n/*`: localized README files
 - `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
@@ -135,3 +136,4 @@ python3 scripts/autopilot.py status \
 이 저장소 루트가 플러그인 루트이자 문서 루트, 설치 스크립트 기준 위치입니다.
 
 일반 유저 기준 추천 흐름은 one-line installer로 설치한 뒤 Codex를 한 번 재시작하고 `$auto-pilot`을 사용하는 것입니다.
+더 자세한 사용 흐름은 `docs/06-usage-guide.md`에서 확인할 수 있습니다.

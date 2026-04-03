@@ -4,6 +4,8 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | [中文](./zh.md) | العربية
 
+دليل الاستخدام التفصيلي: [`docs/06-usage-guide.md`](../../docs/06-usage-guide.md)
+
 ## ثبّت بسطر واحد
 
 ```bash
@@ -105,6 +107,7 @@ python3 scripts/autopilot.py status \
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/05-how-it-works.md`: شرح مرئي لتدفق intake وstate وresume
+- `docs/06-usage-guide.md`: دليل مفصل للتثبيت والتشغيل وresume وCLI وتنظيم الفريق
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
 - `commands/autopilot.md`: secondary plugin command entry point
@@ -149,3 +152,4 @@ python3 scripts/autopilot.py status \
 جذر هذا المستودع هو جذر الإضافة وجذر الوثائق والمكان المرجعي لسكربتات التثبيت.
 
 بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم إعادة تشغيل Codex مرة واحدة وبعدها استخدام `$auto-pilot` داخل Codex.
+إذا أردت شرحًا أكمل للاستخدام، ابدأ بقراءة `docs/06-usage-guide.md`.

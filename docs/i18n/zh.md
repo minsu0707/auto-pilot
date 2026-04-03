@@ -4,6 +4,8 @@
 
 [English](../../README.md) | [한국어](./ko.md) | [日本語](./ja.md) | 中文 | [العربية](./ar.md)
 
+详细使用指南：[`docs/06-usage-guide.md`](../../docs/06-usage-guide.md)
+
 ## 一行安装
 
 ```bash
@@ -105,6 +107,7 @@ python3 scripts/autopilot.py status \
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/05-how-it-works.md`: 用图示整理 intake、state 和 resume 流程
+- `docs/06-usage-guide.md`: 安装、运行、resume、CLI 与团队编排的详细使用指南
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
 - `commands/autopilot.md`: secondary plugin command entry point
@@ -149,3 +152,4 @@ python3 scripts/autopilot.py status \
 此仓库根目录就是插件根目录、文档根目录和安装脚本的基准位置。
 
 面对普通用户，推荐流程是先用 one-line installer 安装，重启一次 Codex，再在 Codex 中使用 `$auto-pilot`。
+如果想看更完整的使用说明，请先读 `docs/06-usage-guide.md`。
