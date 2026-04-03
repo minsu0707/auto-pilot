@@ -8,6 +8,8 @@
 
 > 한 번 묻고, 브리프를 잠그고, 계속 만들어갑니다.
 
+이 마스코트는 oh-my-codex 창시자의 히어로 아이콘 스타일에서 영감을 받아 제작했습니다.
+
 ![GitHub stars](https://img.shields.io/github/stars/minsu0707/auto-pilot?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/minsu0707/auto-pilot?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/minsu0707/auto-pilot?style=flat-square)
