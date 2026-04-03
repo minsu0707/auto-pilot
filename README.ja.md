@@ -18,10 +18,10 @@
 ## 1行でインストール
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.0/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-安定版の導入には `v0.1.0` を使い、これから入る変更の検証時だけ `develop` を使ってください。
+安定版の導入には `v0.1.1` を使い、これから入る変更の検証時だけ `develop` を使ってください。
 
 ## Codex で実行
 
