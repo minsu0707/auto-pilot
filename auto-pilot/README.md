@@ -7,11 +7,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/minsu0707/auto-pilot?style=flat-square)
 ![License](https://img.shields.io/github/license/minsu0707/auto-pilot?style=flat-square)
 
-## Languages
-
-- English
-- [한국어](./docs/i18n/ko.md)
-- [日本語](./docs/i18n/ja.md)
+English | [한국어](./docs/i18n/ko.md) | [日本語](./docs/i18n/ja.md)
 
 ## Install in One Line
 

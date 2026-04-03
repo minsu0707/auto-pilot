@@ -2,11 +2,7 @@
 
 > 한 번 묻고, 브리프를 잠그고, 계속 만들어갑니다.
 
-## Languages
-
-- [English](../../README.md)
-- 한국어
-- [日本語](./ja.md)
+[English](../../README.md) | 한국어 | [日本語](./ja.md)
 
 ## 한줄로 설치하기
 
