@@ -116,6 +116,7 @@ After the final answer, Auto Pilot generates:
 - `docs/02-prd.md`: functional requirements and operating model
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
+- `docs/05-how-it-works.md`: visual walkthrough of intake, state, and resume flow
 - `docs/i18n/*`: localized README files
 - `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest

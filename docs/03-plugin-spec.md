@@ -10,6 +10,8 @@ Auto Pilot is not a single tool. It is an orchestration layer on top of Codex wi
 - recovery
 - blocker handling
 
+For a visual walkthrough of the full request-to-resume flow, see [`docs/05-how-it-works.md`](./05-how-it-works.md).
+
 ## Proposed Structure
 
 ```text
