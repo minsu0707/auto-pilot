@@ -65,11 +65,12 @@ For user-facing products, it also writes a dedicated design brief before UI impl
 
 The plugin repeatedly:
 
-1. chooses the highest-priority unfinished task
-2. implements the smallest shippable slice
-3. runs validation
-4. records progress
-5. chooses the next task
+1. manager reads state and confirms the real execution backend
+2. planner defines the current shippable slice
+3. builder implements the smallest shippable slice
+4. designer reviews user-facing UI when applicable
+5. QA validates the slice
+6. manager records progress and chooses the next task
 
 ### 5. Blocker Handling
 
@@ -131,7 +132,8 @@ Files that should always be kept up to date:
 ### Execution
 
 - always read current state before acting
-- select one or more next tasks
+- let the manager route work through planner, builder, designer, and QA checkpoints
+- select the next shippable slice only after planner review
 - update code, docs, and config together
 - run tests, lint, builds, and browser verification where appropriate
 - save state at the end of each loop

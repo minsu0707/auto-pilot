@@ -8,7 +8,7 @@ It does four things in order:
 
 1. route the request into intake or resume
 2. lock a project contract on disk
-3. keep executing the next shippable slice
+3. route the work through planner, builder, designer, and QA checkpoints
 4. recover from interruptions by reading saved state
 
 ## End-to-End Flow
@@ -27,15 +27,19 @@ flowchart TD
     H --> J
     I --> J
     D --> J
-    J --> K["Pick next shippable task"]
-    K --> L["Implement"]
-    L --> M["Validate"]
-    M --> N{"Blocked?"}
-    N -- "No" --> O["Update progress and next files"]
-    O --> K
-    N -- "Retryable / Deferable" --> P["Retry or defer with defaults"]
-    P --> O
-    N -- "Human-required" --> Q["Pause only the blocked path"]
+    J --> K["Manager confirms real execution mode"]
+    K --> L["Planner defines the current slice"]
+    L --> M["Builder implements"]
+    M --> N{"Designer review needed?"}
+    N -- "Yes" --> O["Designer reviews UI direction"]
+    N -- "No" --> P["QA validates slice"]
+    O --> P
+    P --> Q{"Blocked?"}
+    Q -- "No" --> R["Manager updates progress, next, and state"]
+    R --> L
+    Q -- "Retryable / Deferable" --> S["Retry or defer with defaults"]
+    S --> R
+    Q -- "Human-required" --> T["Pause only the blocked path"]
 ```
 
 ## Routing Logic
@@ -52,6 +56,26 @@ flowchart LR
 - New requests go through intake first.
 - Existing projects skip repeated questions and resume from saved files.
 - The public Codex entry point stays `$auto-pilot`.
+
+## Team Model
+
+Auto Pilot uses a manager-led team model.
+
+- `Manager`: owns user interaction and final state updates
+- `Planner`: defines the current slice and acceptance criteria
+- `Architect`: joins when structure decisions are non-trivial
+- `Builder`: implements the current slice
+- `Designer`: joins for user-facing UI work
+- `QA`: validates the slice before completion
+
+Internal specialist skills back this flow:
+
+- `autopilot-planner`
+- `autopilot-architect`
+- `autopilot-designer`
+- `autopilot-qa`
+
+Manager writes each specialist result back through `scripts/team_checkpoint.py`.
 
 ## What Intake Actually Locks
 
@@ -101,26 +125,39 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant A as Auto Pilot
+    participant A as Manager
+    participant P as Planner
+    participant B as Builder
+    participant D as Designer
+    participant Q as QA
     participant S as Saved State
     U->>A: Start or resume project
     A->>S: Read spec, progress, next, state, blockers
-    A->>A: Choose next smallest shippable task
-    A->>A: Implement code or config changes
-    A->>A: Run validation
+    A->>A: Confirm native specialists or downgrade to serial-fallback
+    A->>P: Define the next shippable slice
+    P-->>A: Slice plan and quality gates
+    A->>B: Implement the slice
+    alt User-facing UI slice
+        B->>D: Hand off for design review
+        D-->>A: Design verdict
+    end
+    A->>Q: Run QA validation
+    Q-->>A: Pass/fail verdict
     A->>S: Write progress, next steps, and state
     alt Human-required blocker
-        A->>S: Record blocker
+        A->>S: Record blocker with ownerRole
         A-->>U: Ask for smallest missing decision
     else No blocker or safe default
-        A->>A: Continue loop
+        A->>P: Continue loop
     end
 ```
 
 The execution loop is intentionally conservative:
 
 - always read state before acting
-- prefer the next smallest shippable slice
+- manager confirms the real backend before dispatching specialists
+- planner goes before builder
+- QA goes before completion
 - keep going with safe defaults where risk is low
 - only stop when the definition of done is met or a human-only blocker is unavoidable
 
@@ -137,7 +174,7 @@ This is meant to reduce generic SaaS-looking output, not to pretend that every d
 
 ## Blocker Model
 
-Auto Pilot treats blockers in three buckets:
+Auto Pilot treats blockers in three buckets, and each blocker should record an `ownerRole`:
 
 - `retryable`: keep trying within the retry budget
 - `deferable`: continue with safe defaults and record the follow-up

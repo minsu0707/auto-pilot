@@ -80,6 +80,7 @@ Hooks should handle routing only, not heavy logic.
 ### Required Files
 
 - `docs/spec.md`
+- `docs/design.md` for user-facing projects
 - `docs/progress.md`
 - `docs/next.md`
 - `autopilot/state.json`
@@ -94,7 +95,14 @@ Recommended shape:
   "projectName": "Auto Pilot",
   "status": "running",
   "currentMilestone": "MVP foundation",
-  "currentTask": "Set up Next.js app shell",
+  "currentTask": "Manager: confirm execution mode and dispatch Planner",
+  "executionMode": "team-product",
+  "teamRoles": ["Manager", "Planner", "Builder", "Designer", "QA"],
+  "currentOwner": "Manager",
+  "qualityGates": ["Planner checkpoint", "Designer checkpoint", "QA checkpoint"],
+  "lastPlannerCheckpoint": "Pending initial planner pass.",
+  "lastReviewerVerdict": "Pending QA review",
+  "lastRoleResults": {},
   "retryCount": 0,
   "lastSuccessfulStep": "Created project brief",
   "definitionOfDoneMet": false
@@ -108,9 +116,24 @@ Recommended shape:
 ```json
 {
   "active": [],
-  "resolved": []
+  "resolved": [],
+  "entryContract": {
+    "ownerRole": "Manager | Planner | Architect | Builder | Designer | QA",
+    "classification": "retryable | deferable | human-required",
+    "summary": "Short blocker summary"
+  }
 }
 ```
+
+### Runtime checkpoint helper
+
+Use `scripts/team_checkpoint.py` to persist planner, architect, builder, designer, QA, and manager results back into:
+
+- `docs/progress.md`
+- `docs/next.md`
+- `docs/design.md` when relevant
+- `autopilot/state.json`
+- `autopilot/blockers.json`
 
 ## Intake Data Model
 
@@ -136,10 +159,12 @@ Recommended fields:
 
 1. Always read state before acting.
 2. Do not ask a question if a safe default is allowed by policy.
-3. Prefer the smallest shippable slice.
-4. Always validate after implementation.
-5. Save state after each loop.
-6. Stop only when the definition of done is met or a `human-required` blocker is active.
+3. Manager must confirm the real backend first: native specialist agents when available, otherwise `serial-fallback`.
+4. Route work through the manager-led team in this order: planner → builder → QA, with architect/designer added only when needed.
+5. Prefer the smallest shippable slice.
+6. Always validate after implementation.
+7. Save state after each loop.
+8. Stop only when the definition of done is met or a `human-required` blocker is active.
 
 For user-facing projects, generate `docs/design.md` before implementing the first UI and treat it as the active design brief.
 

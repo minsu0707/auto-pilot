@@ -42,6 +42,7 @@ Use this skill when a project already has saved autopilot state.
 Read these files first if they exist:
 
 - `docs/spec.md`
+- `docs/design.md` for user-facing projects
 - `docs/progress.md`
 - `docs/next.md`
 - `autopilot/state.json`
@@ -49,11 +50,19 @@ Read these files first if they exist:
 
 ## Resume Workflow
 
-1. Determine whether there is an active blocker.
-2. If the blocker is `human-required`, surface only the next minimal action.
-3. If not blocked, choose the highest-priority unfinished task.
-4. Implement, validate, and update the state files.
-5. Stop only if:
+1. Read `executionMode`, `teamRoles`, `currentOwner`, `qualityGates`, `lastPlannerCheckpoint`, and `lastReviewerVerdict`.
+2. Determine whether there is an active blocker.
+3. If the blocker is `human-required`, surface only the next minimal action.
+4. If not blocked, confirm whether native sub-agents are currently available.
+5. If the saved mode assumes native specialists but they are unavailable, downgrade the runtime path to `serial-fallback` and update state/progress/next before continuing.
+6. Resume from the current owner role and the highest-priority unfinished task.
+7. Preserve the manager flow:
+   - planner before builder
+   - designer review for user-facing UI slices
+   - QA verdict before completion
+8. Implement, validate, and update the state files.
+   - use `python3 ../../scripts/team_checkpoint.py ...` after each planner / architect / builder / designer / QA result so resume state actually advances
+9. Stop only if:
    - definition of done is met, or
    - a human-required blocker prevents further work
 
@@ -62,6 +71,8 @@ Read these files first if they exist:
 Return a concise status update:
 
 - last completed work
+- current owner role
 - current task
 - next task after this
+- QA verdict
 - blocker status

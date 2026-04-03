@@ -3,6 +3,18 @@
   "status": "running",
   "currentMilestone": "",
   "currentTask": "",
+  "executionMode": "team-lite",
+  "teamRoles": [
+    "Manager",
+    "Planner",
+    "Builder",
+    "QA"
+  ],
+  "currentOwner": "Manager",
+  "qualityGates": [],
+  "lastPlannerCheckpoint": "Pending initial planner pass.",
+  "lastReviewerVerdict": "",
+  "lastRoleResults": {},
   "retryCount": 0,
   "lastSuccessfulStep": "",
   "definitionOfDoneMet": false

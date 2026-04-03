@@ -1,4 +1,9 @@
 {
   "active": [],
-  "resolved": []
+  "resolved": [],
+  "entryContract": {
+    "ownerRole": "Manager | Planner | Architect | Builder | Designer | QA",
+    "classification": "retryable | deferable | human-required",
+    "summary": "Short blocker summary"
+  }
 }
