@@ -1,7 +1,5 @@
 # Auto Pilot
 
----
-
 <p align="center">
   <img src="./assets/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
 </p>
