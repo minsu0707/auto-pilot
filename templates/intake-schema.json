@@ -1,5 +1,5 @@
 {
-  "totalQuestions": 12,
+  "totalQuestions": 14,
   "questionOrder": [
     {
       "index": 1,
@@ -28,43 +28,53 @@
     },
     {
       "index": 6,
+      "key": "architecture_preset",
+      "label": "What project structure should I use? Simple, Feature-based, or Scalable?"
+    },
+    {
+      "index": 7,
       "key": "auth_mode",
       "label": "Do you need login or authentication?"
     },
     {
-      "index": 7,
+      "index": 8,
       "key": "payments_mode",
       "label": "Do you need payments?"
     },
     {
-      "index": 8,
+      "index": 9,
       "key": "admin_required",
       "label": "Do you need an admin or operations page?"
     },
     {
-      "index": 9,
+      "index": 10,
       "key": "deploy_target",
       "label": "Where should this be deployed?"
     },
     {
-      "index": 10,
+      "index": 11,
       "key": "data_store",
       "label": "Where should the data be stored?"
     },
     {
-      "index": 11,
-      "key": "design_direction",
-      "label": "Do you have a preferred design direction or reference?"
+      "index": 12,
+      "key": "theme_preset",
+      "label": "What theme should I use? Minimal, Bold, Playful, or Premium?"
     },
     {
-      "index": 12,
+      "index": 13,
+      "key": "design_direction",
+      "label": "Do you have any design references or extra visual direction beyond that theme?"
+    },
+    {
+      "index": 14,
       "key": "definition_of_done",
       "label": "What counts as done for this project?"
     }
   ],
   "optionalQuestions": [
     {
-      "index": 13,
+      "index": 15,
       "key": "blocker_policy",
       "label": "If something blocks progress, should I continue with defaults or ask you right away?"
     }

@@ -15,6 +15,10 @@ DEFAULT_BLOCKER_POLICY = (
     "retry technical failures automatically, defer low-risk polish, "
     "ask only for secrets, approvals, payments, OAuth, and production launch"
 )
+DEFAULT_ARCHITECTURE = "Feature-based"
+DEFAULT_THEME = "Minimal"
+ARCHITECTURE_PRESETS = ("Simple", "Feature-based", "Scalable")
+THEME_PRESETS = ("Minimal", "Bold", "Playful", "Premium")
 
 DEFAULT_STACK_SENTINELS = {
     "",
@@ -169,17 +173,42 @@ def normalize_bool_like(answer: str) -> str:
     return text
 
 
+def select_preset(answer: str, presets: tuple[str, ...], default: str) -> str:
+    text = answer.strip()
+    if not text:
+        return default
+
+    lowered = text.lower()
+    for preset in presets:
+        if preset.lower() in lowered:
+            return preset
+
+    return default
+
+
 def derive_defaults(answers: dict[str, str]) -> dict[str, str]:
     resolved = dict(answers)
     stack_pref = resolved.get("stack_preferences", "").strip()
     if stack_pref.lower() in DEFAULT_STACK_SENTINELS or stack_pref in DEFAULT_STACK_SENTINELS:
         resolved["stack_preferences"] = "Next.js + TypeScript + Tailwind CSS"
 
+    resolved["architecture_preset"] = select_preset(
+        resolved.get("architecture_preset", ""),
+        ARCHITECTURE_PRESETS,
+        DEFAULT_ARCHITECTURE,
+    )
+
     if not resolved.get("deploy_target", "").strip():
         resolved["deploy_target"] = "Vercel"
 
     if not resolved.get("data_store", "").strip():
         resolved["data_store"] = "Supabase"
+
+    resolved["theme_preset"] = select_preset(
+        resolved.get("theme_preset", ""),
+        THEME_PRESETS,
+        DEFAULT_THEME,
+    )
 
     for key in ("auth_mode", "payments_mode", "admin_required"):
         resolved[key] = normalize_bool_like(resolved.get(key, ""))
@@ -188,6 +217,9 @@ def derive_defaults(answers: dict[str, str]) -> dict[str, str]:
 
     if not resolved.get("blocker_policy", "").strip():
         resolved["blocker_policy"] = DEFAULT_BLOCKER_POLICY
+
+    if not resolved.get("design_direction", "").strip():
+        resolved["design_direction"] = "No extra design reference provided beyond the selected theme."
 
     return resolved
 
@@ -199,6 +231,24 @@ def bool_label(value: str) -> str:
     if normalized == "no":
         return "Not required"
     return value or "TBD"
+
+
+def architecture_guidance(value: str) -> str:
+    if value == "Simple":
+        return "Use a lean MVP-friendly structure with fewer folders and minimal abstraction."
+    if value == "Scalable":
+        return "Use clearer separation for shared, feature, and app-level concerns so the project can grow without major restructuring."
+    return "Organize code primarily by feature or domain, with shared code extracted only when reuse becomes clear."
+
+
+def theme_guidance(value: str) -> str:
+    if value == "Bold":
+        return "Use stronger contrast, assertive typography, and more prominent visual hierarchy."
+    if value == "Playful":
+        return "Use a friendlier, more expressive visual language with softer shapes and lighter tone."
+    if value == "Premium":
+        return "Use polished spacing, refined hierarchy, and a more upscale, composed presentation."
+    return "Use restrained styling, clear spacing, and a calm visual system with low decoration."
 
 
 def create_spec_markdown(answers: dict[str, str]) -> str:
@@ -224,6 +274,12 @@ def create_spec_markdown(answers: dict[str, str]) -> str:
 
 {answers['stack_preferences']}
 
+## Architecture Preset
+
+{answers['architecture_preset']}
+
+{architecture_guidance(answers['architecture_preset'])}
+
 ## Operating Constraints
 
 - Authentication: {bool_label(answers['auth_mode'])}
@@ -231,6 +287,12 @@ def create_spec_markdown(answers: dict[str, str]) -> str:
 - Admin: {bool_label(answers['admin_required'])}
 - Deploy Target: {answers['deploy_target']}
 - Data Store: {answers['data_store']}
+
+## Theme Preset
+
+{answers['theme_preset']}
+
+{theme_guidance(answers['theme_preset'])}
 
 ## Design Direction
 
@@ -265,6 +327,8 @@ def create_progress_markdown(answers: dict[str, str]) -> str:
 
 - Product summary: {answers['product_summary']}
 - Target user: {answers['target_user']}
+- Architecture preset: {answers['architecture_preset']}
+- Theme preset: {answers['theme_preset']}
 """
 
 
@@ -276,6 +340,13 @@ def create_next_markdown(answers: dict[str, str]) -> str:
 1. Create the initial project structure
 2. Break the MVP into milestones based on the core features
 3. Implement the first shippable slice
+
+## Implementation Defaults
+
+- Architecture preset: {answers['architecture_preset']}
+- Architecture guidance: {architecture_guidance(answers['architecture_preset'])}
+- Theme preset: {answers['theme_preset']}
+- Theme guidance: {theme_guidance(answers['theme_preset'])}
 
 ## Constraints
 
@@ -296,6 +367,10 @@ def create_runtime_state(answers: dict[str, str]) -> dict[str, Any]:
         "status": "running",
         "currentMilestone": "Project bootstrap",
         "currentTask": "Set up the initial workspace and first implementation slice",
+        "architecturePreset": answers["architecture_preset"],
+        "themePreset": answers["theme_preset"],
+        "architectureGuidance": architecture_guidance(answers["architecture_preset"]),
+        "themeGuidance": theme_guidance(answers["theme_preset"]),
         "retryCount": 0,
         "lastSuccessfulStep": "Locked project spec from intake",
         "definitionOfDoneMet": False,

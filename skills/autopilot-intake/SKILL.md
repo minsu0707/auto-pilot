@@ -64,7 +64,7 @@ Then on the next line:
 Example:
 
 `1. What do you want to build?`
-`Questions remaining: 11`
+`Questions remaining: 13`
 
 ### Keep each question short
 
@@ -86,13 +86,15 @@ Use this order by default. Skip questions only if the answer is already explicit
 3. core features
 4. non-goals for this version
 5. stack preference or permission to use defaults
-6. auth requirement
-7. payment requirement
-8. admin requirement
-9. deploy target
-10. data store
-11. design direction
-12. definition of done
+6. architecture preset
+7. auth requirement
+8. payment requirement
+9. admin requirement
+10. deploy target
+11. data store
+12. theme preset
+13. design direction refinement
+14. definition of done
 
 ## Optional Question
 
@@ -115,11 +117,13 @@ Store answers into the intake record with these keys:
 - `core_features`
 - `non_goals`
 - `stack_preferences`
+- `architecture_preset`
 - `auth_mode`
 - `payments_mode`
 - `admin_required`
 - `deploy_target`
 - `data_store`
+- `theme_preset`
 - `design_direction`
 - `definition_of_done`
 - `blocker_policy`
@@ -130,8 +134,10 @@ If the user says "use the defaults" or an equivalent phrase:
 
 - frontend: Next.js
 - backend: Next.js route handlers or simple managed backend
+- architecture: Feature-based
 - deploy: Vercel
 - data store: Supabase or managed Postgres depending on project shape
+- theme: Minimal
 - auth: none unless clearly required
 - payments: none unless clearly required
 - admin: lightweight admin page only if the use case implies operational control

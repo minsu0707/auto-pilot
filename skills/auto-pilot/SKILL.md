@@ -91,12 +91,14 @@ Ask for only the minimum complete project contract:
 - core features
 - non-goals for this version
 - stack preference or default stack permission
+- architecture preset
 - auth requirement
 - payment requirement
 - admin requirement
 - deploy target
 - data store
-- design direction
+- theme preset
+- design direction refinement
 - blocker policy
 - definition of done
 
