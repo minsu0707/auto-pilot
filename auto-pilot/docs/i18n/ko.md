@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../imgs/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
+  <img src="../../assets/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
 </p>
 
 # Auto Pilot
@@ -108,7 +108,7 @@ python3 scripts/autopilot.py status \
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
-- `docs/imgs/auto-pilot.png`: mascot image
+- `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
 - `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
