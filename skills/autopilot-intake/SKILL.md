@@ -140,20 +140,24 @@ Record every inferred default in the final summary.
 After the final question:
 
 1. Summarize the captured project contract.
-2. Write or update:
+2. Determine the team profile:
+   - `team-product` for user-facing work, `Scalable` projects, or auth/payments/admin-heavy projects
+   - `team-lite` for clearly CLI-only, backend-only, library-only, or simple internal utilities
+   - `serial-fallback` only when the runtime later confirms native sub-agents are unavailable
+3. Write or update:
    - `docs/spec.md`
    - `docs/design.md` for user-facing products
    - `docs/progress.md`
    - `docs/next.md`
    - `autopilot/state.json`
    - `autopilot/blockers.json`
-3. Start execution immediately.
+4. Start execution immediately with the manager taking the first step and dispatching Planner.
 
 If script usage is appropriate, use:
 
 ```bash
-python3 /Users/minsu/Documents/Codex/scripts/init_intake.py --workspace <target-workspace> --prompt "<initial prompt>"
-python3 /Users/minsu/Documents/Codex/scripts/record_answer.py --workspace <target-workspace> --answer "<user answer>"
+python3 ../../scripts/init_intake.py --workspace <target-workspace> --prompt "<initial prompt>"
+python3 ../../scripts/record_answer.py --workspace <target-workspace> --answer "<user answer>"
 ```
 
 The second command should be repeated once per answer. On the final answer it will generate the spec, progress, next, and runtime state files automatically.
@@ -166,6 +170,17 @@ If the project is user-facing, design synthesis is mandatory before the first UI
 - Use Figma first when a Figma reference exists
 - Otherwise rely on curated inspiration sources such as Mobbin, Refero, Land-book, and Page Collective
 - Write the result into `docs/design.md`
+
+## Team Handoff Rule
+
+The intake step does not finish at “spec lock only”.
+It also sets the initial team handoff:
+
+- Manager confirms the real execution backend first
+- Planner goes first
+- Designer joins only for user-facing products
+- Architect joins only when structure decisions are non-trivial
+- QA is always required before a slice is treated as done
 
 ## Output Style
 

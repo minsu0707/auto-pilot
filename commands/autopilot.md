@@ -47,6 +47,7 @@ Follow the existing Auto Pilot skill behavior rather than inventing new runtime 
 - Collect the minimum required project contract one question at a time
 - Write:
   - `docs/spec.md`
+  - `docs/design.md` for user-facing projects
   - `docs/progress.md`
   - `docs/next.md`
   - `autopilot/state.json`

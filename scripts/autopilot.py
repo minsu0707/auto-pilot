@@ -86,6 +86,10 @@ def run_status(workspace: Path) -> int:
         print(f"status: {state.get('status', '')}")
         print(f"milestone: {state.get('currentMilestone', '')}")
         print(f"task: {state.get('currentTask', '')}")
+        print(f"execution_mode: {state.get('executionMode', '')}")
+        print(f"current_owner: {state.get('currentOwner', '')}")
+        print(f"qa_verdict: {state.get('lastReviewerVerdict', '')}")
+        print(f"role_results: {', '.join(sorted(state.get('lastRoleResults', {}).keys()))}")
         print(f"active_blockers: {len(blockers.get('active', []))}")
         return 0
 

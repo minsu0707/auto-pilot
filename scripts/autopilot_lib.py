@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -247,6 +248,92 @@ def architecture_guidance(value: str) -> str:
     if value == "Scalable":
         return "Use clearer separation for shared, feature, and app-level concerns so the project can grow without major restructuring."
     return "Organize code primarily by feature or domain, with shared code extracted only when reuse becomes clear."
+
+
+def execution_mode_for_answers(answers: dict[str, str]) -> str:
+    override = os.environ.get("AUTO_PILOT_EXECUTION_MODE", "").strip()
+    if override in {"team-lite", "team-product", "serial-fallback"}:
+        return override
+
+    user_facing = is_user_facing_project(answers)
+    architecture = answers["architecture_preset"]
+    operational_surface = any(
+        normalize_bool_like(answers.get(key, "")) == "yes"
+        for key in ("auth_mode", "payments_mode", "admin_required")
+    )
+
+    return "team-product" if (user_facing or architecture == "Scalable" or operational_surface) else "team-lite"
+
+
+def team_roles_for_answers(answers: dict[str, str], execution_mode: str) -> list[str]:
+    roles = ["Manager", "Planner"]
+    if answers["architecture_preset"] == "Scalable":
+        roles.append("Architect")
+    roles.append("Builder")
+    if is_user_facing_project(answers):
+        roles.append("Designer")
+    roles.append("QA")
+    return roles
+
+
+def quality_gates_for_answers(answers: dict[str, str]) -> list[str]:
+    gates = [
+        "Planner checkpoint: next slice matches the locked spec and definition of done.",
+        "Builder checkpoint: implement the smallest shippable slice without drifting from the agreed structure.",
+        "QA checkpoint: run relevant validation, regression checks, and definition-of-done alignment review.",
+    ]
+    if answers["architecture_preset"] == "Scalable":
+        gates.insert(
+            1,
+            "Architect checkpoint: confirm folder boundaries, shared-vs-feature split, and integration seams before large scaffolding.",
+        )
+    if is_user_facing_project(answers):
+        gates.insert(
+            -1,
+            "Designer checkpoint: strengthen docs/design.md before the first UI build and run one explicit post-build design review.",
+        )
+    return gates
+
+
+def team_mode_summary(execution_mode: str) -> str:
+    if execution_mode == "serial-fallback":
+        return "Use the manager-led role sequence in a single loop because specialist sub-agents are unavailable in this environment."
+    if execution_mode == "team-product":
+        return "Run manager-led specialist orchestration for a product surface that benefits from planner, builder, designer, and QA checkpoints."
+    return "Run a lighter manager-led team with planner, builder, and QA, adding specialists only when the current slice requires them."
+
+
+def planner_checkpoint(answers: dict[str, str]) -> str:
+    return (
+        "Break the locked spec into milestones, define the current slice, and set acceptance criteria before implementation starts."
+    )
+
+
+def planner_checkpoint_seed() -> str:
+    return "Pending initial planner pass."
+
+
+def builder_target(answers: dict[str, str]) -> str:
+    target = "Build the next smallest shippable slice from docs/next.md"
+    if is_user_facing_project(answers):
+        return f"{target}, following docs/design.md as the binding UI brief."
+    return f"{target}, following the structure and constraints already locked in docs/spec.md."
+
+
+def designer_notes(answers: dict[str, str]) -> str:
+    if not is_user_facing_project(answers):
+        return ""
+    return (
+        "Designer owns docs/design.md, strengthens the visual brief before the first UI slice, "
+        "and runs one explicit design review after the first UI implementation."
+    )
+
+
+def qa_verdict_seed(answers: dict[str, str]) -> str:
+    checks = ["spec alignment", "definition of done"]
+    if is_user_facing_project(answers):
+        checks.insert(0, "design brief alignment")
+    return f"Pending. QA must validate {', '.join(checks)} before the slice can be marked complete."
 
 
 def default_vibe_for_theme(value: str) -> str:
@@ -541,6 +628,9 @@ Run one explicit post-build design review after the first UI pass. {design_revie
 
 
 def create_spec_markdown(answers: dict[str, str]) -> str:
+    execution_mode = execution_mode_for_answers(answers)
+    roles = team_roles_for_answers(answers, execution_mode)
+    quality_gates = "\n".join(f"- {gate}" for gate in quality_gates_for_answers(answers))
     design_reference = (
         "Treat `docs/design.md` as the binding design brief for any user-facing UI implementation."
         if is_user_facing_project(answers)
@@ -600,6 +690,20 @@ def create_spec_markdown(answers: dict[str, str]) -> str:
 
 {answers['design_direction']}
 
+## Execution Mode
+
+{execution_mode}
+
+{team_mode_summary(execution_mode)}
+
+## Team Roles
+
+{", ".join(roles)}
+
+## Quality Gates
+
+{quality_gates}
+
 ## Blocker Policy
 
 {answers['blocker_policy']}
@@ -611,19 +715,41 @@ def create_spec_markdown(answers: dict[str, str]) -> str:
 
 
 def create_progress_markdown(answers: dict[str, str]) -> str:
+    execution_mode = execution_mode_for_answers(answers)
     return f"""# Progress
 
 ## Current Status
 
 - Intake completed
 - Spec written
-- Autonomous execution ready
+- Team orchestration ready
+
+## Execution Mode
+
+- Mode: {execution_mode}
+- Roles: {", ".join(team_roles_for_answers(answers, execution_mode))}
 
 ## Recently Completed
 
 - Locked the initial project brief
 - Locked the definition of done
-- Initialized runtime state files
+- Initialized team-aware runtime state files
+
+## Planner Notes
+
+- Pending initial planner pass. Planner must break the locked spec into milestones, define the current slice, and set acceptance criteria.
+
+## Builder Progress
+
+- Waiting for planner output before the first implementation slice starts.
+
+## Designer Notes
+
+- {designer_notes(answers) or "No dedicated designer role is active for this project type."}
+
+## QA Verdict
+
+- {qa_verdict_seed(answers)}
 
 ## Notes
 
@@ -637,23 +763,30 @@ def create_progress_markdown(answers: dict[str, str]) -> str:
 
 
 def create_next_markdown(answers: dict[str, str]) -> str:
-    design_line = (
-        "1. Review the planned design sources and refine docs/design.md before building the first UI slice\n"
-        "2. Create the initial project structure\n"
-        "3. Break the MVP into milestones based on the core features\n"
-        "4. Implement the first shippable slice using docs/design.md as the design brief\n"
-        "5. Run one post-build design review after the first UI pass"
+    execution_mode = execution_mode_for_answers(answers)
+    quality_gates = "\n".join(f"- {gate}" for gate in quality_gates_for_answers(answers))
+    designer_handoff = (
+        f"## Designer Notes\n\n- {designer_notes(answers)}\n\n"
         if is_user_facing_project(answers)
-        else
-        "1. Create the initial project structure\n"
-        "2. Break the MVP into milestones based on the core features\n"
-        "3. Implement the first shippable slice"
+        else ""
     )
     return f"""# Next Steps
 
-## Immediate
+## Execution Mode
 
-{design_line}
+{execution_mode}
+
+## Planner Intent
+
+- {planner_checkpoint(answers)}
+
+## Builder Target
+
+- {builder_target(answers)}
+
+{designer_handoff}## QA Checks
+
+{quality_gates}
 
 ## Implementation Defaults
 
@@ -681,15 +814,21 @@ def create_next_markdown(answers: dict[str, str]) -> str:
 def create_runtime_state(answers: dict[str, str]) -> dict[str, Any]:
     user_facing = is_user_facing_project(answers)
     sources = select_design_sources(answers)
+    execution_mode = execution_mode_for_answers(answers)
+    roles = team_roles_for_answers(answers, execution_mode)
+    quality_gates = quality_gates_for_answers(answers)
     return {
         "projectName": answers["product_summary"],
         "status": "running",
         "currentMilestone": "Project bootstrap",
-        "currentTask": (
-            "Synthesize the design brief and set up the first implementation slice"
-            if user_facing
-            else "Set up the initial workspace and first implementation slice"
-        ),
+        "currentTask": "Manager: confirm execution mode, dispatch Planner, and lock the first slice handoff.",
+        "executionMode": execution_mode,
+        "teamRoles": roles,
+        "currentOwner": "Manager",
+        "qualityGates": quality_gates,
+        "lastPlannerCheckpoint": planner_checkpoint_seed(),
+        "lastReviewerVerdict": qa_verdict_seed(answers),
+        "lastRoleResults": {},
         "architecturePreset": answers["architecture_preset"],
         "themePreset": answers["theme_preset"],
         "visualVibe": answers["visual_vibe"],
@@ -710,7 +849,15 @@ def create_runtime_state(answers: dict[str, str]) -> dict[str, Any]:
 
 
 def create_blockers_state() -> dict[str, Any]:
-    return {"active": [], "resolved": []}
+    return {
+        "active": [],
+        "resolved": [],
+        "entryContract": {
+            "ownerRole": "Manager | Planner | Architect | Builder | Designer | QA",
+            "classification": "retryable | deferable | human-required",
+            "summary": "Short blocker summary",
+        },
+    }
 
 
 def bootstrap_workspace(workspace: Path, intake_answers: dict[str, str]) -> dict[str, Path]:
