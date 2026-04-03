@@ -1,6 +1,15 @@
+<p align="center">
+  <img src="../imgs/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
+</p>
+
 # Auto Pilot
 
 > 한 번 묻고, 브리프를 잠그고, 계속 만들어갑니다.
+
+![GitHub stars](https://img.shields.io/github/stars/minsu0707/auto-pilot?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/minsu0707/auto-pilot?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/minsu0707/auto-pilot?style=flat-square)
+![License](https://img.shields.io/github/license/minsu0707/auto-pilot?style=flat-square)
 
 [English](../../README.md) | 한국어 | [日本語](./ja.md)
 
@@ -21,14 +30,14 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
 재시작 후에는 `Build a budgeting app for freelancers ap` 같은 자연어 숏컷도 사용할 수 있습니다.
 
-이 폴더는 `Auto Pilot` Codex 플러그인의 정식 루트입니다. 이 플러그인은 `Build me a budgeting app` 같은 짧은 요청을 intake-first 실행 워크플로우로 바꿉니다.
+## What It Is
 
-Auto Pilot은 몇 단계마다 멈춰서 맥락을 다시 묻는 대신:
+Auto Pilot은 짧은 제품 요청을 resumable execution workflow로 바꾸는 Codex 플러그인입니다.
 
-- 최소한의 필수 입력만 한 번 수집하고
+- 중요한 입력만 한 번 수집하고
 - 재사용 가능한 프로젝트 계약을 저장하고
-- spec, progress, next-step, runtime state 파일을 만들고
-- 다음 Codex 세션에서도 이어서 진행할 수 있게 만듭니다
+- 진짜 human-only blocker가 나오기 전까지 계속 진행하고
+- 저장된 상태를 바탕으로 다음 세션에서 다시 이어갑니다
 
 ## Why It Exists
 
@@ -43,10 +52,10 @@ Auto Pilot은 이 간극을 아래 요소로 메웁니다.
 
 목표는 단순합니다. 덜 붙잡고, 더 계속 전진하는 것.
 
-## What It Does
+## Core Features
 
 - 짧은 프로젝트 요청을 구조화된 intake 세션으로 바꿉니다
-- `1. Question` / `Questions remaining: N` UX 패턴을 사용합니다
+- `1. Question` / `Questions remaining: N` 패턴으로 상호작용합니다
 - `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, `autopilot/blockers.json`를 생성합니다
 - 다음 Codex 세션이 멈춘 지점부터 이어갈 수 있을 만큼 상태를 남깁니다
 - 정식 플러그인 코드, 문서, 설치 로직을 모두 `auto-pilot/` 아래에 둡니다
@@ -99,6 +108,7 @@ python3 scripts/autopilot.py status \
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
+- `docs/imgs/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
 - `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
@@ -109,33 +119,6 @@ python3 scripts/autopilot.py status \
 - `templates/*.json`: state templates
 - `install.sh`: canonical installer
 - `uninstall.sh`: canonical uninstaller
-
-## Current Identity
-
-- Product name: `Auto Pilot`
-- Plugin slug: `auto-pilot`
-
-## Usage
-
-다음과 같이 요청할 수 있습니다.
-
-- `Start this project with Auto Pilot`
-- `Use autopilot to kick off a SaaS MVP`
-- `Continue this project with Auto Pilot`
-- `Build a budgeting app for freelancers ap`
-
-새 프로젝트에서는 intake가 아래 UX를 따릅니다.
-
-- 질문을 한 번에 하나씩 표시
-- `1. Question` 형식 사용
-- 다음 줄에 `Questions remaining: N` 표시
-- 마지막 답변 후 계약을 요약하고 spec lock 및 실행 시작
-
-하위 스크립트도 그대로 사용할 수 있습니다.
-
-- `init_intake.py`
-- `record_answer.py`
-- `status.py`
 
 ## Current Status
 

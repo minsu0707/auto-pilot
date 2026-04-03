@@ -1,6 +1,15 @@
+<p align="center">
+  <img src="../imgs/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
+</p>
+
 # Auto Pilot
 
 > 一度だけ聞いて、ブリーフを固定し、そのまま作り続ける。
+
+![GitHub stars](https://img.shields.io/github/stars/minsu0707/auto-pilot?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/minsu0707/auto-pilot?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/minsu0707/auto-pilot?style=flat-square)
+![License](https://img.shields.io/github/license/minsu0707/auto-pilot?style=flat-square)
 
 [English](../../README.md) | [한국어](./ko.md) | 日本語
 
@@ -21,14 +30,14 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
 再起動後は `Build a budgeting app for freelancers ap` のような自然言語ショートカットも使えます。
 
-このフォルダは `Auto Pilot` Codex プラグインの正式なルートです。このプラグインは `Build me a budgeting app` のような短い依頼を intake-first の実行ワークフローに変換します。
+## What It Is
 
-Auto Pilot は数ステップごとに止まって文脈を聞き直す代わりに、次のことを行います。
+Auto Pilot は短い製品依頼を resumable execution workflow に変える Codex プラグインです。
 
-- 必要最小限の入力を一度だけ集める
+- 重要な入力だけを一度だけ集める
 - 再利用できるプロジェクト契約を保存する
-- spec、progress、next-step、runtime state ファイルを生成する
-- 次の Codex セッションでも続きから進められるようにする
+- 本当に human-only blocker が出るまで進み続ける
+- 保存された状態から次のセッションで再開できる
 
 ## Why It Exists
 
@@ -43,11 +52,11 @@ Auto Pilot は次の要素でそのギャップを埋めます。
 
 目標はシンプルです。付き添いを減らし、前進を増やすことです。
 
-## What It Does
+## Core Features
 
 - 短いプロジェクト依頼を構造化された intake セッションに変換する
-- `1. Question` / `Questions remaining: N` UX パターンを使う
-- `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json` を書き出す
+- `1. Question` / `Questions remaining: N` パターンで対話する
+- `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json` を生成する
 - 次の Codex セッションが止まった場所から再開できるだけの状態を残す
 - 正式なプラグインコード、ドキュメント、インストーラをすべて `auto-pilot/` 配下に置く
 
@@ -90,7 +99,7 @@ python3 scripts/autopilot.py status \
 2. Auto Pilot は質問を一つずつ行います。
 3. 回答はプロジェクト契約として正規化されます。
 4. 将来の実行と再開のための runtime state が作られます。
-5. Codex は文脈を再探索せず、保存済みファイルから続行できます。
+5. Codex は保存済みファイルから続行できます。
 
 ## Repository Layout
 
@@ -99,6 +108,7 @@ python3 scripts/autopilot.py status \
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
+- `docs/imgs/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
 - `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
@@ -109,33 +119,6 @@ python3 scripts/autopilot.py status \
 - `templates/*.json`: state templates
 - `install.sh`: canonical installer
 - `uninstall.sh`: canonical uninstaller
-
-## Current Identity
-
-- Product name: `Auto Pilot`
-- Plugin slug: `auto-pilot`
-
-## Usage
-
-次のように依頼できます。
-
-- `Start this project with Auto Pilot`
-- `Use autopilot to kick off a SaaS MVP`
-- `Continue this project with Auto Pilot`
-- `Build a budgeting app for freelancers ap`
-
-新しいプロジェクトでは intake は次の UX に従います。
-
-- 一度に一つの質問だけ表示
-- `1. Question` 形式を使用
-- 次の行に `Questions remaining: N` を表示
-- 最後の回答後に契約を要約し、spec lock と実行を開始
-
-下位スクリプトもそのまま使えます。
-
-- `init_intake.py`
-- `record_answer.py`
-- `status.py`
 
 ## Current Status
 

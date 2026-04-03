@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./docs/imgs/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
+</p>
+
 # Auto Pilot
 
 > Ask once. Lock the brief. Keep shipping.
@@ -26,14 +30,14 @@ Restart Codex once after installation so the slash command is loaded.
 Install once, then route to intake for new projects and resume automatically for existing ones.
 After restart, you can also use the natural-language shortcut `Build a budgeting app for freelancers ap`.
 
-This folder is the canonical home for the `Auto Pilot` Codex plugin. The plugin turns a short request like `Build me a budgeting app` into an intake-first execution workflow.
+## What It Is
 
-Instead of stopping every few steps to ask for missing context, Auto Pilot:
+Auto Pilot is a Codex plugin for turning a short product request into a resumable execution workflow.
 
-- collects the minimum required inputs once
-- saves a reusable project contract
-- generates spec, progress, next-step, and runtime state files
-- gives Codex a resumable structure for long-running execution
+- Ask for the minimum important inputs once
+- Save a reusable project contract
+- Keep shipping until a real human-only blocker appears
+- Resume later from saved state instead of rediscovering context
 
 ## Why It Exists
 
@@ -48,13 +52,13 @@ Auto Pilot closes that gap by adding:
 
 The goal is simple: less babysitting, more forward motion.
 
-## What It Does
+## Core Features
 
 - Converts a short project request into a structured intake session
-- Uses a `1. Question` / `Questions remaining: N` UX pattern
+- Uses a `1. Question` / `Questions remaining: N` interaction pattern
 - Writes `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, and `autopilot/blockers.json`
 - Keeps enough state for the next Codex session to resume from where it stopped
-- Keeps all canonical plugin code, docs, and installer logic under `auto-pilot/`
+- Keeps canonical plugin code, docs, and installer logic under `auto-pilot/`
 
 ## Quick Start
 
@@ -104,6 +108,7 @@ After the final answer, Auto Pilot generates:
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
+- `docs/imgs/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
 - `commands/autopilot.md`: public slash command entry point
 - `skills/autopilot/SKILL.md`: main orchestration skill
@@ -114,33 +119,6 @@ After the final answer, Auto Pilot generates:
 - `templates/*.json`: state templates
 - `install.sh`: canonical installer
 - `uninstall.sh`: canonical uninstaller
-
-## Current Identity
-
-- Product name: `Auto Pilot`
-- Plugin slug: `auto-pilot`
-
-## Usage
-
-You can ask for:
-
-- `Start this project with Auto Pilot`
-- `Use autopilot to kick off a SaaS MVP`
-- `Continue this project with Auto Pilot`
-- `Build a budgeting app for freelancers ap`
-
-For new projects, intake follows this UX:
-
-- show one question at a time
-- use the `1. Question` format
-- show `Questions remaining: N` on the next line
-- summarize the captured contract, lock the spec, and start execution after the last answer
-
-Lower-level scripts remain available:
-
-- `init_intake.py`
-- `record_answer.py`
-- `status.py`
 
 ## Current Status
 
