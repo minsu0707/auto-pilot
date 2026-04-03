@@ -17,23 +17,43 @@ English | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 
 ## Install in One Line
 
+Stable `v0.1.1` currently expects `curl`, `tar`, and `python3` and keeps the published slash-command entry point:
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-Use `v0.1.1` for stable installs. Stable release tags should install that exact tag, and the examples below describe the current repository workflow that will be promoted in the next stable release. Use `develop` only to test those upcoming changes before the next tag is cut.
-When the next stable tag is created, update the install URL, install examples, and the baked-in stable ref together.
+To preview the next release line on `develop`, install it explicitly:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/develop/install.sh | env -u NO_COLOR bash
+```
+
+Use `v0.1.1` for the currently published release. Use `develop` only when you intentionally want unreleased behavior for testing. When the next stable tag is created, update the stable install URL, run examples, and baked-in stable ref together.
 
 ## Run in Codex
+
+### Stable `v0.1.1`
+
+```text
+/auto-pilot:autopilot Build a budgeting app for freelancers
+```
+
+Use `/auto-pilot:autopilot` as the stable public entry point.
+Restart Codex once after installation so the slash command is loaded.
+Install once, then route to intake for new projects and resume automatically for existing ones.
+After restart, you can also use the natural-language shortcut `Build a budgeting app for freelancers ap`.
+
+### Preview on `develop`
 
 ```text
 $auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
-Use `$auto-pilot` as the primary public entry point.
-Restart Codex once after installation so the skill is loaded.
-Install once, then route to intake for new projects and resume automatically for existing ones.
+Use `$auto-pilot` only if you installed from `develop`.
 After restart, you can also use the natural-language shortcut `Build a diary app my friend Dohyeon would love ap`.
+
+The sections below describe the current repository workflow on `main`, including features that will ship in the next stable release.
 
 ## What It Is
 

@@ -11,22 +11,46 @@
 
 ## 一行安装
 
+当前 stable `v0.1.1` 依赖 `curl`、`tar` 和 `python3`，并继续使用已经发布的 slash command 入口。
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-稳定安装请使用 `v0.1.1`。stable release tag 应当始终安装它自己对应的版本；如果你想提前验证即将进入下一个 stable tag 的改动，再使用 `develop`。
+如果你要提前验证下一条 stable release 线，再显式安装 `develop`：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/develop/install.sh | env -u NO_COLOR bash
+```
+
+当前已发布版本是 `v0.1.1`。只有在明确测试未发布行为时才使用 `develop`。下一个 stable tag 发布时，要一起更新 stable install URL、运行示例和 baked-in stable ref。
 
 ## 在 Codex 中运行
+
+### Stable `v0.1.1`
+
+```text
+/auto-pilot:autopilot Build a budgeting app for freelancers
+```
+
+stable 的公开主入口是 `/auto-pilot:autopilot`。安装后请重启一次 Codex，让 slash command 正常加载。
+
+安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。重启后也可以使用自然语言快捷写法：
+
+```text
+Build a budgeting app for freelancers ap
+```
+
+### Preview on `develop`
 
 ```text
 $auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
-公开主入口是 `$auto-pilot`。安装后请重启一次 Codex，让 skill 正常加载。
-
-安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。重启后也可以使用自然语言快捷写法：
+只有在安装了 `develop` 之后才使用 `$auto-pilot`。重启后也可以使用自然语言快捷写法：
 
 ```text
 Build a diary app my friend Dohyeon would love ap
 ```
+
+下面的内容描述的是 `main` 上当前仓库工作流，也就是下一次 stable release 将要包含的行为。

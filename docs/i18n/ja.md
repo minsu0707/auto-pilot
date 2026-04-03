@@ -19,23 +19,43 @@
 
 ## 1行でインストール
 
+現在の stable `v0.1.1` は `curl`、`tar`、`python3` を前提にしており、公開済みの slash command エントリーポイントを維持します。
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-安定版の導入には `v0.1.1` を使い、stable release tag は必ずそのタグ自身をインストールする状態で維持してください。以下の例は次の stable release に反映される現在のリポジトリワークフローを説明しているため、次のタグ前に検証するときだけ `develop` を使ってください。
-次の stable tag を切るときは、install URL、インストール例、baked-in stable ref を一緒に更新してください。
+次の stable release ラインを先に試したい場合だけ `develop` を明示してインストールしてください。
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/develop/install.sh | env -u NO_COLOR bash
+```
+
+現在公開中のリリースは `v0.1.1` です。unreleased な挙動を検証したいときだけ `develop` を使ってください。次の stable tag を切るときは、stable install URL、実行例、baked-in stable ref をまとめて更新してください。
 
 ## Codex で実行
+
+### Stable `v0.1.1`
+
+```text
+/auto-pilot:autopilot Build a budgeting app for freelancers
+```
+
+stable の公開エントリーポイントは `/auto-pilot:autopilot` です。
+インストール後は slash command を読み込むために Codex を一度再起動してください。
+一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
+再起動後は `Build a budgeting app for freelancers ap` のような自然言語ショートカットも使えます。
+
+### Preview on `develop`
 
 ```text
 $auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
-公開の基本エントリーポイントは `$auto-pilot` です。
-インストール後は skill を読み込むために Codex を一度再起動してください。
-一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
+`$auto-pilot` は `develop` をインストールした場合にのみ使ってください。
 再起動後は `Build a diary app my friend Dohyeon would love ap` のような自然言語ショートカットも使えます。
+
+以下のセクションでは、次の stable release に入る `main` 基準の現在のリポジトリワークフローを説明します。
 
 ## What It Is
 
