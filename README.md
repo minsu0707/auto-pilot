@@ -28,11 +28,11 @@ Use `v0.1.1` for stable installs. Use `develop` only to test upcoming changes.
 ## Run in Codex
 
 ```text
-/autopilot Build a budgeting app for freelancers
+$auto-pilot Build a budgeting app for freelancers
 ```
 
-Use `/autopilot` as the primary public entry point.
-Restart Codex once after installation so the slash command is loaded.
+Use `$auto-pilot` as the primary public entry point.
+Restart Codex once after installation so the skill is loaded.
 Install once, then route to intake for new projects and resume automatically for existing ones.
 After restart, you can also use the natural-language shortcut `Build a budgeting app for freelancers ap`.
 
@@ -116,8 +116,8 @@ After the final answer, Auto Pilot generates:
 - `docs/i18n/*`: localized README files
 - `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
-- `commands/autopilot.md`: public slash command entry point
-- `skills/autopilot/SKILL.md`: main orchestration skill
+- `commands/autopilot.md`: secondary plugin command entry point
+- `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
 - `scripts/autopilot.py`: recommended CLI entry point
@@ -130,4 +130,4 @@ After the final answer, Auto Pilot generates:
 
 This repository root is the canonical plugin root, docs home, and installer home.
 
-For end users, the recommended flow is the one-line installer, one Codex restart, then `/autopilot` inside Codex.
+For end users, the recommended flow is the one-line installer, one Codex restart, then `$auto-pilot` inside Codex.

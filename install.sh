@@ -186,7 +186,7 @@ echo
 echo "🎉 Congratulations! Auto Pilot is installed. Start building now."
 echo
 echo "Restart Codex, then run:"
-echo "/autopilot Build a budgeting app for freelancers"
+echo "\$auto-pilot Build a budgeting app for freelancers"
 echo
 echo "Optional shortcut after restart:"
 echo "Build a budgeting app for freelancers ap"

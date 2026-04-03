@@ -28,11 +28,11 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## Codex で実行
 
 ```text
-/autopilot Build a budgeting app for freelancers
+$auto-pilot Build a budgeting app for freelancers
 ```
 
-公開の基本エントリーポイントは `/autopilot` です。
-インストール後は slash command を読み込むために Codex を一度再起動してください。
+公開の基本エントリーポイントは `$auto-pilot` です。
+インストール後は skill を読み込むために Codex を一度再起動してください。
 一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
 再起動後は `Build a budgeting app for freelancers ap` のような自然言語ショートカットも使えます。
 
@@ -116,8 +116,8 @@ python3 scripts/autopilot.py status \
 - `docs/i18n/*`: localized README files
 - `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
-- `commands/autopilot.md`: public slash command entry point
-- `skills/autopilot/SKILL.md`: main orchestration skill
+- `commands/autopilot.md`: secondary plugin command entry point
+- `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
 - `scripts/autopilot.py`: recommended CLI entry point
@@ -130,4 +130,4 @@ python3 scripts/autopilot.py status \
 
 このリポジトリルートがプラグインルート兼ドキュメントルート兼インストーラの基準位置です。
 
-一般ユーザー向けの推奨フローは、one-line installer で導入し、Codex を一度再起動してから `/autopilot` を使うことです。
+一般ユーザー向けの推奨フローは、one-line installer で導入し、Codex を一度再起動してから `$auto-pilot` を使うことです。

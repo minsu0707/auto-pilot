@@ -13,11 +13,11 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## 在 Codex 中运行
 
 ```text
-/autopilot Build a budgeting app for freelancers
+$auto-pilot Build a budgeting app for freelancers
 ```
 
-公开主入口是 `/autopilot`。
-安装后请重启一次 Codex，让 slash command 被正确加载。
+公开主入口是 `$auto-pilot`。
+安装后请重启一次 Codex，让 skill 被正确加载。
 安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。
 重启后，也可以使用 `Build a budgeting app for freelancers ap` 这样的自然语言快捷写法。
 
@@ -100,8 +100,8 @@ python3 scripts/autopilot.py status \
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
-- `commands/autopilot.md`: public slash command entry point
-- `skills/autopilot/SKILL.md`: main orchestration skill
+- `commands/autopilot.md`: secondary plugin command entry point
+- `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
 - `scripts/autopilot.py`: recommended CLI entry point
@@ -141,4 +141,4 @@ python3 scripts/autopilot.py status \
 
 此文件夹就是插件根目录、文档根目录和安装脚本的基准位置。
 
-面对普通用户，推荐流程是先用 one-line installer 安装，重启一次 Codex，再在 Codex 中使用 `/autopilot`。
+面对普通用户，推荐流程是先用 one-line installer 安装，重启一次 Codex，再在 Codex 中使用 `$auto-pilot`。
