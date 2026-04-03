@@ -28,13 +28,13 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## Codex で実行
 
 ```text
-$auto-pilot Build a budgeting app for freelancers
+$auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
 公開の基本エントリーポイントは `$auto-pilot` です。
 インストール後は skill を読み込むために Codex を一度再起動してください。
 一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
-再起動後は `Build a budgeting app for freelancers ap` のような自然言語ショートカットも使えます。
+再起動後は `Build a diary app my friend Dohyeon would love ap` のような自然言語ショートカットも使えます。
 
 ## What It Is
 
@@ -73,7 +73,7 @@ Auto Pilot は次の要素でそのギャップを埋めます。
 ```bash
 python3 scripts/autopilot.py start \
   --workspace /tmp/my-project \
-  --prompt "Build a budgeting app for freelancers"
+  --prompt "Build a diary app my friend Dohyeon would love"
 ```
 
 現在の質問に回答:

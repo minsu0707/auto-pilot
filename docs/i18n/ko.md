@@ -28,13 +28,13 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## Codex에서 실행하기
 
 ```text
-$auto-pilot Build a budgeting app for freelancers
+$auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
 공개 기본 진입점은 `$auto-pilot`입니다.
 설치 후에는 skill이 보이도록 Codex를 한 번 다시 시작하면 됩니다.
 한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
-재시작 후에는 `Build a budgeting app for freelancers ap` 같은 자연어 숏컷도 사용할 수 있습니다.
+재시작 후에는 `Build a diary app my friend Dohyeon would love ap` 같은 자연어 숏컷도 사용할 수 있습니다.
 
 ## What It Is
 
@@ -73,7 +73,7 @@ Auto Pilot은 이 간극을 아래 요소로 메웁니다.
 ```bash
 python3 scripts/autopilot.py start \
   --workspace /tmp/my-project \
-  --prompt "Build a budgeting app for freelancers"
+  --prompt "Build a diary app my friend Dohyeon would love"
 ```
 
 현재 질문에 답변:

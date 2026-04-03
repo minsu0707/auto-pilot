@@ -13,13 +13,13 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## 在 Codex 中运行
 
 ```text
-$auto-pilot Build a budgeting app for freelancers
+$auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
 公开主入口是 `$auto-pilot`。
 安装后请重启一次 Codex，让 skill 被正确加载。
 安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。
-重启后，也可以使用 `Build a budgeting app for freelancers ap` 这样的自然语言快捷写法。
+重启后，也可以使用 `Build a diary app my friend Dohyeon would love ap` 这样的自然语言快捷写法。
 
 此文件夹是 `Auto Pilot` Codex 插件的正式根目录。该插件会把 `Build me a budgeting app` 这样的短请求转换为 intake-first 执行工作流。
 
@@ -58,7 +58,7 @@ Auto Pilot 通过以下能力填补这个缺口：
 ```bash
 python3 scripts/autopilot.py start \
   --workspace /tmp/my-project \
-  --prompt "Build a budgeting app for freelancers"
+  --prompt "Build a diary app my friend Dohyeon would love"
 ```
 
 回答当前问题：
@@ -122,7 +122,7 @@ python3 scripts/autopilot.py status \
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
-- `Build a budgeting app for freelancers ap`
+- `Build a diary app my friend Dohyeon would love ap`
 
 新项目的 intake 遵循以下 UX：
 
