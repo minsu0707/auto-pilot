@@ -1,5 +1,11 @@
 # Auto Pilot
 
+---
+
+<p align="center">
+  <img src="./auto-pilot/assets/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
+</p>
+
 正式なドキュメントとプラグイン本体は [`auto-pilot/`](./auto-pilot/) にあります。
 
 [English](./README.md) | [한국어](./README.ko.md) | 日本語
@@ -13,7 +19,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ## Codex で実行
 
 ```text
-/autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
 インストール後に再起動すれば、次のショートカットも使えます。

@@ -7,6 +7,7 @@ REPO_REF="${AUTO_PILOT_REPO_REF:-main}"
 INSTALL_DIR="${AUTO_PILOT_INSTALL_DIR:-$HOME/plugins/auto-pilot}"
 MARKETPLACE_PATH="${AUTO_PILOT_MARKETPLACE_PATH:-$HOME/.agents/plugins/marketplace.json}"
 MARKETPLACE_SOURCE_PATH="${AUTO_PILOT_SOURCE_PATH:-./plugins/auto-pilot}"
+CODEX_CONFIG_PATH="${AUTO_PILOT_CODEX_CONFIG_PATH:-$HOME/.codex/config.toml}"
 TMP_ROOT="${TMPDIR:-/tmp}"
 WORK_DIR="$(mktemp -d "${TMP_ROOT%/}/auto-pilot-install.XXXXXX")"
 ARCHIVE_URL="https://github.com/${REPO_SLUG}/archive/refs/heads/${REPO_REF}.tar.gz"
@@ -53,13 +54,15 @@ cp -R "${SOURCE_PLUGIN_DIR}" "${INSTALL_DIR}"
 
 mkdir -p "$(dirname "${MARKETPLACE_PATH}")"
 
-python3 - "${MARKETPLACE_PATH}" "${MARKETPLACE_SOURCE_PATH}" <<'PY'
+python3 - "${MARKETPLACE_PATH}" "${MARKETPLACE_SOURCE_PATH}" "${CODEX_CONFIG_PATH}" <<'PY'
 import json
 import pathlib
+import re
 import sys
 
 marketplace_path = pathlib.Path(sys.argv[1]).expanduser()
 source_path = sys.argv[2]
+config_path = pathlib.Path(sys.argv[3]).expanduser()
 
 if marketplace_path.exists():
     with marketplace_path.open("r", encoding="utf-8") as handle:
@@ -108,12 +111,35 @@ marketplace_path.write_text(
     json.dumps(data, indent=2, ensure_ascii=False) + "\n",
     encoding="utf-8",
 )
+
+plugin_ref = f'auto-pilot@{data["name"]}'
+header = f'[plugins."{plugin_ref}"]'
+block = f'{header}\nenabled = true\n'
+
+config_path.parent.mkdir(parents=True, exist_ok=True)
+config_text = config_path.read_text(encoding="utf-8") if config_path.exists() else ""
+
+pattern = re.compile(
+    rf'(?ms)^\[plugins\."{re.escape(plugin_ref)}"\]\n(?:.*\n)*?(?=^\[|\Z)'
+)
+
+if pattern.search(config_text):
+    config_text = pattern.sub(block + "\n", config_text).rstrip() + "\n"
+else:
+    stripped = config_text.rstrip()
+    if stripped:
+        config_text = stripped + "\n\n" + block
+    else:
+        config_text = block
+
+config_path.write_text(config_text, encoding="utf-8")
 PY
 
 echo "Auto Pilot installed."
 echo "Canonical plugin root: ${INSTALL_DIR}"
 echo "Marketplace: ${MARKETPLACE_PATH}"
 echo "Marketplace source path: ${MARKETPLACE_SOURCE_PATH}"
+echo "Codex config: ${CODEX_CONFIG_PATH}"
 echo
 echo "Restart Codex, then run:"
 echo "/auto-pilot:autopilot Build a budgeting app for freelancers"

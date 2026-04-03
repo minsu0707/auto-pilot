@@ -1,8 +1,10 @@
+# Auto Pilot
+
+---
+
 <p align="center">
   <img src="./assets/auto-pilot.png" alt="Auto Pilot mascot" width="260" />
 </p>
-
-# Auto Pilot
 
 > Ask once. Lock the brief. Keep shipping.
 
@@ -22,10 +24,10 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ## Run in Codex
 
 ```text
-/autopilot Build a budgeting app for freelancers
+/auto-pilot:autopilot Build a budgeting app for freelancers
 ```
 
-Use `/autopilot` as the primary public entry point.
+Use `/auto-pilot:autopilot` as the primary public entry point.
 Restart Codex once after installation so the slash command is loaded.
 Install once, then route to intake for new projects and resume automatically for existing ones.
 After restart, you can also use the natural-language shortcut `Build a budgeting app for freelancers ap`.
@@ -124,4 +126,4 @@ After the final answer, Auto Pilot generates:
 
 This folder is the canonical plugin root, docs home, and installer home.
 
-For end users, the recommended flow is the one-line installer, one Codex restart, then `/autopilot` inside Codex.
+For end users, the recommended flow is the one-line installer, one Codex restart, then `/auto-pilot:autopilot` inside Codex.
