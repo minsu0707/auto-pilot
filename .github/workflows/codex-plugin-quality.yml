@@ -1,0 +1,24 @@
+name: Codex plugin quality gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Codex plugin quality gate
+        uses: hashgraph-online/hol-codex-plugin-scanner-action@v1
+        with:
+          plugin_dir: "."
