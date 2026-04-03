@@ -193,7 +193,7 @@ def derive_defaults(answers: dict[str, str]) -> dict[str, str]:
     resolved = dict(answers)
     stack_pref = resolved.get("stack_preferences", "").strip()
     if stack_pref.lower() in DEFAULT_STACK_SENTINELS or stack_pref in DEFAULT_STACK_SENTINELS:
-        resolved["stack_preferences"] = "Next.js + TypeScript + Tailwind CSS"
+        resolved["stack_preferences"] = "Next.js + TypeScript + Tailwind CSS + shadcn/ui"
 
     resolved["architecture_preset"] = select_preset(
         resolved.get("architecture_preset", ""),

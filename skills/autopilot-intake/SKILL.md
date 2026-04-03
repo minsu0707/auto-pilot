@@ -121,6 +121,7 @@ Store answers into the intake record with these keys:
 If the user says "use the defaults" or an equivalent phrase:
 
 - frontend: Next.js
+- UI system: Tailwind CSS + shadcn/ui
 - backend: Next.js route handlers or simple managed backend
 - architecture: Feature-based
 - deploy: Vercel
