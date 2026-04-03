@@ -44,18 +44,22 @@ The plugin collects the minimum data required for long-running execution.
 - core features
 - out-of-scope items for this version
 - preferred stack or permission to use defaults
+- architecture preset
 - auth requirement
 - payment requirement
 - admin requirement
 - deploy target
 - data store
+- theme preset
+- visual vibe
 - design direction
-- blocker policy
 - definition of done
 
 ### 3. Spec Lock
 
 The plugin writes a project brief and execution contract to disk.
+
+For user-facing products, it also writes a dedicated design brief before UI implementation starts.
 
 ### 4. Execution Loop
 
@@ -103,6 +107,7 @@ The plugin stops when the full definition of done has been satisfied.
 Files that should always be kept up to date:
 
 - `docs/spec.md`
+- `docs/design.md` for user-facing projects
 - `docs/progress.md`
 - `docs/next.md`
 - `autopilot/state.json`

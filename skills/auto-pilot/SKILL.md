@@ -98,8 +98,8 @@ Ask for only the minimum complete project contract:
 - deploy target
 - data store
 - theme preset
+- visual vibe
 - design direction refinement
-- blocker policy
 - definition of done
 
 Keep the intake compact, but ask exactly one question at a time.
@@ -118,6 +118,26 @@ For the exact interaction format, follow `../autopilot-intake/SKILL.md`.
    - external account setup is required
    - payment or production deployment approval is required
    - the product direction is ambiguous in a way that changes the build materially
+
+## Design Execution Rule
+
+For user-facing products, design synthesis is required before the first UI build.
+
+- Create and follow `docs/design.md`
+- Use the `frontend-ui-ux` skill as the default design helper
+- Prefer Figma references when provided
+- Otherwise use curated design inspiration sources rather than broad web search
+- Run one explicit post-build design review after the first UI pass
+
+Treat these as user-facing by default:
+
+- landing pages
+- marketing sites
+- dashboards
+- consumer web or mobile apps
+- admin interfaces
+
+Skip dedicated design synthesis only for clearly CLI-only, backend-only, or library-only work.
 
 ## Blocker Policy
 

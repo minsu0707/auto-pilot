@@ -3,14 +3,24 @@
 set -euo pipefail
 
 REPO_SLUG="${AUTO_PILOT_REPO_SLUG:-minsu0707/auto-pilot}"
-REPO_REF="${AUTO_PILOT_REPO_REF:-main}"
+# On develop, keep the default pinned to develop.
+# Before cutting a stable release tag, replace this baked-in default with that exact tag.
+REPO_REF="${AUTO_PILOT_REPO_REF:-develop}"
 INSTALL_DIR="${AUTO_PILOT_INSTALL_DIR:-$HOME/plugins/auto-pilot}"
 MARKETPLACE_PATH="${AUTO_PILOT_MARKETPLACE_PATH:-$HOME/.agents/plugins/marketplace.json}"
 MARKETPLACE_SOURCE_PATH="${AUTO_PILOT_SOURCE_PATH:-./plugins/auto-pilot}"
 CODEX_CONFIG_PATH="${AUTO_PILOT_CODEX_CONFIG_PATH:-$HOME/.codex/config.toml}"
 TMP_ROOT="${TMPDIR:-/tmp}"
 WORK_DIR="$(mktemp -d "${TMP_ROOT%/}/auto-pilot-install.XXXXXX")"
-ARCHIVE_URL="https://github.com/${REPO_SLUG}/archive/refs/heads/${REPO_REF}.tar.gz"
+if [[ "${REPO_REF}" == refs/tags/* ]]; then
+  ARCHIVE_URL="https://github.com/${REPO_SLUG}/archive/${REPO_REF}.tar.gz"
+elif [[ "${REPO_REF}" == refs/heads/* ]]; then
+  ARCHIVE_URL="https://github.com/${REPO_SLUG}/archive/${REPO_REF}.tar.gz"
+elif [[ "${REPO_REF}" == v* ]]; then
+  ARCHIVE_URL="https://github.com/${REPO_SLUG}/archive/refs/tags/${REPO_REF}.tar.gz"
+else
+  ARCHIVE_URL="https://github.com/${REPO_SLUG}/archive/refs/heads/${REPO_REF}.tar.gz"
+fi
 ARCHIVE_PATH="${WORK_DIR}/auto-pilot.tar.gz"
 EXTRACT_DIR="${WORK_DIR}/extract"
 
@@ -186,7 +196,7 @@ echo
 echo "🎉 Congratulations! Auto Pilot is installed. Start building now."
 echo
 echo "Restart Codex, then run:"
-echo "\$auto-pilot Build a budgeting app for freelancers"
+echo "\$auto-pilot Build a diary app my friend Dohyeon would love"
 echo
 echo "Optional shortcut after restart:"
-echo "Build a budgeting app for freelancers ap"
+echo "Build a diary app my friend Dohyeon would love ap"

@@ -23,7 +23,7 @@
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-安定版の導入には `v0.1.1` を使い、これから入る変更の検証時だけ `develop` を使ってください。
+安定版の導入には `v0.1.1` を使い、stable release tag は必ずそのタグ自身をインストールする状態で維持してください。これから入る変更の検証時だけ `develop` を使ってください。
 
 ## Codex で実行
 

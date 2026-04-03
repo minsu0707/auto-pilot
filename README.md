@@ -21,7 +21,7 @@ English | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-Use `v0.1.1` for stable installs. Use `develop` only to test upcoming changes.
+Use `v0.1.1` for stable installs. Stable release tags should install that exact tag. Use `develop` only to test upcoming changes.
 
 ## Run in Codex
 
