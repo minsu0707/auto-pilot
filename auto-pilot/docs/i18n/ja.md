@@ -13,10 +13,10 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ## Codex で実行
 
 ```text
-/auto-pilot:autopilot Build a budgeting app for freelancers
+/autopilot Build a budgeting app for freelancers
 ```
 
-公開の基本エントリーポイントは `/auto-pilot:autopilot` です。
+公開の基本エントリーポイントは `/autopilot` です。
 インストール後は slash command を読み込むために Codex を一度再起動してください。
 一度インストールすれば、新規プロジェクトなら intake に進み、既存プロジェクトなら自動で resume します。
 再起動後は `Build a budgeting app for freelancers ap` のような自然言語ショートカットも使えます。
@@ -141,4 +141,4 @@ python3 scripts/autopilot.py status \
 
 このフォルダがプラグインルート兼ドキュメントルート兼インストーラの基準位置です。
 
-一般ユーザー向けの推奨フローは、one-line installer で導入し、Codex を一度再起動してから `/auto-pilot:autopilot` を使うことです。
+一般ユーザー向けの推奨フローは、one-line installer で導入し、Codex を一度再起動してから `/autopilot` を使うことです。

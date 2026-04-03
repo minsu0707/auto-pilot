@@ -33,7 +33,7 @@ Choose exactly one path:
    - Read the saved state files
    - Resume from the highest-priority unfinished task
 
-Keep `/auto-pilot:autopilot` as the only public entry point. Intake and resume remain internal routing decisions.
+Keep `/autopilot` as the only public entry point. Intake and resume remain internal routing decisions.
 
 ## Commands
 

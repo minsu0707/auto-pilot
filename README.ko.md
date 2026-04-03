@@ -13,7 +13,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ## Codex에서 실행하기
 
 ```text
-/auto-pilot:autopilot Build a budgeting app for freelancers
+/autopilot Build a budgeting app for freelancers
 ```
 
 설치 후 재시작했다면 아래 숏컷도 사용할 수 있습니다.

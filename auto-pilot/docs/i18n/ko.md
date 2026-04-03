@@ -13,10 +13,10 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ## Codex에서 실행하기
 
 ```text
-/auto-pilot:autopilot Build a budgeting app for freelancers
+/autopilot Build a budgeting app for freelancers
 ```
 
-공개 기본 진입점은 `/auto-pilot:autopilot`입니다.
+공개 기본 진입점은 `/autopilot`입니다.
 설치 후에는 slash command가 보이도록 Codex를 한 번 다시 시작하면 됩니다.
 한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
 재시작 후에는 `Build a budgeting app for freelancers ap` 같은 자연어 숏컷도 사용할 수 있습니다.
@@ -141,4 +141,4 @@ python3 scripts/autopilot.py status \
 
 이 폴더가 플러그인 루트이자 문서 루트, 설치 스크립트 기준 위치입니다.
 
-일반 유저 기준 추천 흐름은 one-line installer로 설치한 뒤 Codex를 한 번 재시작하고 `/auto-pilot:autopilot`을 사용하는 것입니다.
+일반 유저 기준 추천 흐름은 one-line installer로 설치한 뒤 Codex를 한 번 재시작하고 `/autopilot`을 사용하는 것입니다.

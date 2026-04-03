@@ -13,7 +13,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 ## Run in Codex
 
 ```text
-/auto-pilot:autopilot Build a budgeting app for freelancers
+/autopilot Build a budgeting app for freelancers
 ```
 
 Optional shortcut after installation and restart:
