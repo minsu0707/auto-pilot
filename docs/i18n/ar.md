@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - يستخدم نمط UX من نوع `1. Question` / `Questions remaining: N`
 - يكتب `docs/spec.md` و`docs/progress.md` و`docs/next.md` و`autopilot/state.json` و`autopilot/blockers.json`
 - يحتفظ بحالة كافية لكي تستأنف جلسة Codex التالية من حيث توقفت
-- يبقي الكود الرسمي للإضافة والوثائق ومنطق التثبيت جميعها داخل `auto-pilot/`
+- يبقي الكود الرسمي للإضافة والوثائق ومنطق التثبيت جميعها في جذر المستودع
 
 ## Quick Start
 

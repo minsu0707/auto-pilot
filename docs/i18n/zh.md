@@ -49,7 +49,7 @@ Auto Pilot 通过以下能力填补这个缺口：
 - 使用 `1. Question` / `Questions remaining: N` UX 模式
 - 写入 `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json`
 - 保留足够状态，让下一次 Codex 会话从停止处继续
-- 将正式插件代码、文档和安装逻辑统一放在 `auto-pilot/` 下
+- 将正式插件代码、文档和安装逻辑统一放在仓库根目录下
 
 ## Quick Start
 

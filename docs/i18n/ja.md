@@ -60,7 +60,7 @@ Auto Pilot は次の要素でそのギャップを埋めます。
 - `1. Question` / `Questions remaining: N` パターンで対話する
 - `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json` を生成する
 - 次の Codex セッションが止まった場所から再開できるだけの状態を残す
-- 正式なプラグインコード、ドキュメント、インストーラをすべて `auto-pilot/` 配下に置く
+- 正式なプラグインコード、ドキュメント、インストーラをすべてリポジトリルートに置く
 
 ## Quick Start
 
@@ -124,6 +124,6 @@ python3 scripts/autopilot.py status \
 
 ## Current Status
 
-このフォルダがプラグインルート兼ドキュメントルート兼インストーラの基準位置です。
+このリポジトリルートがプラグインルート兼ドキュメントルート兼インストーラの基準位置です。
 
 一般ユーザー向けの推奨フローは、one-line installer で導入し、Codex を一度再起動してから `/auto-pilot:autopilot` を使うことです。

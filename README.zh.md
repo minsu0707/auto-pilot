@@ -1,12 +1,12 @@
 # Auto Pilot
 
-正式文档和插件主体现在都在 [`auto-pilot/`](./auto-pilot/) 下。
+正式文档和插件主体现在都在仓库根目录下。
 
-- 完整文档: [auto-pilot/README.md](./auto-pilot/README.md)
-- 한국어: [auto-pilot/docs/i18n/ko.md](./auto-pilot/docs/i18n/ko.md)
-- 日本語: [auto-pilot/docs/i18n/ja.md](./auto-pilot/docs/i18n/ja.md)
-- 中文: [auto-pilot/docs/i18n/zh.md](./auto-pilot/docs/i18n/zh.md)
-- العربية: [auto-pilot/docs/i18n/ar.md](./auto-pilot/docs/i18n/ar.md)
+- 完整文档: [README.md](./README.md)
+- 한국어: [README.ko.md](./README.ko.md)
+- 日本語: [README.ja.md](./README.ja.md)
+- 中文: [docs/i18n/zh.md](./docs/i18n/zh.md)
+- العربية: [docs/i18n/ar.md](./docs/i18n/ar.md)
 
 ## 一行安装
 

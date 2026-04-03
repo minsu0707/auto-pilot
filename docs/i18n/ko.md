@@ -60,7 +60,7 @@ Auto Pilot은 이 간극을 아래 요소로 메웁니다.
 - `1. Question` / `Questions remaining: N` 패턴으로 상호작용합니다
 - `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, `autopilot/blockers.json`를 생성합니다
 - 다음 Codex 세션이 멈춘 지점부터 이어갈 수 있을 만큼 상태를 남깁니다
-- 정식 플러그인 코드, 문서, 설치 로직을 모두 `auto-pilot/` 아래에 둡니다
+- 정식 플러그인 코드, 문서, 설치 로직을 모두 저장소 루트에 둡니다
 
 ## Quick Start
 
@@ -124,6 +124,6 @@ python3 scripts/autopilot.py status \
 
 ## Current Status
 
-이 폴더가 플러그인 루트이자 문서 루트, 설치 스크립트 기준 위치입니다.
+이 저장소 루트가 플러그인 루트이자 문서 루트, 설치 스크립트 기준 위치입니다.
 
 일반 유저 기준 추천 흐름은 one-line installer로 설치한 뒤 Codex를 한 번 재시작하고 `/auto-pilot:autopilot`을 사용하는 것입니다.
