@@ -31,6 +31,47 @@ require_cmd curl
 require_cmd tar
 require_cmd python3
 
+print_success_art() {
+  local image_path="${INSTALL_DIR}/assets/auto-pilot.png"
+
+  if [[ -f "${image_path}" ]]; then
+    if command -v imgcat >/dev/null 2>&1; then
+      imgcat "${image_path}" || true
+      return
+    fi
+
+    if command -v chafa >/dev/null 2>&1; then
+      chafa --symbols vhalf --size 44x22 "${image_path}" || true
+      return
+    fi
+
+    if command -v viu >/dev/null 2>&1; then
+      viu -w 44 "${image_path}" || true
+      return
+    fi
+
+    if command -v kitty >/dev/null 2>&1 && [[ "${TERM:-}" == xterm-kitty* ]]; then
+      kitty +kitten icat --silent "${image_path}" || true
+      return
+    fi
+  fi
+
+  cat <<'EOF'
+                _________
+          _____/ ======= \_____
+   ======/_____________________\======
+            /  _   ___   _  \
+           /  (_) [___] (_)  \
+          |        \_/        |
+          |     .-=====-.     |
+           \   /  AUTO  \    /
+            \  \  PILOT /   /
+             \  '-----'   /
+              \__________/
+                /_/  \_\
+EOF
+}
+
 echo "Downloading Auto Pilot from ${REPO_SLUG}@${REPO_REF}..."
 curl -fsSL "${ARCHIVE_URL}" -o "${ARCHIVE_PATH}"
 
@@ -146,6 +187,10 @@ echo "Canonical plugin root: ${INSTALL_DIR}"
 echo "Marketplace: ${MARKETPLACE_PATH}"
 echo "Marketplace source path: ${MARKETPLACE_SOURCE_PATH}"
 echo "Codex config: ${CODEX_CONFIG_PATH}"
+echo
+print_success_art
+echo
+echo "🎉 Congratulations! Auto Pilot is installed. Start building now."
 echo
 echo "Restart Codex, then run:"
 echo "/auto-pilot:autopilot Build a budgeting app for freelancers"
