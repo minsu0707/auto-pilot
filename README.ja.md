@@ -118,6 +118,7 @@ python3 scripts/autopilot.py status \
 - `docs/02-prd.md`: functional requirements and operating model
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
+- `docs/05-how-it-works.md`: intake、state、resume の流れを図でまとめた文書
 - `docs/i18n/*`: localized README files
 - `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest

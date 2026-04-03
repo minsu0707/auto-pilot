@@ -11,17 +11,21 @@
 ## التثبيت بسطر واحد
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
+
+للتثبيت المستقر استخدم `v0.1.1`. يجب أن يثبّت stable release tag نفس ذلك الإصدار، واستخدم `develop` فقط إذا أردت تجربة التغييرات القادمة قبل إصدار stable التالي.
 
 ## التشغيل داخل Codex
 
 ```text
-/auto-pilot:autopilot Build a budgeting app for freelancers
+$auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
-بعد التثبيت وإعادة التشغيل يمكنك أيضًا استخدام هذا الاختصار.
+نقطة الدخول العامة الأساسية هي `$auto-pilot`. بعد التثبيت أعد تشغيل Codex مرة واحدة حتى يتم تحميل الـ skill بشكل صحيح.
+
+بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا. وبعد إعادة التشغيل يمكنك أيضًا استخدام الاختصار الطبيعي:
 
 ```text
-Build a budgeting app for freelancers ap
+Build a diary app my friend Dohyeon would love ap
 ```
