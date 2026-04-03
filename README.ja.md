@@ -2,11 +2,15 @@
 
 正式なドキュメントとプラグイン本体は [`auto-pilot/`](./auto-pilot/) にあります。
 
+## Languages
+
+- [English](./README.md)
+- [한국어](./README.ko.md)
+- 日本語
+
 - フルドキュメント: [auto-pilot/README.md](./auto-pilot/README.md)
 - 한국어: [auto-pilot/docs/i18n/ko.md](./auto-pilot/docs/i18n/ko.md)
 - 日本語: [auto-pilot/docs/i18n/ja.md](./auto-pilot/docs/i18n/ja.md)
-- 中文: [auto-pilot/docs/i18n/zh.md](./auto-pilot/docs/i18n/zh.md)
-- العربية: [auto-pilot/docs/i18n/ar.md](./auto-pilot/docs/i18n/ar.md)
 
 ## 1行でインストール
 

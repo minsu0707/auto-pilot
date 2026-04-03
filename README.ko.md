@@ -2,11 +2,15 @@
 
 정식 문서와 플러그인 파일은 이제 [`auto-pilot/`](./auto-pilot/) 아래에 있습니다.
 
+## Languages
+
+- [English](./README.md)
+- 한국어
+- [日本語](./README.ja.md)
+
 - 전체 문서: [auto-pilot/README.md](./auto-pilot/README.md)
 - 한국어: [auto-pilot/docs/i18n/ko.md](./auto-pilot/docs/i18n/ko.md)
 - 日本語: [auto-pilot/docs/i18n/ja.md](./auto-pilot/docs/i18n/ja.md)
-- 中文: [auto-pilot/docs/i18n/zh.md](./auto-pilot/docs/i18n/zh.md)
-- العربية: [auto-pilot/docs/i18n/ar.md](./auto-pilot/docs/i18n/ar.md)
 
 ## 한줄로 설치하기
 

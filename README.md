@@ -2,11 +2,15 @@
 
 Canonical docs and plugin files now live in [`auto-pilot/`](./auto-pilot/).
 
+## Languages
+
+- English
+- [한국어](./README.ko.md)
+- [日本語](./README.ja.md)
+
 - Full docs: [auto-pilot/README.md](./auto-pilot/README.md)
 - Korean: [auto-pilot/docs/i18n/ko.md](./auto-pilot/docs/i18n/ko.md)
 - Japanese: [auto-pilot/docs/i18n/ja.md](./auto-pilot/docs/i18n/ja.md)
-- Chinese: [auto-pilot/docs/i18n/zh.md](./auto-pilot/docs/i18n/zh.md)
-- Arabic: [auto-pilot/docs/i18n/ar.md](./auto-pilot/docs/i18n/ar.md)
 
 ## Install in One Line
 
