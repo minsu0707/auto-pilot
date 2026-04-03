@@ -1,5 +1,5 @@
 ---
-name: autopilot
+name: auto-pilot
 description: Intake-first autonomous project execution for Codex. Use when the user wants a short project request turned into a long-running build workflow with minimal interruptions, or explicitly mentions 오토파일럿/autopilot.
 summary: Ask once, lock spec, save state, keep shipping.
 metadata:
@@ -8,6 +8,7 @@ metadata:
     phrases:
       - "오토파일럿"
       - "autopilot"
+      - "auto-pilot"
       - "24시간 계속"
       - "with ap"
       - "using ap"
@@ -25,11 +26,13 @@ metadata:
     anyOf:
       - "오토파일럿"
       - "autopilot"
+      - "auto-pilot"
     minScore: 7
 retrieval:
   aliases:
     - 오토파일럿
     - autopilot mode
+    - auto-pilot mode
     - with ap
     - intake first execution
     - continuous project execution
@@ -138,27 +141,19 @@ Behavior:
 
 Behavior:
 
-- continue with safe defaults
-- record the deferred item in `docs/next.md`
+- keep moving with a reasonable default
+- write the deferred decision into `docs/next.md` when useful
 
 ### `human-required`
 
-- API keys
-- OAuth provider setup
-- payment activation
-- domain purchase
-- production go-live approval
+- API keys or secrets
+- OAuth app creation
+- payment account setup
+- production deployment approval
+- ambiguous product direction that changes scope materially
 
 Behavior:
 
-- pause only the blocked path
-- ask for the smallest actionable input
-
-## Output Expectations
-
-- Keep status legible.
-- Summaries should focus on:
-  - what changed
-  - what is next
-  - whether a blocker exists
-- Stop when the definition of done is satisfied.
+- stop only at the minimum blocking decision
+- ask one focused question
+- continue immediately after the answer

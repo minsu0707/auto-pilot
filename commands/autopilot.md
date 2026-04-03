@@ -4,7 +4,7 @@ description: Start or resume Auto Pilot from the current workspace using the pro
 
 # Auto Pilot
 
-Run the Auto Pilot workflow from the current workspace. Use this as the single public slash command for the plugin.
+Run the Auto Pilot workflow from the current workspace. Treat `$auto-pilot` as the primary public entry point, with this command available as a secondary plugin command.
 
 ## Preflight
 
@@ -33,7 +33,7 @@ Choose exactly one path:
    - Read the saved state files
    - Resume from the highest-priority unfinished task
 
-Keep `/autopilot` as the only public entry point. Intake and resume remain internal routing decisions.
+Keep `$auto-pilot` as the primary public entry point. Intake and resume remain internal routing decisions.
 
 ## Commands
 
@@ -42,7 +42,7 @@ Follow the existing Auto Pilot skill behavior rather than inventing new runtime 
 ### New project path
 
 - Use the project prompt from `$ARGUMENTS`
-- Apply the workflow defined in `skills/autopilot/SKILL.md`
+- Apply the workflow defined in `skills/auto-pilot/SKILL.md`
 - Use the intake behavior from `skills/autopilot-intake/SKILL.md`
 - Collect the minimum required project contract one question at a time
 - Write:

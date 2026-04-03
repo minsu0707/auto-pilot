@@ -13,11 +13,11 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## شغّل داخل Codex
 
 ```text
-/autopilot Build a budgeting app for freelancers
+$auto-pilot Build a budgeting app for freelancers
 ```
 
-استخدم `/autopilot` كنقطة الدخول العامة الأساسية.
-بعد التثبيت، أعد تشغيل Codex مرة واحدة حتى يصبح slash command متاحًا.
+استخدم `$auto-pilot` كنقطة الدخول العامة الأساسية.
+بعد التثبيت، أعد تشغيل Codex مرة واحدة حتى يصبح skill متاحًا.
 بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
 بعد إعادة التشغيل يمكنك أيضًا استخدام الاختصار الطبيعي `Build a budgeting app for freelancers ap`.
 
@@ -100,8 +100,8 @@ python3 scripts/autopilot.py status \
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
-- `commands/autopilot.md`: public slash command entry point
-- `skills/autopilot/SKILL.md`: main orchestration skill
+- `commands/autopilot.md`: secondary plugin command entry point
+- `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
 - `scripts/autopilot.py`: recommended CLI entry point
@@ -141,4 +141,4 @@ python3 scripts/autopilot.py status \
 
 هذا المجلد هو جذر الإضافة وجذر الوثائق والمكان المرجعي لسكربتات التثبيت.
 
-بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم إعادة تشغيل Codex مرة واحدة وبعدها استخدام `/autopilot` داخل Codex.
+بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم إعادة تشغيل Codex مرة واحدة وبعدها استخدام `$auto-pilot` داخل Codex.
