@@ -28,13 +28,13 @@ Use `v0.1.1` for stable installs. Use `develop` only to test upcoming changes.
 ## Run in Codex
 
 ```text
-$auto-pilot Build a budgeting app for freelancers
+$auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
 Use `$auto-pilot` as the primary public entry point.
 Restart Codex once after installation so the skill is loaded.
 Install once, then route to intake for new projects and resume automatically for existing ones.
-After restart, you can also use the natural-language shortcut `Build a budgeting app for freelancers ap`.
+After restart, you can also use the natural-language shortcut `Build a diary app my friend Dohyeon would love ap`.
 
 ## What It Is
 
@@ -73,7 +73,7 @@ Start a new intake session:
 ```bash
 python3 scripts/autopilot.py start \
   --workspace /tmp/my-project \
-  --prompt "Build a budgeting app for freelancers"
+  --prompt "Build a diary app my friend Dohyeon would love"
 ```
 
 Answer the current question:

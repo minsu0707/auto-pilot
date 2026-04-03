@@ -13,13 +13,13 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## شغّل داخل Codex
 
 ```text
-$auto-pilot Build a budgeting app for freelancers
+$auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
 استخدم `$auto-pilot` كنقطة الدخول العامة الأساسية.
 بعد التثبيت، أعد تشغيل Codex مرة واحدة حتى يصبح skill متاحًا.
 بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
-بعد إعادة التشغيل يمكنك أيضًا استخدام الاختصار الطبيعي `Build a budgeting app for freelancers ap`.
+بعد إعادة التشغيل يمكنك أيضًا استخدام الاختصار الطبيعي `Build a diary app my friend Dohyeon would love ap`.
 
 هذا المجلد هو الجذر الرسمي لإضافة Codex المسماة `Auto Pilot`. تقوم الإضافة بتحويل طلب قصير مثل `Build me a budgeting app` إلى سير تنفيذ intake-first.
 
@@ -58,7 +58,7 @@ $auto-pilot Build a budgeting app for freelancers
 ```bash
 python3 scripts/autopilot.py start \
   --workspace /tmp/my-project \
-  --prompt "Build a budgeting app for freelancers"
+  --prompt "Build a diary app my friend Dohyeon would love"
 ```
 
 أجب عن السؤال الحالي:
@@ -122,7 +122,7 @@ python3 scripts/autopilot.py status \
 - `Start this project with Auto Pilot`
 - `Use autopilot to kick off a SaaS MVP`
 - `Continue this project with Auto Pilot`
-- `Build a budgeting app for freelancers ap`
+- `Build a diary app my friend Dohyeon would love ap`
 
 في المشاريع الجديدة يتبع intake هذا النمط:
 
