@@ -1,11 +1,14 @@
 {
   "name": "auto-pilot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Intake-first autonomous project execution for Codex.",
+  "type": "plugin",
   "author": {
     "name": "Minsu",
-    "url": "https://github.com"
+    "url": "https://github.com/minsu0707"
   },
+  "homepage": "https://github.com/minsu0707/auto-pilot",
+  "repository": "https://github.com/minsu0707/auto-pilot",
   "license": "MIT",
   "keywords": [
     "autopilot",
@@ -29,9 +32,12 @@
       "Turn this short brief into an intake-first execution flow",
       "Continue this project with Auto Pilot"
     ],
+    "websiteURL": "https://github.com/minsu0707/auto-pilot",
+    "privacyPolicyURL": "https://github.com/minsu0707/auto-pilot/blob/main/SECURITY.md",
+    "termsOfServiceURL": "https://github.com/minsu0707/auto-pilot/blob/main/LICENSE",
     "brandColor": "#0F766E",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/icon.svg",
+    "composerIcon": "./assets/auto-pilot.png",
+    "logo": "./assets/auto-pilot.png",
     "screenshots": []
   }
 }
