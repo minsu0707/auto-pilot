@@ -13,23 +13,24 @@ Auto Pilot is not a single tool. It is an orchestration layer on top of Codex wi
 ## Proposed Structure
 
 ```text
-plugins/auto-pilot/
+repo-root/
   .codex-plugin/plugin.json
-  skills/
-    project-intake/SKILL.md
-    project-execution/SKILL.md
-    blocker-triage/SKILL.md
-    resume-from-state/SKILL.md
-    done-check/SKILL.md
-  scripts/
-    bootstrap-state.ts
-    choose-next-task.ts
-    classify-blocker.ts
-    summarize-status.ts
-  hooks.json
-  .mcp.json
-  .app.json
   assets/
+  docs/
+  commands/
+  skills/
+    auto-pilot/SKILL.md
+    autopilot-intake/SKILL.md
+    autopilot-resume/SKILL.md
+  scripts/
+    autopilot.py
+    autopilot_lib.py
+    init_intake.py
+    record_answer.py
+    status.py
+  templates/
+  install.sh
+  uninstall.sh
 ```
 
 ## Responsibility Split
@@ -121,10 +122,12 @@ Recommended fields:
 - `auth_mode`
 - `payments_mode`
 - `admin_required`
+- `architecture_preset`
+- `theme_preset`
+- `visual_vibe`
 - `design_direction`
 - `deploy_target`
 - `data_store`
-- `blocker_policy`
 - `definition_of_done`
 
 ## Execution Rules
@@ -135,6 +138,8 @@ Recommended fields:
 4. Always validate after implementation.
 5. Save state after each loop.
 6. Stop only when the definition of done is met or a `human-required` blocker is active.
+
+For user-facing projects, generate `docs/design.md` before implementing the first UI and treat it as the active design brief.
 
 ## Recommended Integrations
 

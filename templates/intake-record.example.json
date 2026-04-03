@@ -13,12 +13,12 @@
     "deploy_target": "",
     "data_store": "",
     "theme_preset": "",
+    "visual_vibe": "",
     "design_direction": "",
-    "definition_of_done": "",
-    "blocker_policy": "retry technical failures automatically, defer low-risk polish, ask only for secrets, approvals, payments, OAuth, and production launch"
+    "definition_of_done": ""
   },
   "questionProgress": {
     "currentIndex": 1,
-    "remaining": 14
+    "remaining": 15
   }
 }

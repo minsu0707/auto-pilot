@@ -1,5 +1,5 @@
 {
-  "totalQuestions": 14,
+  "totalQuestions": 15,
   "questionOrder": [
     {
       "index": 1,
@@ -63,20 +63,18 @@
     },
     {
       "index": 13,
+      "key": "visual_vibe",
+      "label": "What visual vibe should I target? Editorial, Playful, Premium, Calm, or Techy?"
+    },
+    {
+      "index": 14,
       "key": "design_direction",
       "label": "Do you have any design references or extra visual direction beyond that theme?"
     },
     {
-      "index": 14,
+      "index": 15,
       "key": "definition_of_done",
       "label": "What counts as done for this project?"
-    }
-  ],
-  "optionalQuestions": [
-    {
-      "index": 15,
-      "key": "blocker_policy",
-      "label": "If something blocks progress, should I continue with defaults or ask you right away?"
     }
   ]
 }

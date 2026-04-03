@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -17,8 +18,10 @@ DEFAULT_BLOCKER_POLICY = (
 )
 DEFAULT_ARCHITECTURE = "Feature-based"
 DEFAULT_THEME = "Minimal"
+DEFAULT_VIBE = "Calm"
 ARCHITECTURE_PRESETS = ("Simple", "Feature-based", "Scalable")
 THEME_PRESETS = ("Minimal", "Bold", "Playful", "Premium")
+VIBE_PRESETS = ("Editorial", "Playful", "Premium", "Calm", "Techy")
 
 DEFAULT_STACK_SENTINELS = {
     "",
@@ -209,6 +212,11 @@ def derive_defaults(answers: dict[str, str]) -> dict[str, str]:
         THEME_PRESETS,
         DEFAULT_THEME,
     )
+    resolved["visual_vibe"] = select_preset(
+        resolved.get("visual_vibe", ""),
+        VIBE_PRESETS,
+        default_vibe_for_theme(resolved["theme_preset"]),
+    )
 
     for key in ("auth_mode", "payments_mode", "admin_required"):
         resolved[key] = normalize_bool_like(resolved.get(key, ""))
@@ -241,6 +249,16 @@ def architecture_guidance(value: str) -> str:
     return "Organize code primarily by feature or domain, with shared code extracted only when reuse becomes clear."
 
 
+def default_vibe_for_theme(value: str) -> str:
+    if value == "Bold":
+        return "Techy"
+    if value == "Playful":
+        return "Playful"
+    if value == "Premium":
+        return "Premium"
+    return DEFAULT_VIBE
+
+
 def theme_guidance(value: str) -> str:
     if value == "Bold":
         return "Use stronger contrast, assertive typography, and more prominent visual hierarchy."
@@ -251,7 +269,283 @@ def theme_guidance(value: str) -> str:
     return "Use restrained styling, clear spacing, and a calm visual system with low decoration."
 
 
+def vibe_guidance(value: str) -> str:
+    if value == "Editorial":
+        return "Favor strong layout composition, confident whitespace, and typography-led presentation over generic dashboard chrome."
+    if value == "Playful":
+        return "Use softer corners, friendlier shapes, warmer accents, and more expressive UI moments without becoming childish."
+    if value == "Premium":
+        return "Use refined hierarchy, richer surfaces, elegant contrast, and restrained motion that feels polished."
+    if value == "Techy":
+        return "Use sharper contrast, structured layout rhythm, and a more product-forward feel with crisp visual hierarchy."
+    return "Keep the interface calm, spacious, and restrained with low decoration and clear hierarchy."
+
+
+def is_user_facing_project(answers: dict[str, str]) -> bool:
+    corpus = " ".join(
+        [
+            answers.get("product_summary", ""),
+            answers.get("core_features", ""),
+            answers.get("target_user", ""),
+            answers.get("definition_of_done", ""),
+        ]
+    ).lower()
+    positive_signals = (
+        "landing",
+        "marketing",
+        "dashboard",
+        "admin",
+        "ui",
+        "ux",
+        "web",
+        "app",
+        "mobile",
+        "page",
+        "screen",
+        "consumer",
+        "site",
+        "saas",
+        "portal",
+        "일기",
+        "가계부",
+        "앱",
+        "화면",
+        "페이지",
+        "대시보드",
+        "랜딩",
+        "모바일",
+    )
+    negative_signals = (
+        "cli",
+        "sdk",
+        "library",
+        "package",
+        "api only",
+        "backend only",
+        "worker",
+        "daemon",
+        "batch",
+        "headless",
+    )
+    if matches_any_signal(corpus, positive_signals):
+        return True
+    if matches_any_signal(corpus, negative_signals):
+        return False
+    return normalize_bool_like(answers.get("admin_required", "")) == "yes"
+
+
+def matches_any_signal(corpus: str, signals: tuple[str, ...]) -> bool:
+    for signal in signals:
+        if re.search(r"[a-z]", signal):
+            if re.search(rf"\b{re.escape(signal)}\b", corpus):
+                return True
+        elif signal in corpus:
+            return True
+    return False
+
+
+def select_design_sources(answers: dict[str, str]) -> list[str]:
+    summary = " ".join(
+        [answers.get("product_summary", ""), answers.get("core_features", "")]
+    ).lower()
+    sources = ["frontend-ui-ux skill"]
+    if "figma.com" in summary or "node-id=" in summary:
+        sources.append("Figma reference if provided")
+        return sources
+    if any(token in summary for token in ("landing", "marketing", "brand", "promo", "homepage", "랜딩")):
+        sources.extend(["Land-book", "Page Collective"])
+    else:
+        sources.extend(["Mobbin", "Refero"])
+    if answers.get("visual_vibe") in {"Editorial", "Premium"} and "Page Collective" not in sources:
+        sources.append("Page Collective")
+    return sources[:4]
+
+
+def target_reference_summary(answers: dict[str, str]) -> str:
+    sources = select_design_sources(answers)
+    if "Figma reference if provided" in sources:
+        return "Prioritize Figma if available, then use curated references to sharpen hierarchy and layout decisions before the first UI build."
+    if "Land-book" in sources:
+        return "Review landing-page inspiration for composition, headline rhythm, and visual storytelling instead of defaulting to generic SaaS hero blocks."
+    return "Review product UI inspiration for app structure, dashboard density, and component tone before implementing the first screen."
+
+
+def color_direction(answers: dict[str, str]) -> str:
+    theme = answers["theme_preset"]
+    vibe = answers["visual_vibe"]
+    if theme == "Bold" or vibe == "Techy":
+        return "High-contrast neutrals with one assertive accent; avoid washed-out grays and low-energy palettes."
+    if theme == "Playful" or vibe == "Playful":
+        return "Warm or cheerful accents with softer neutrals; keep contrast accessible and avoid rainbow overload."
+    if theme == "Premium" or vibe == "Premium":
+        return "Restrained palette with richer dark neutrals, refined highlights, and limited accent usage."
+    if vibe == "Editorial":
+        return "Minimal palette driven by typography and whitespace; use color sparingly for emphasis."
+    return "Calm neutral foundation with one muted accent and clean contrast boundaries."
+
+
+def typography_direction(answers: dict[str, str]) -> str:
+    vibe = answers["visual_vibe"]
+    if vibe == "Editorial":
+        return "Typography should carry the design with stronger scale contrast and more intentional heading rhythm."
+    if vibe == "Premium":
+        return "Use refined, elegant type hierarchy with comfortable line lengths and higher perceived polish."
+    if vibe == "Techy":
+        return "Use crisp, structured typography with stronger information density and sharper hierarchy."
+    if vibe == "Playful":
+        return "Use approachable, friendly type scale with slightly softer rhythm and less rigid structure."
+    return "Use restrained, highly readable typography with modest but clear hierarchy."
+
+
+def spacing_direction(answers: dict[str, str]) -> str:
+    vibe = answers["visual_vibe"]
+    if vibe in {"Editorial", "Premium"}:
+        return "Prefer spacious layouts with stronger breathing room and deliberate negative space."
+    if vibe == "Techy":
+        return "Use balanced-to-compact spacing with a clear grid and tidy alignment."
+    if vibe == "Playful":
+        return "Use balanced spacing with softer grouping and slightly rounder visual rhythm."
+    return "Keep spacing clean and calm with consistent vertical rhythm."
+
+
+def component_tone(answers: dict[str, str]) -> str:
+    vibe = answers["visual_vibe"]
+    if vibe == "Techy":
+        return "Components should feel crisp and product-driven, with clearer borders, tighter grouping, and stronger state emphasis."
+    if vibe == "Premium":
+        return "Components should feel polished and upscale, with subtle surfaces and restrained visual noise."
+    if vibe == "Playful":
+        return "Components should feel friendly and expressive, with softer shapes and warmer micro-details."
+    if vibe == "Editorial":
+        return "Components should defer to layout and typography; avoid over-decorated cards and heavy widget framing."
+    return "Components should stay minimal and unobtrusive, supporting clarity over decoration."
+
+
+def layout_pattern(answers: dict[str, str]) -> str:
+    summary = answers["product_summary"].lower()
+    if any(token in summary for token in ("landing", "marketing", "brand", "promo", "homepage", "랜딩")):
+        return "Use a composition-first marketing layout with more variation in section rhythm and stronger visual pacing."
+    if any(token in summary for token in ("dashboard", "admin", "portal", "대시보드", "관리")):
+        return "Use a structured app shell with clear navigation, prioritized overview panels, and fewer throwaway cards."
+    return "Use a product-focused app layout with strong hierarchy, intentional empty space, and one standout primary screen."
+
+
+def motion_guidance(answers: dict[str, str]) -> str:
+    vibe = answers["visual_vibe"]
+    if vibe in {"Premium", "Editorial"}:
+        return "Use restrained motion: soft fades, measured reveals, and subtle transitions."
+    if vibe == "Playful":
+        return "Use a few friendly transitions and small expressive moments, but avoid noisy micro-animation."
+    if vibe == "Techy":
+        return "Use crisp transitions that reinforce responsiveness and hierarchy without adding clutter."
+    return "Keep motion subtle and purposeful, limited to structure and focus changes."
+
+
+def avoid_list(answers: dict[str, str]) -> list[str]:
+    items = [
+        "Generic SaaS dashboard cards with no visual hierarchy",
+        "Default-feeling Tailwind layouts with interchangeable sections",
+        "Flat monochrome UI with no focal point",
+    ]
+    vibe = answers["visual_vibe"]
+    if vibe == "Editorial":
+        items.append("Over-framing every section with boxes and widget chrome")
+    if vibe == "Playful":
+        items.append("Turning expressive styling into toy-like UI noise")
+    if vibe == "Techy":
+        items.append("Low-contrast pastel styling that weakens product clarity")
+    return items
+
+
+def design_review_focus(answers: dict[str, str]) -> str:
+    vibe = answers["visual_vibe"]
+    if vibe == "Editorial":
+        return "Check typography hierarchy, section rhythm, and whether the layout still feels intentional without over-relying on cards."
+    if vibe == "Premium":
+        return "Check polish, spacing, and whether the visual hierarchy feels upscale rather than merely minimal."
+    if vibe == "Playful":
+        return "Check whether the UI feels warm and expressive without slipping into clutter."
+    if vibe == "Techy":
+        return "Check product clarity, contrast, and whether the interface looks confident instead of generic."
+    return "Check that the UI feels calm and intentional rather than plain or unfinished."
+
+
+def create_design_markdown(answers: dict[str, str]) -> str:
+    sources = select_design_sources(answers)
+    avoid = "\n".join(f"- {item}" for item in avoid_list(answers))
+    return f"""# Design Brief
+
+## Theme Preset
+
+{answers['theme_preset']}
+
+## Visual Vibe
+
+{answers['visual_vibe']}
+
+## User-Facing Classification
+
+This project is treated as a user-facing product, so design synthesis is required before implementing the first UI.
+
+## Research Execution Status
+
+This brief is the initial direction synthesized from intake answers and local project docs.
+Review the planned research stack below and refine this brief before implementing the first production UI.
+
+## Planned Design Research Stack
+
+- Local design skill: `frontend-ui-ux`
+- Product docs: `docs/01-product-brief.md`, `docs/02-prd.md`, `docs/03-plugin-spec.md`, `docs/04-mvp-roadmap.md`
+- Curated inspiration sources: {", ".join(sources)}
+
+## Initial Reference Direction
+
+{target_reference_summary(answers)}
+
+## Color Direction
+
+{color_direction(answers)}
+
+## Typography Direction
+
+{typography_direction(answers)}
+
+## Spacing and Density
+
+{spacing_direction(answers)}
+
+## Component Tone
+
+{component_tone(answers)}
+
+## Layout Pattern
+
+{layout_pattern(answers)}
+
+## Motion Guidance
+
+{motion_guidance(answers)}
+
+## Design Direction Refinement
+
+{answers['design_direction']}
+
+## Avoid
+
+{avoid}
+
+## Review Requirement
+
+Run one explicit post-build design review after the first UI pass. {design_review_focus(answers)}
+"""
+
+
 def create_spec_markdown(answers: dict[str, str]) -> str:
+    design_reference = (
+        "Treat `docs/design.md` as the binding design brief for any user-facing UI implementation."
+        if is_user_facing_project(answers)
+        else "No dedicated design brief is required unless the project later grows a user-facing interface."
+    )
     return f"""# Project Spec
 
 ## Product Summary
@@ -294,7 +588,15 @@ def create_spec_markdown(answers: dict[str, str]) -> str:
 
 {theme_guidance(answers['theme_preset'])}
 
+## Visual Vibe
+
+{answers['visual_vibe']}
+
+{vibe_guidance(answers['visual_vibe'])}
+
 ## Design Direction
+
+{design_reference}
 
 {answers['design_direction']}
 
@@ -329,17 +631,29 @@ def create_progress_markdown(answers: dict[str, str]) -> str:
 - Target user: {answers['target_user']}
 - Architecture preset: {answers['architecture_preset']}
 - Theme preset: {answers['theme_preset']}
+- Visual vibe: {answers['visual_vibe']}
+- Design synthesis: {"Required before UI implementation" if is_user_facing_project(answers) else "Skipped for non-user-facing project"}
 """
 
 
 def create_next_markdown(answers: dict[str, str]) -> str:
+    design_line = (
+        "1. Review the planned design sources and refine docs/design.md before building the first UI slice\n"
+        "2. Create the initial project structure\n"
+        "3. Break the MVP into milestones based on the core features\n"
+        "4. Implement the first shippable slice using docs/design.md as the design brief\n"
+        "5. Run one post-build design review after the first UI pass"
+        if is_user_facing_project(answers)
+        else
+        "1. Create the initial project structure\n"
+        "2. Break the MVP into milestones based on the core features\n"
+        "3. Implement the first shippable slice"
+    )
     return f"""# Next Steps
 
 ## Immediate
 
-1. Create the initial project structure
-2. Break the MVP into milestones based on the core features
-3. Implement the first shippable slice
+{design_line}
 
 ## Implementation Defaults
 
@@ -347,6 +661,9 @@ def create_next_markdown(answers: dict[str, str]) -> str:
 - Architecture guidance: {architecture_guidance(answers['architecture_preset'])}
 - Theme preset: {answers['theme_preset']}
 - Theme guidance: {theme_guidance(answers['theme_preset'])}
+- Visual vibe: {answers['visual_vibe']}
+- Vibe guidance: {vibe_guidance(answers['visual_vibe'])}
+- Design brief: {"docs/design.md" if is_user_facing_project(answers) else "Not required for this project type"}
 
 ## Constraints
 
@@ -362,15 +679,30 @@ def create_next_markdown(answers: dict[str, str]) -> str:
 
 
 def create_runtime_state(answers: dict[str, str]) -> dict[str, Any]:
+    user_facing = is_user_facing_project(answers)
+    sources = select_design_sources(answers)
     return {
         "projectName": answers["product_summary"],
         "status": "running",
         "currentMilestone": "Project bootstrap",
-        "currentTask": "Set up the initial workspace and first implementation slice",
+        "currentTask": (
+            "Synthesize the design brief and set up the first implementation slice"
+            if user_facing
+            else "Set up the initial workspace and first implementation slice"
+        ),
         "architecturePreset": answers["architecture_preset"],
         "themePreset": answers["theme_preset"],
+        "visualVibe": answers["visual_vibe"],
         "architectureGuidance": architecture_guidance(answers["architecture_preset"]),
         "themeGuidance": theme_guidance(answers["theme_preset"]),
+        "vibeGuidance": vibe_guidance(answers["visual_vibe"]),
+        "userFacingProject": user_facing,
+        "designResearchSummary": (
+            f"Review {'/'.join(sources)} and refine docs/design.md before the first UI implementation."
+            if user_facing
+            else "No dedicated design synthesis required for this project type."
+        ),
+        "designReviewRequired": user_facing,
         "retryCount": 0,
         "lastSuccessfulStep": "Locked project spec from intake",
         "definitionOfDoneMet": False,
@@ -390,12 +722,15 @@ def bootstrap_workspace(workspace: Path, intake_answers: dict[str, str]) -> dict
     ensure_dir(autopilot_dir)
 
     spec_path = docs_dir / "spec.md"
+    design_path = docs_dir / "design.md"
     progress_path = docs_dir / "progress.md"
     next_path = docs_dir / "next.md"
     state_path = autopilot_dir / "state.json"
     blockers_path = autopilot_dir / "blockers.json"
 
     spec_path.write_text(create_spec_markdown(answers))
+    if is_user_facing_project(answers):
+        design_path.write_text(create_design_markdown(answers))
     progress_path.write_text(create_progress_markdown(answers))
     next_path.write_text(create_next_markdown(answers))
     write_json(state_path, create_runtime_state(answers))
@@ -406,6 +741,7 @@ def bootstrap_workspace(workspace: Path, intake_answers: dict[str, str]) -> dict
 
     return {
         "spec": spec_path,
+        "design": design_path,
         "progress": progress_path,
         "next": next_path,
         "state": state_path,

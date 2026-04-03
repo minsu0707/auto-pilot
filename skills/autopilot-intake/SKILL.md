@@ -36,7 +36,6 @@ retrieval:
     - questions
     - setup
     - definition of done
-    - blocker policy
 ---
 
 # Auto Pilot Intake
@@ -64,7 +63,7 @@ Then on the next line:
 Example:
 
 `1. What do you want to build?`
-`Questions remaining: 13`
+`Questions remaining: 14`
 
 ### Keep each question short
 
@@ -93,20 +92,9 @@ Use this order by default. Skip questions only if the answer is already explicit
 10. deploy target
 11. data store
 12. theme preset
-13. design direction refinement
-14. definition of done
-
-## Optional Question
-
-Ask this only if it materially changes autonomy behavior:
-
-13. blocker policy
-
-Use a default blocker policy if the user does not care:
-
-- retry technical failures automatically
-- defer low-risk polish decisions
-- ask only for secrets, approvals, payments, OAuth, and production launch
+13. visual vibe
+14. design direction refinement
+15. definition of done
 
 ## Data Capture Rules
 
@@ -124,9 +112,9 @@ Store answers into the intake record with these keys:
 - `deploy_target`
 - `data_store`
 - `theme_preset`
+- `visual_vibe`
 - `design_direction`
 - `definition_of_done`
-- `blocker_policy`
 
 ## Default Handling
 
@@ -138,9 +126,11 @@ If the user says "use the defaults" or an equivalent phrase:
 - deploy: Vercel
 - data store: Supabase or managed Postgres depending on project shape
 - theme: Minimal
+- visual vibe: derive from theme by default (`Minimal -> Calm`, `Bold -> Techy`, `Playful -> Playful`, `Premium -> Premium`)
 - auth: none unless clearly required
 - payments: none unless clearly required
 - admin: lightweight admin page only if the use case implies operational control
+- blocker policy: retry technical failures automatically, defer low-risk polish, ask only for secrets, approvals, payments, OAuth, and production launch
 
 Record every inferred default in the final summary.
 
@@ -151,6 +141,7 @@ After the final question:
 1. Summarize the captured project contract.
 2. Write or update:
    - `docs/spec.md`
+   - `docs/design.md` for user-facing products
    - `docs/progress.md`
    - `docs/next.md`
    - `autopilot/state.json`
@@ -165,6 +156,15 @@ python3 /Users/minsu/Documents/Codex/scripts/record_answer.py --workspace <targe
 ```
 
 The second command should be repeated once per answer. On the final answer it will generate the spec, progress, next, and runtime state files automatically.
+
+## Design Research Rule
+
+If the project is user-facing, design synthesis is mandatory before the first UI implementation.
+
+- Use the local `frontend-ui-ux` skill as the default design helper
+- Use Figma first when a Figma reference exists
+- Otherwise rely on curated inspiration sources such as Mobbin, Refero, Land-book, and Page Collective
+- Write the result into `docs/design.md`
 
 ## Output Style
 
