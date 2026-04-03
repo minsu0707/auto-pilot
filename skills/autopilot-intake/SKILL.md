@@ -154,8 +154,8 @@ After the final question:
 If script usage is appropriate, use:
 
 ```bash
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/init_intake.py --workspace <target-workspace> --prompt "<initial prompt>"
-python3 /Users/minsu/Documents/Codex/auto-pilot/scripts/record_answer.py --workspace <target-workspace> --answer "<user answer>"
+python3 /Users/minsu/Documents/Codex/scripts/init_intake.py --workspace <target-workspace> --prompt "<initial prompt>"
+python3 /Users/minsu/Documents/Codex/scripts/record_answer.py --workspace <target-workspace> --answer "<user answer>"
 ```
 
 The second command should be repeated once per answer. On the final answer it will generate the spec, progress, next, and runtime state files automatically.
