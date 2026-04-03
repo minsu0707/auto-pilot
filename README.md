@@ -26,10 +26,10 @@ Use `v0.1.1` for stable installs. Use `develop` only to test upcoming changes.
 ## Run in Codex
 
 ```text
-/auto-pilot:autopilot Build a budgeting app for freelancers
+/autopilot Build a budgeting app for freelancers
 ```
 
-Use `/auto-pilot:autopilot` as the primary public entry point.
+Use `/autopilot` as the primary public entry point.
 Restart Codex once after installation so the slash command is loaded.
 Install once, then route to intake for new projects and resume automatically for existing ones.
 After restart, you can also use the natural-language shortcut `Build a budgeting app for freelancers ap`.
@@ -128,4 +128,4 @@ After the final answer, Auto Pilot generates:
 
 This repository root is the canonical plugin root, docs home, and installer home.
 
-For end users, the recommended flow is the one-line installer, one Codex restart, then `/auto-pilot:autopilot` inside Codex.
+For end users, the recommended flow is the one-line installer, one Codex restart, then `/autopilot` inside Codex.

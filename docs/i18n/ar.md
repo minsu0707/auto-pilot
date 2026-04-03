@@ -13,10 +13,10 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install
 ## شغّل داخل Codex
 
 ```text
-/auto-pilot:autopilot Build a budgeting app for freelancers
+/autopilot Build a budgeting app for freelancers
 ```
 
-استخدم `/auto-pilot:autopilot` كنقطة الدخول العامة الأساسية.
+استخدم `/autopilot` كنقطة الدخول العامة الأساسية.
 بعد التثبيت، أعد تشغيل Codex مرة واحدة حتى يصبح slash command متاحًا.
 بعد التثبيت مرة واحدة، يبدأ intake تلقائيًا للمشاريع الجديدة ويستأنف المشاريع الحالية تلقائيًا.
 بعد إعادة التشغيل يمكنك أيضًا استخدام الاختصار الطبيعي `Build a budgeting app for freelancers ap`.
@@ -141,4 +141,4 @@ python3 scripts/autopilot.py status \
 
 هذا المجلد هو جذر الإضافة وجذر الوثائق والمكان المرجعي لسكربتات التثبيت.
 
-بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم إعادة تشغيل Codex مرة واحدة وبعدها استخدام `/auto-pilot:autopilot` داخل Codex.
+بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم إعادة تشغيل Codex مرة واحدة وبعدها استخدام `/autopilot` داخل Codex.
