@@ -19,23 +19,43 @@
 
 ## 한줄로 설치하기
 
+현재 stable `v0.1.1`은 `curl`, `tar`, `python3`가 필요하고, 공개된 slash command 진입점을 유지합니다.
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-안정적으로 설치하려면 `v0.1.1`을 사용하고, stable release tag는 반드시 그 태그 자체를 설치하도록 유지하세요. 아래 예시는 다음 stable release에 반영될 현재 저장소 워크플로를 설명하므로, 다음 태그 전에 미리 검증할 때만 `develop`을 사용하세요.
-다음 stable tag를 만들 때는 install URL, 설치 예시, baked-in stable ref를 함께 갱신해야 합니다.
+다음 stable release 라인을 미리 보려면 `develop`을 명시해서 설치하세요.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/develop/install.sh | env -u NO_COLOR bash
+```
+
+현재 배포된 릴리스는 `v0.1.1`이고, unreleased 동작을 테스트할 때만 `develop`을 사용하세요. 다음 stable tag를 만들 때는 stable install URL, 실행 예시, baked-in stable ref를 함께 갱신해야 합니다.
 
 ## Codex에서 실행하기
+
+### Stable `v0.1.1`
+
+```text
+/auto-pilot:autopilot Build a budgeting app for freelancers
+```
+
+stable 공개 기본 진입점은 `/auto-pilot:autopilot`입니다.
+설치 후에는 slash command가 보이도록 Codex를 한 번 다시 시작하면 됩니다.
+한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
+재시작 후에는 `Build a budgeting app for freelancers ap` 같은 자연어 숏컷도 사용할 수 있습니다.
+
+### Preview on `develop`
 
 ```text
 $auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
-공개 기본 진입점은 `$auto-pilot`입니다.
-설치 후에는 skill이 보이도록 Codex를 한 번 다시 시작하면 됩니다.
-한 번 설치한 뒤에는 새 프로젝트면 intake로 보내고, 기존 프로젝트면 자동으로 resume 흐름으로 이어집니다.
+`$auto-pilot`은 `develop`을 설치했을 때만 사용하세요.
 재시작 후에는 `Build a diary app my friend Dohyeon would love ap` 같은 자연어 숏컷도 사용할 수 있습니다.
+
+아래 섹션들은 다음 stable release에 포함될 `main` 기준 현재 저장소 워크플로를 설명합니다.
 
 ## What It Is
 

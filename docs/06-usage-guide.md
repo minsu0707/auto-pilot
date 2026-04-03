@@ -12,18 +12,28 @@ Use this guide when you want to:
 
 ## Recommended Public Entry Point
 
-Inside Codex, use:
+Stable `v0.1.1`:
+
+```text
+/auto-pilot:autopilot Build a budgeting app for freelancers
+```
+
+Use `/auto-pilot:autopilot` when you installed the current stable tag.
+
+Preview on `develop`:
 
 ```text
 $auto-pilot Build a diary app my friend Dohyeon would love
 ```
 
-`$auto-pilot` is the primary public entry point.
-The plugin command in `commands/autopilot.md` is a secondary path.
+Use `$auto-pilot` only when you intentionally installed the unreleased `develop` line.
+On `develop`, the plugin command in `commands/autopilot.md` remains a secondary path behind `$auto-pilot`.
 
 ## Install
 
 ### Stable
+
+Stable `v0.1.1` expects `curl`, `tar`, and `python3`.
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
@@ -35,13 +45,25 @@ Use the stable tag when you want the currently published release line.
 
 Use `develop` only when you intentionally want the next unreleased behavior for testing.
 
+```bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/develop/install.sh | env -u NO_COLOR bash
+```
+
 ## First Run in Codex
 
-1. Install Auto Pilot.
-2. Restart Codex once so the skill loads.
-3. Run `$auto-pilot` with a short product prompt.
+This guide documents the current `main` workflow. If you stay on stable `v0.1.1`, use the stable path below. Features such as `docs/design.md` land on the preview line first and ship in the next stable release.
 
-Example:
+1. Install Auto Pilot from the stable tag or `develop`.
+2. Restart Codex once so the skill loads.
+3. Run the command that matches the line you installed.
+
+Stable example:
+
+```text
+/auto-pilot:autopilot Build a budgeting app for freelancers
+```
+
+Preview example:
 
 ```text
 $auto-pilot Build a diary app my friend Dohyeon would love
