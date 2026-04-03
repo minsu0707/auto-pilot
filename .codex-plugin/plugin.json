@@ -1,6 +1,6 @@
 {
   "name": "auto-pilot",
-  "version": "0.1.1",
+  "version": "0.1.2-dev",
   "description": "Intake-first autonomous project execution for Codex.",
   "type": "plugin",
   "author": {

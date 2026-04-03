@@ -10,6 +10,8 @@
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
+للتثبيت المستقر استخدم `v0.1.1`. يجب أن يثبّت stable release tag نفس ذلك الإصدار، واستخدم `develop` فقط إذا أردت تجربة التغييرات القادمة قبل إصدار stable التالي.
+
 ## شغّل داخل Codex
 
 ```text
@@ -38,7 +40,7 @@ $auto-pilot Build a diary app my friend Dohyeon would love
 
 - intake بسؤال واحد في كل مرة
 - definition of done واضح
-- blocker policy
+- blocker policy افتراضي
 - حالة مشروع قابلة للاستئناف
 
 الهدف بسيط: babysitting أقل، وتقدم أكثر.
@@ -48,7 +50,9 @@ $auto-pilot Build a diary app my friend Dohyeon would love
 - يحول طلب مشروع قصير إلى جلسة intake منظمة
 - يستخدم نمط UX من نوع `1. Question` / `Questions remaining: N`
 - يكتب `docs/spec.md` و`docs/progress.md` و`docs/next.md` و`autopilot/state.json` و`autopilot/blockers.json`
+- وفي المشاريع ذات الواجهة للمستخدم ينشئ أيضًا `docs/design.md` بحيث يبدأ العمل من design brief واضح بدلًا من واجهة generic افتراضية
 - يحتفظ بحالة كافية لكي تستأنف جلسة Codex التالية من حيث توقفت
+- وصف التصميم هنا يعني إنشاء design brief مبني على curated references، وليس الادعاء بأنه أنهى بحثًا واسعًا عبر الويب
 - يبقي الكود الرسمي للإضافة والوثائق ومنطق التثبيت جميعها في جذر المستودع
 
 ## Quick Start
@@ -66,7 +70,7 @@ python3 scripts/autopilot.py start \
 ```bash
 python3 scripts/autopilot.py answer \
   --workspace /tmp/my-project \
-  --text "Freelancers and solo business owners"
+  --text "مستخدمون صغار السن يريدون تطبيق يوميات دافئًا وخاصًا يمكن تزيينه كل يوم"
 ```
 
 تحقق من الوضع الحالي والحالة:
@@ -79,6 +83,7 @@ python3 scripts/autopilot.py status \
 بعد الإجابة الأخيرة، ينشئ Auto Pilot الملفات التالية:
 
 - `docs/spec.md`
+- `docs/design.md` للمشاريع ذات الواجهة للمستخدم
 - `docs/progress.md`
 - `docs/next.md`
 - `autopilot/state.json`
@@ -89,8 +94,9 @@ python3 scripts/autopilot.py status \
 1. يبدأ prompt قصير عملية intake.
 2. يطرح Auto Pilot سؤالًا واحدًا في كل مرة.
 3. تُطبَّع الإجابات إلى عقد مشروع.
-4. تُنشأ runtime state للتنفيذ والاستئناف لاحقًا.
-5. يمكن لـ Codex المتابعة من الملفات المحفوظة بدلًا من إعادة اكتشاف السياق.
+4. وفي المشاريع ذات الواجهة للمستخدم، يُنشأ أيضًا `docs/design.md` اعتمادًا على theme وvibe وdesign direction.
+5. تُنشأ runtime state للتنفيذ والاستئناف لاحقًا.
+6. يمكن لـ Codex المتابعة من الملفات المحفوظة بدلًا من إعادة اكتشاف السياق.
 
 ## Repository Layout
 
@@ -98,6 +104,7 @@ python3 scripts/autopilot.py status \
 - `docs/02-prd.md`: functional requirements and operating model
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
+- `docs/05-how-it-works.md`: شرح مرئي لتدفق intake وstate وresume
 - `docs/i18n/*`: localized README files
 - `.codex-plugin/plugin.json`: Codex plugin manifest
 - `commands/autopilot.md`: secondary plugin command entry point
@@ -139,6 +146,6 @@ python3 scripts/autopilot.py status \
 
 ## Current Status
 
-هذا المجلد هو جذر الإضافة وجذر الوثائق والمكان المرجعي لسكربتات التثبيت.
+جذر هذا المستودع هو جذر الإضافة وجذر الوثائق والمكان المرجعي لسكربتات التثبيت.
 
 بالنسبة للمستخدم العادي، المسار الموصى به هو التثبيت عبر one-line installer ثم إعادة تشغيل Codex مرة واحدة وبعدها استخدام `$auto-pilot` داخل Codex.

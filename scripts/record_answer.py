@@ -35,6 +35,8 @@ def main() -> None:
             intake_path.unlink()
         print("intake-complete")
         print(f"spec: {outputs['spec']}")
+        if outputs["design"].exists():
+            print(f"design: {outputs['design']}")
         print(f"progress: {outputs['progress']}")
         print(f"next: {outputs['next']}")
         print(f"state: {outputs['state']}")
