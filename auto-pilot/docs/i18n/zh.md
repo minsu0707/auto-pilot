@@ -1,4 +1,4 @@
-# Auto Pilot Docs
+# Auto Pilot
 
 > 一次提问，锁定简报，然后持续构建。
 
@@ -21,9 +21,78 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 安装一次后，新项目会自动进入 intake，已有项目会自动走 resume 流程。
 重启后，也可以使用 `Build a budgeting app for freelancers ap` 这样的自然语言快捷写法。
 
-此文件夹是 `Auto Pilot` Codex 插件的正式根目录。该插件会把简短的项目请求转换为 intake-driven 的长时间自治执行工作流。
+此文件夹是 `Auto Pilot` Codex 插件的正式根目录。该插件会把 `Build me a budgeting app` 这样的短请求转换为 intake-first 执行工作流。
 
-## Files
+Auto Pilot 不会每走几步就停下来重新追问上下文，而是会：
+
+- 一次性收集最小必要输入
+- 保存可复用的项目契约
+- 生成 spec、progress、next-step 和 runtime state 文件
+- 让下一次 Codex 会话也能从中断位置继续
+
+## Why It Exists
+
+短提示很方便，但通常不足以支撑长时间自治工作。
+
+Auto Pilot 通过以下能力填补这个缺口：
+
+- 一次只问一个问题的 intake
+- 明确的 definition of done
+- blocker policy
+- 可恢复的项目状态
+
+目标很简单：少 babysitting，多推进。
+
+## What It Does
+
+- 把简短项目请求转换成结构化 intake 会话
+- 使用 `1. Question` / `Questions remaining: N` UX 模式
+- 写入 `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json`
+- 保留足够状态，让下一次 Codex 会话从停止处继续
+- 将正式插件代码、文档和安装逻辑统一放在 `auto-pilot/` 下
+
+## Quick Start
+
+启动新的 intake 会话：
+
+```bash
+python3 scripts/autopilot.py start \
+  --workspace /tmp/my-project \
+  --prompt "Build a budgeting app for freelancers"
+```
+
+回答当前问题：
+
+```bash
+python3 scripts/autopilot.py answer \
+  --workspace /tmp/my-project \
+  --text "Freelancers and solo business owners"
+```
+
+查看当前模式和状态：
+
+```bash
+python3 scripts/autopilot.py status \
+  --workspace /tmp/my-project
+```
+
+最后一个回答提交后，Auto Pilot 会生成以下文件：
+
+- `docs/spec.md`
+- `docs/progress.md`
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+
+## How It Works
+
+1. 一个简短提示启动 intake。
+2. Auto Pilot 一次只问一个问题。
+3. 回答会被归一化为项目契约。
+4. 为后续执行和恢复创建 runtime state。
+5. Codex 不需要重新摸索上下文，直接从保存的文件继续。
+
+## Repository Layout
 
 - `docs/01-product-brief.md`: product overview
 - `docs/02-prd.md`: functional requirements and operating model
@@ -38,15 +107,13 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - `scripts/autopilot.py`: recommended CLI entry point
 - `scripts/*.py`: intake, answer recording, and status scripts
 - `templates/*.json`: state templates
+- `install.sh`: canonical installer
+- `uninstall.sh`: canonical uninstaller
 
 ## Current Identity
 
 - Product name: `Auto Pilot`
 - Plugin slug: `auto-pilot`
-
-## Current Status
-
-此文件夹就是插件根目录、文档根目录和安装脚本的基准位置。
 
 ## Usage
 
@@ -64,33 +131,14 @@ curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.s
 - 下一行显示 `Questions remaining: N`
 - 最后一个回答后总结契约，并开始 spec lock 与执行
 
-## Script Example
-
-```bash
-python3 scripts/autopilot.py start \
-  --workspace /path/to/project \
-  --prompt "Build a budgeting app for freelancers"
-
-python3 scripts/autopilot.py answer \
-  --workspace /path/to/project \
-  --text "Freelancers and solo business owners"
-
-python3 scripts/autopilot.py status \
-  --workspace /path/to/project
-```
-
-最后一个回答提交后，会生成以下文件：
-
-- `docs/spec.md`
-- `docs/progress.md`
-- `docs/next.md`
-- `autopilot/state.json`
-- `autopilot/blockers.json`
-
 底层脚本仍然可用：
 
 - `init_intake.py`
 - `record_answer.py`
 - `status.py`
+
+## Current Status
+
+此文件夹就是插件根目录、文档根目录和安装脚本的基准位置。
 
 面对普通用户，推荐流程是先用 one-line installer 安装，重启一次 Codex，再在 Codex 中使用 `/auto-pilot:autopilot`。
