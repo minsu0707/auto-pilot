@@ -21,7 +21,8 @@ English | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.1/install.sh | bash
 ```
 
-Use `v0.1.1` for stable installs. Stable release tags should install that exact tag. Use `develop` only to test upcoming changes.
+Use `v0.1.1` for stable installs. Stable release tags should install that exact tag, and the examples below describe the current repository workflow that will be promoted in the next stable release. Use `develop` only to test those upcoming changes before the next tag is cut.
+When the next stable tag is created, update the install URL, install examples, and the baked-in stable ref together.
 
 ## Run in Codex
 
@@ -51,7 +52,7 @@ Auto Pilot closes that gap by adding:
 
 - one-question-at-a-time intake
 - explicit definition of done
-- blocker policy
+- a default blocker policy
 - resumable project state
 
 The goal is simple: less babysitting, more forward motion.
@@ -61,7 +62,9 @@ The goal is simple: less babysitting, more forward motion.
 - Converts a short project request into a structured intake session
 - Uses a `1. Question` / `Questions remaining: N` interaction pattern
 - Writes `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, and `autopilot/blockers.json`
+- Adds `docs/design.md` for user-facing projects so UI work starts from a concrete design brief instead of generic defaults
 - Keeps enough state for the next Codex session to resume from where it stopped
+- Keeps design research scoped to a brief and a curated reference stack instead of pretending broad web research already happened
 - Keeps canonical plugin code, docs, and installer logic at the repository root
 
 ## Quick Start
@@ -79,7 +82,7 @@ Answer the current question:
 ```bash
 python3 scripts/autopilot.py answer \
   --workspace /tmp/my-project \
-  --text "Freelancers and solo business owners"
+  --text "Teenagers who want a cozy, private diary they can decorate every day"
 ```
 
 Check the current mode and status:
@@ -94,6 +97,7 @@ After the final answer, Auto Pilot generates:
 - `docs/spec.md`
 - `docs/progress.md`
 - `docs/next.md`
+- `docs/design.md` for user-facing projects
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 
@@ -102,8 +106,9 @@ After the final answer, Auto Pilot generates:
 1. A short prompt starts intake.
 2. Auto Pilot asks one question at a time.
 3. The answers are normalized into a project contract.
-4. Runtime state is created for future execution and resume.
-5. Codex can continue from saved files instead of rediscovering context.
+4. User-facing projects also get a `docs/design.md` brief built from the selected theme, vibe, and design direction.
+5. Runtime state is created for future execution and resume.
+6. Codex can continue from saved files instead of rediscovering context.
 
 ## Repository Layout
 
