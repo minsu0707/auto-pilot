@@ -21,6 +21,8 @@
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
 ```
 
+安定版の導入には `main` を使い、これから入る変更の検証時だけ `develop` を使ってください。
+
 ## Codex で実行
 
 ```text

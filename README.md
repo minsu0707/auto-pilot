@@ -21,6 +21,8 @@ English | [한국어](./README.ko.md) | [日本語](./README.ja.md)
 curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
 ```
 
+Use `main` for stable installs. Use `develop` only to test upcoming changes.
+
 ## Run in Codex
 
 ```text
