@@ -117,6 +117,7 @@ After the final answer, Auto Pilot generates:
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/05-how-it-works.md`: visual walkthrough of intake, state, and resume flow
+- `docs/06-usage-guide.md`: detailed install, run, resume, CLI, and team-usage guide
 - `docs/i18n/*`: localized README files
 - `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
@@ -135,3 +136,4 @@ After the final answer, Auto Pilot generates:
 This repository root is the canonical plugin root, docs home, and installer home.
 
 For end users, the recommended flow is the one-line installer, one Codex restart, then `$auto-pilot` inside Codex.
+For a fuller walkthrough, start with `docs/06-usage-guide.md`.
