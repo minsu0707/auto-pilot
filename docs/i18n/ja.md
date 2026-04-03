@@ -119,6 +119,7 @@ python3 scripts/autopilot.py status \
 - `docs/03-plugin-spec.md`: plugin structure and state model
 - `docs/04-mvp-roadmap.md`: MVP implementation sequence
 - `docs/05-how-it-works.md`: intake、state、resume の流れを図でまとめた文書
+- `docs/06-usage-guide.md`: インストール、実行、resume、CLI、チーム運用の詳細ガイド
 - `docs/i18n/*`: localized README files
 - `assets/auto-pilot.png`: mascot image
 - `.codex-plugin/plugin.json`: Codex plugin manifest
@@ -137,3 +138,4 @@ python3 scripts/autopilot.py status \
 このリポジトリルートがプラグインルート兼ドキュメントルート兼インストーラの基準位置です。
 
 一般ユーザー向けの推奨フローは、one-line installer で導入し、Codex を一度再起動してから `$auto-pilot` を使うことです。
+より詳しい使い方は `docs/06-usage-guide.md` を参照してください。

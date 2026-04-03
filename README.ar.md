@@ -3,6 +3,7 @@
 الوثائق الرسمية وملفات الإضافة الأساسية موجودة الآن في جذر المستودع.
 
 - الوثائق الكاملة: [README.md](./README.md)
+- دليل الاستخدام التفصيلي: [docs/06-usage-guide.md](./docs/06-usage-guide.md)
 - 한국어: [README.ko.md](./README.ko.md)
 - 日本語: [README.ja.md](./README.ja.md)
 - 中文: [docs/i18n/zh.md](./docs/i18n/zh.md)
