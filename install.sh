@@ -41,6 +41,19 @@ require_cmd curl
 require_cmd tar
 require_cmd python3
 
+setup_colors() {
+  if [[ -t 1 && -z "${NO_COLOR:-}" ]]; then
+    COLOR_ART_PRIMARY=$'\033[1;38;5;45m'
+    COLOR_ART_SECONDARY=$'\033[1;38;5;81m'
+    COLOR_RESET=$'\033[0m'
+    return
+  fi
+
+  COLOR_ART_PRIMARY=''
+  COLOR_ART_SECONDARY=''
+  COLOR_RESET=''
+}
+
 print_success_art() {
   local image_path="${INSTALL_DIR}/assets/auto-pilot.png"
 
@@ -66,14 +79,15 @@ print_success_art() {
     fi
   fi
 
-  cat <<'EOF'
-      ___   _   _ _____ ___        ____ ___ _     ___ _____
-     / _ \ | | | |_   _/ _ \ _____|  _ \_ _| |   / _ \_   _|
-    | | | || | | | | || | | |_____| |_) | || |  | | | || |
-    | |_| || |_| | | || |_| |     |  __/| || |__| |_| || |
-     \__\_\ \___/  |_| \___/      |_|  |___|_____\___/ |_|
-EOF
+  printf '%s\n' \
+    "${COLOR_ART_PRIMARY}      ___   _   _ _____ ___        ____ ___ _     ___ _____${COLOR_RESET}" \
+    "${COLOR_ART_PRIMARY}     / _ \\ | | | |_   _/ _ \\ _____|  _ \\_ _| |   / _ \\_   _|${COLOR_RESET}" \
+    "${COLOR_ART_SECONDARY}    | | | || | | | | || | | |_____| |_) | || |  | | | || |${COLOR_RESET}" \
+    "${COLOR_ART_SECONDARY}    | |_| || |_| | | || |_| |     |  __/| || |__| |_| || |${COLOR_RESET}" \
+    "${COLOR_ART_SECONDARY}     \\__\\_\\\\ \\___/  |_| \\___/      |_|  |___|_____\\___/ |_|${COLOR_RESET}"
 }
+
+setup_colors
 
 echo "Downloading Auto Pilot from ${REPO_SLUG}@${REPO_REF}..."
 curl -fsSL "${ARCHIVE_URL}" -o "${ARCHIVE_PATH}"
