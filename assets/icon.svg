@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Auto Pilot">
-  <rect width="64" height="64" rx="14" fill="#0F766E"/>
-  <path d="M18 36c0-10.3 7.8-18 18-18s18 7.7 18 18" fill="none" stroke="#F0FDFA" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="32" cy="36" r="6" fill="#F0FDFA"/>
-  <path d="M32 36l12-10" fill="none" stroke="#99F6E4" stroke-width="4" stroke-linecap="round"/>
-  <path d="M15 48h34" fill="none" stroke="#CCFBF1" stroke-width="4" stroke-linecap="round"/>
-</svg>
