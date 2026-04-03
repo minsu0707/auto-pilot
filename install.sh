@@ -63,8 +63,8 @@ print_success_art() {
       return
     fi
 
-    if command -v chafa >/dev/null 2>&1; then
-      chafa --symbols vhalf --size 44x22 "${image_path}" || true
+    if command -v kitty >/dev/null 2>&1 && [[ "${TERM:-}" == xterm-kitty* ]]; then
+      kitty +kitten icat --silent "${image_path}" || true
       return
     fi
 
@@ -73,8 +73,9 @@ print_success_art() {
       return
     fi
 
-    if command -v kitty >/dev/null 2>&1 && [[ "${TERM:-}" == xterm-kitty* ]]; then
-      kitty +kitten icat --silent "${image_path}" || true
+    # Chafa tends to mangle the pixel text logo at this size, so keep it opt-in.
+    if [[ "${AUTO_PILOT_USE_CHAFA:-0}" == "1" ]] && command -v chafa >/dev/null 2>&1; then
+      chafa --symbols vhalf --size 44x22 "${image_path}" || true
       return
     fi
   fi
