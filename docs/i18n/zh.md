@@ -7,7 +7,7 @@
 ## 一行安装
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/minsu0707/auto-pilot/v0.1.0/install.sh | bash
 ```
 
 ## 在 Codex 中运行
