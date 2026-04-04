@@ -90,10 +90,14 @@ The goal is simple: less babysitting, more forward motion.
 
 ## Quick Start
 
+These CLI examples are for plugin development or local debugging.
+Run them from the Auto Pilot repository root or the installed plugin directory.
+If you are using Auto Pilot inside Codex, prefer `$auto-pilot` or `/auto-pilot:autopilot` and ignore this CLI section.
+
 Start a new intake session:
 
 ```bash
-python3 scripts/autopilot.py start \
+./scripts/autopilot start \
   --workspace /tmp/my-project \
   --prompt "Build a diary app my friend Dohyeon would love"
 ```
@@ -101,7 +105,7 @@ python3 scripts/autopilot.py start \
 Answer the current question:
 
 ```bash
-python3 scripts/autopilot.py answer \
+./scripts/autopilot answer \
   --workspace /tmp/my-project \
   --text "Teenagers who want a cozy, private diary they can decorate every day"
 ```
@@ -109,14 +113,14 @@ python3 scripts/autopilot.py answer \
 Check the current mode and status:
 
 ```bash
-python3 scripts/autopilot.py status \
+./scripts/autopilot status \
   --workspace /tmp/my-project
 ```
 
 If the project needs upfront integration env values, submit them in one payload:
 
 ```bash
-python3 scripts/autopilot.py secrets \
+./scripts/autopilot secrets \
   --workspace /tmp/my-project \
   --text 'GOOGLE_CLIENT_ID=...'
 ```
@@ -156,7 +160,8 @@ After the final answer, Auto Pilot either moves into `setup-secrets` or generate
 - `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
-- `scripts/autopilot.py`: recommended CLI entry point
+- `scripts/autopilot`: recommended CLI entry point
+- `scripts/autopilot.py`: Python backend for the CLI wrapper
 - `scripts/*.py`: intake, answer recording, and status scripts
 - `templates/*.json`: state templates
 - `install.sh`: canonical installer

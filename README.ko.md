@@ -90,10 +90,14 @@ Auto Pilot은 이 간극을 아래 요소로 메웁니다.
 
 ## Quick Start
 
+이 CLI 예시는 플러그인 개발 또는 로컬 디버깅용입니다.
+반드시 Auto Pilot 저장소 루트나 설치된 플러그인 디렉터리에서 실행하세요.
+Codex 안에서 쓰는 일반 사용 흐름이라면 이 섹션 대신 `$auto-pilot` 또는 `/auto-pilot:autopilot`를 쓰면 됩니다.
+
 새 intake 세션 시작:
 
 ```bash
-python3 scripts/autopilot.py start \
+./scripts/autopilot start \
   --workspace /tmp/my-project \
   --prompt "Build a diary app my friend Dohyeon would love"
 ```
@@ -101,7 +105,7 @@ python3 scripts/autopilot.py start \
 현재 질문에 답변:
 
 ```bash
-python3 scripts/autopilot.py answer \
+./scripts/autopilot answer \
   --workspace /tmp/my-project \
   --text "매일 꾸미며 비밀스럽게 기록하고 싶은 10대 사용자"
 ```
@@ -109,14 +113,14 @@ python3 scripts/autopilot.py answer \
 현재 모드와 상태 확인:
 
 ```bash
-python3 scripts/autopilot.py status \
+./scripts/autopilot status \
   --workspace /tmp/my-project
 ```
 
 프로젝트에 upfront integration env 값이 필요하면 한 번에 제출할 수 있습니다.
 
 ```bash
-python3 scripts/autopilot.py secrets \
+./scripts/autopilot secrets \
   --workspace /tmp/my-project \
   --text 'GOOGLE_CLIENT_ID=...'
 ```

@@ -129,10 +129,14 @@ If required env values are missing, Auto Pilot switches to `setup-secrets` first
 At that point you submit the missing values in one payload with:
 
 ```bash
-python3 scripts/autopilot.py secrets \
+./scripts/autopilot secrets \
   --workspace /tmp/my-project \
   --text 'GOOGLE_CLIENT_ID=...'
 ```
+
+These CLI commands are for local plugin development or debugging.
+Run them from the Auto Pilot repository root or the installed plugin directory.
+For normal usage inside Codex, prefer `$auto-pilot` or `/auto-pilot:autopilot`.
 
 ## What Each File Means
 
@@ -294,11 +298,12 @@ The goal is to pause only the blocked path, not the whole project.
 ## CLI Scripts
 
 These scripts are useful for local testing and debugging.
+Run them from the Auto Pilot repository root or the installed plugin directory.
 
 ### Start intake
 
 ```bash
-python3 scripts/autopilot.py start \
+./scripts/autopilot start \
   --workspace /tmp/my-project \
   --prompt "Build a diary app my friend Dohyeon would love"
 ```
@@ -306,7 +311,7 @@ python3 scripts/autopilot.py start \
 ### Answer intake
 
 ```bash
-python3 scripts/autopilot.py answer \
+./scripts/autopilot answer \
   --workspace /tmp/my-project \
   --text "Teenagers who want a cozy, private diary they can decorate every day"
 ```
@@ -314,8 +319,16 @@ python3 scripts/autopilot.py answer \
 ### Check status
 
 ```bash
-python3 scripts/autopilot.py status \
+./scripts/autopilot status \
   --workspace /tmp/my-project
+```
+
+### Submit upfront integration secrets
+
+```bash
+./scripts/autopilot secrets \
+  --workspace /tmp/my-project \
+  --text 'GOOGLE_CLIENT_ID=...'
 ```
 
 ### Alternate answer helper

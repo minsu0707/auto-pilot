@@ -92,10 +92,14 @@ Auto Pilot は次の要素でそのギャップを埋めます。
 
 ## Quick Start
 
+この CLI 例はプラグイン開発またはローカルデバッグ用です。
+必ず Auto Pilot のリポジトリルート、またはインストール済みプラグインディレクトリから実行してください。
+Codex 内で通常利用する場合は、この CLI セクションではなく `$auto-pilot` または `/auto-pilot:autopilot` を使ってください。
+
 新しい intake セッションを開始:
 
 ```bash
-python3 scripts/autopilot.py start \
+./scripts/autopilot start \
   --workspace /tmp/my-project \
   --prompt "Build a diary app my friend Dohyeon would love"
 ```
@@ -103,7 +107,7 @@ python3 scripts/autopilot.py start \
 現在の質問に回答:
 
 ```bash
-python3 scripts/autopilot.py answer \
+./scripts/autopilot answer \
   --workspace /tmp/my-project \
   --text "毎日飾りながら秘密の日記を書きたい10代のユーザー"
 ```
@@ -111,14 +115,14 @@ python3 scripts/autopilot.py answer \
 現在のモードと状態を確認:
 
 ```bash
-python3 scripts/autopilot.py status \
+./scripts/autopilot status \
   --workspace /tmp/my-project
 ```
 
 プロジェクトで upfront integration env 値が必要なら、1回でまとめて送れます。
 
 ```bash
-python3 scripts/autopilot.py secrets \
+./scripts/autopilot secrets \
   --workspace /tmp/my-project \
   --text 'GOOGLE_CLIENT_ID=...'
 ```
