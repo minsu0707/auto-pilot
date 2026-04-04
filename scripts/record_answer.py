@@ -5,10 +5,10 @@ import argparse
 from pathlib import Path
 
 from autopilot_lib import (
-    bootstrap_workspace,
     format_question,
     intake_state_path,
     load_json,
+    prepare_workspace_after_intake,
     record_answer,
 )
 
@@ -29,19 +29,32 @@ def main() -> None:
         raise SystemExit(str(exc))
 
     if state.get("completed"):
-        outputs = bootstrap_workspace(workspace, state["answers"])
+        result = prepare_workspace_after_intake(workspace, state["answers"])
         intake_path = intake_state_path(workspace)
         if intake_path.exists():
             intake_path.unlink()
-        print("intake-complete")
-        print(f"spec: {outputs['spec']}")
-        if outputs["design"].exists():
-            print(f"design: {outputs['design']}")
-        print(f"progress: {outputs['progress']}")
+        outputs = result["outputs"]
+        if result["mode"] == "execution":
+            print("intake-complete")
+            print(f"spec: {outputs['spec']}")
+            if outputs["design"].exists():
+                print(f"design: {outputs['design']}")
+            print(f"progress: {outputs['progress']}")
+            print(f"next: {outputs['next']}")
+            print(f"state: {outputs['state']}")
+            print(f"blockers: {outputs['blockers']}")
+            print(f"secrets: {outputs['secrets']}")
+            print(f"summary: {outputs['summary']}")
+            return
+
+        print("setup-secrets")
         print(f"next: {outputs['next']}")
         print(f"state: {outputs['state']}")
         print(f"blockers: {outputs['blockers']}")
+        print(f"secrets: {outputs['secrets']}")
         print(f"summary: {outputs['summary']}")
+        print("")
+        print(result["message"])
         return
 
     print(format_question(load_json(intake_state_path(workspace))))

@@ -11,11 +11,13 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = ROOT / "templates"
+ENV_ASSIGNMENT_RE = re.compile(r"^\s*(?:export\s+)?([A-Z0-9_]+)\s*=\s*(.*)\s*$")
 
 
 DEFAULT_BLOCKER_POLICY = (
     "retry technical failures automatically, defer low-risk polish, "
-    "ask only for secrets, approvals, payments, OAuth, and production launch"
+    "collect required integration env values in one upfront setup step, "
+    "then ask only for approvals, payments, OAuth console work, and production launch"
 )
 DEFAULT_ARCHITECTURE = "Feature-based"
 DEFAULT_THEME = "Minimal"
@@ -45,6 +47,18 @@ class Question:
     optional: bool = False
 
 
+@dataclass(frozen=True)
+class ProviderSecretSpec:
+    id: str
+    display_name: str
+    required_env_vars: list[str]
+    optional_env_vars: list[str]
+    input_labels: dict[str, str]
+    validation_rules: dict[str, dict[str, str]]
+    setup_checklist: list[str]
+    docs_links: list[str]
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text())
 
@@ -65,12 +79,29 @@ def load_question_schema() -> list[Question]:
     return ordered + optional
 
 
+def load_provider_registry() -> list[dict[str, Any]]:
+    registry = load_json(TEMPLATES_DIR / "provider-secrets.json")
+    return registry.get("providers", [])
+
+
 def intake_state_path(workspace: Path) -> Path:
     return workspace / ".autopilot" / "intake.json"
 
 
 def intake_summary_path(workspace: Path) -> Path:
     return workspace / ".autopilot" / "intake-summary.json"
+
+
+def runtime_state_path(workspace: Path) -> Path:
+    return workspace / "autopilot" / "state.json"
+
+
+def blockers_state_path(workspace: Path) -> Path:
+    return workspace / "autopilot" / "blockers.json"
+
+
+def secrets_status_path(workspace: Path) -> Path:
+    return workspace / "autopilot" / "secrets-status.json"
 
 
 def require_intake_state(workspace: Path) -> dict[str, Any]:
@@ -233,12 +264,280 @@ def derive_defaults(answers: dict[str, str]) -> dict[str, str]:
     return resolved
 
 
+def is_requirement_enabled(value: str) -> bool:
+    normalized = normalize_bool_like(value)
+    return bool(normalized) and normalized != "no"
+
+
+def choose_env_file(workspace: Path, answers: dict[str, str]) -> Path:
+    stack = answers.get("stack_preferences", "").lower()
+    if any(token in stack for token in ("next.js", "nextjs", "vite", "react")):
+        return workspace / ".env.local"
+    return workspace / ".env"
+
+
+def env_example_path(workspace: Path) -> Path:
+    return workspace / ".env.example"
+
+
+def candidate_env_paths(workspace: Path, target_env_path: Path) -> list[Path]:
+    ordered = [target_env_path, workspace / ".env.local", workspace / ".env"]
+    unique: list[Path] = []
+    seen: set[Path] = set()
+    for path in ordered:
+        if path in seen:
+            continue
+        unique.append(path)
+        seen.add(path)
+    return unique
+
+
+def parse_env_value(raw_value: str) -> str:
+    value = raw_value.strip()
+    if value and value[0] == value[-1] and value[0] in {'"', "'"}:
+        return value[1:-1]
+    return value
+
+
+def parse_env_text(text: str) -> dict[str, str]:
+    values: dict[str, str] = {}
+    for line in text.splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        match = ENV_ASSIGNMENT_RE.match(line)
+        if not match:
+            raise ValueError(f"Invalid env line: {line}")
+        key = match.group(1)
+        value = match.group(2)
+        if " #" in value:
+            value = value.split(" #", 1)[0]
+        values[key] = parse_env_value(value)
+    return values
+
+
+def parse_secret_input(text: str) -> dict[str, str]:
+    stripped = text.strip()
+    if not stripped:
+        return {}
+    if stripped.startswith("{"):
+        payload = json.loads(stripped)
+        if not isinstance(payload, dict):
+            raise ValueError("Secret JSON payload must be an object.")
+        return {str(key): str(value) for key, value in payload.items() if str(value).strip()}
+    parsed = parse_env_text(stripped)
+    if not parsed:
+        raise ValueError("Secret payload must contain KEY=value lines or a JSON object.")
+    return parsed
+
+
+def read_env_file(path: Path) -> dict[str, str]:
+    if not path.exists():
+        return {}
+    return parse_env_text(path.read_text())
+
+
+def read_existing_env_values(workspace: Path, target_env_path: Path) -> dict[str, str]:
+    merged: dict[str, str] = {}
+    for path in candidate_env_paths(workspace, target_env_path):
+        for key, value in read_env_file(path).items():
+            if key not in merged and value.strip():
+                merged[key] = value.strip()
+    return merged
+
+
+def serialize_env_value(value: str) -> str:
+    if re.fullmatch(r"[A-Za-z0-9_./:@%+=,-]+", value):
+        return value
+    escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+    return f'"{escaped}"'
+
+
+def merge_env_values(path: Path, values: dict[str, str], overwrite_existing: bool = False) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    existing_text = path.read_text() if path.exists() else ""
+    lines = existing_text.splitlines()
+    managed_keys = list(values.keys())
+    seen_keys: set[str] = set()
+    updated_lines: list[str] = []
+
+    for line in lines:
+        match = ENV_ASSIGNMENT_RE.match(line)
+        if not match:
+            updated_lines.append(line)
+            continue
+        key = match.group(1)
+        if key not in values:
+            updated_lines.append(line)
+            continue
+
+        seen_keys.add(key)
+        current_value = parse_env_value(match.group(2))
+        if overwrite_existing or not current_value.strip():
+            updated_lines.append(f"{key}={serialize_env_value(values[key])}")
+        else:
+            updated_lines.append(line)
+
+    missing_keys = [key for key in managed_keys if key not in seen_keys]
+    if missing_keys and updated_lines:
+        updated_lines.append("")
+    for key in missing_keys:
+        updated_lines.append(f"{key}={serialize_env_value(values[key])}")
+
+    path.write_text("\n".join(updated_lines).rstrip() + "\n")
+
+
+def placeholder_for_env_key(key: str) -> str:
+    return f"your-{key.lower().replace('_', '-')}"
+
+
+def matches_provider_rule(answer_value: str, match_terms: list[str]) -> bool:
+    normalized = answer_value.lower()
+    return any(term.lower() in normalized for term in match_terms)
+
+
+def provider_spec_from_entry(entry: dict[str, Any]) -> ProviderSecretSpec:
+    return ProviderSecretSpec(
+        id=entry["id"],
+        display_name=entry.get("displayName", entry["id"]),
+        required_env_vars=list(entry.get("requiredEnvVars", [])),
+        optional_env_vars=list(entry.get("optionalEnvVars", [])),
+        input_labels=dict(entry.get("inputLabels", {})),
+        validation_rules=dict(entry.get("validationRules", {})),
+        setup_checklist=list(entry.get("setupChecklist", [])),
+        docs_links=list(entry.get("docsLinks", [])),
+    )
+
+
+def detect_required_providers(answers: dict[str, str]) -> list[ProviderSecretSpec]:
+    matches: list[ProviderSecretSpec] = []
+    for entry in load_provider_registry():
+        rules = entry.get("triggerRules", [])
+        for rule in rules:
+            field = rule.get("field", "")
+            value = answers.get(field, "").strip()
+            if value and matches_provider_rule(value, list(rule.get("matchAny", []))):
+                matches.append(provider_spec_from_entry(entry))
+                break
+    unique: list[ProviderSecretSpec] = []
+    seen: set[str] = set()
+    for provider in matches:
+        if provider.id in seen:
+            continue
+        unique.append(provider)
+        seen.add(provider.id)
+    return unique
+
+
+def validate_secret_value(key: str, value: str, provider: ProviderSecretSpec) -> str | None:
+    rule = provider.validation_rules.get(key, {})
+    kind = rule.get("kind", "non-empty")
+    if kind == "url" and not re.match(r"^https?://", value):
+        return f"{key} must be a valid http(s) URL."
+    if not value.strip():
+        return f"{key} cannot be empty."
+    return None
+
+
+def validate_secret_payload(payload: dict[str, str], providers: list[ProviderSecretSpec]) -> list[str]:
+    errors: list[str] = []
+    provider_by_key = {
+        key: provider
+        for provider in providers
+        for key in provider.required_env_vars + provider.optional_env_vars
+    }
+    for key, value in payload.items():
+        provider = provider_by_key.get(key)
+        if provider is None:
+            continue
+        error = validate_secret_value(key, value, provider)
+        if error:
+            errors.append(error)
+    return errors
+
+
+def required_secret_keys(providers: list[ProviderSecretSpec]) -> list[str]:
+    keys: list[str] = []
+    seen: set[str] = set()
+    for provider in providers:
+        for key in provider.required_env_vars:
+            if key in seen:
+                continue
+            keys.append(key)
+            seen.add(key)
+    return keys
+
+
+def secret_input_labels(providers: list[ProviderSecretSpec]) -> dict[str, str]:
+    labels: dict[str, str] = {}
+    for provider in providers:
+        labels.update(provider.input_labels)
+    return labels
+
+
+def build_secrets_status(
+    workspace: Path,
+    answers: dict[str, str],
+    providers: list[ProviderSecretSpec],
+) -> dict[str, Any]:
+    env_path = choose_env_file(workspace, answers)
+    existing_values = read_existing_env_values(workspace, env_path)
+    required_keys = required_secret_keys(providers)
+    present_keys = [key for key in required_keys if existing_values.get(key, "").strip()]
+    missing_keys = [key for key in required_keys if key not in present_keys]
+    setup_checklist = [
+        {
+            "providerId": provider.id,
+            "displayName": provider.display_name,
+            "items": provider.setup_checklist,
+            "docsLinks": provider.docs_links,
+        }
+        for provider in providers
+    ]
+    return {
+        "requiredProviders": [provider.id for provider in providers],
+        "envFilePath": str(env_path),
+        "requiredKeys": required_keys,
+        "presentKeys": present_keys,
+        "missingKeys": missing_keys,
+        "inputLabels": secret_input_labels(providers),
+        "setupChecklist": setup_checklist,
+        "status": "complete" if not missing_keys else "pending",
+    }
+
+
+def setup_pending_message(secret_status: dict[str, Any]) -> str:
+    labels = secret_status.get("inputLabels", {})
+    lines = [
+        "Integration setup is required before execution can start.",
+        f"Target env file: {secret_status['envFilePath']}",
+        "Accepted formats:",
+        "- KEY=value",
+        '- {"KEY":"value"}',
+        "Missing values:",
+    ]
+    for key in secret_status.get("missingKeys", []):
+        label = labels.get(key, key)
+        lines.append(f"- {key}: {label}")
+    lines.append("")
+    lines.append("Provider checklist:")
+    for provider in secret_status.get("setupChecklist", []):
+        lines.append(f"- {provider['displayName']}:")
+        for item in provider.get("items", []):
+            lines.append(f"  - {item}")
+        for link in provider.get("docsLinks", []):
+            lines.append(f"  - Docs: {link}")
+    return "\n".join(lines)
+
+
 def bool_label(value: str) -> str:
     normalized = normalize_bool_like(value)
     if normalized == "yes":
         return "Required"
     if normalized == "no":
         return "Not required"
+    if normalized:
+        return f"Required ({value})"
     return value or "TBD"
 
 
@@ -257,10 +556,7 @@ def execution_mode_for_answers(answers: dict[str, str]) -> str:
 
     user_facing = is_user_facing_project(answers)
     architecture = answers["architecture_preset"]
-    operational_surface = any(
-        normalize_bool_like(answers.get(key, "")) == "yes"
-        for key in ("auth_mode", "payments_mode", "admin_required")
-    )
+    operational_surface = any(is_requirement_enabled(answers.get(key, "")) for key in ("auth_mode", "payments_mode", "admin_required"))
 
     return "team-product" if (user_facing or architecture == "Scalable" or operational_surface) else "team-lite"
 
@@ -811,7 +1107,54 @@ def create_next_markdown(answers: dict[str, str]) -> str:
 """
 
 
-def create_runtime_state(answers: dict[str, str]) -> dict[str, Any]:
+def create_setup_pending_next_markdown(answers: dict[str, str], secret_status: dict[str, Any]) -> str:
+    provider_lines: list[str] = []
+    labels = secret_status.get("inputLabels", {})
+    provider_specs = {provider.id: provider for provider in detect_required_providers(answers)}
+    for provider in secret_status.get("setupChecklist", []):
+        provider_spec = provider_specs.get(provider["providerId"])
+        provider_lines.append(f"## {provider['displayName']}")
+        provider_lines.append("")
+        provider_lines.append(f"- Env file: {secret_status['envFilePath']}")
+        if provider_spec:
+            for key in provider_spec.required_env_vars:
+                if key not in secret_status.get("missingKeys", []):
+                    continue
+                provider_lines.append(f"- Missing {key}: {labels.get(key, key)}")
+        for item in provider.get("items", []):
+            provider_lines.append(f"- {item}")
+        for link in provider.get("docsLinks", []):
+            provider_lines.append(f"- Docs: {link}")
+        provider_lines.append("")
+    provider_block = "\n".join(provider_lines).strip()
+    return f"""# Next Steps
+
+## Execution Mode
+
+setup-secrets
+
+## Integration Setup
+
+- Intake is complete, but execution is paused until the required external integration values are available.
+- Target env file: {secret_status['envFilePath']}
+- Required providers: {", ".join(secret_status['requiredProviders'])}
+- Missing keys: {", ".join(secret_status['missingKeys']) or "None"}
+- Accepted input formats: `KEY=value` lines or a JSON object
+
+{provider_block}
+
+## Definition of Done Reference
+
+{answers['definition_of_done']}
+"""
+
+
+def create_runtime_state(
+    answers: dict[str, str],
+    setup_status: str = "complete",
+    required_integrations: list[str] | None = None,
+    secrets_ready: bool = True,
+) -> dict[str, Any]:
     user_facing = is_user_facing_project(answers)
     sources = select_design_sources(answers)
     execution_mode = execution_mode_for_answers(answers)
@@ -845,6 +1188,9 @@ def create_runtime_state(answers: dict[str, str]) -> dict[str, Any]:
         "retryCount": 0,
         "lastSuccessfulStep": "Locked project spec from intake",
         "definitionOfDoneMet": False,
+        "setupStatus": setup_status,
+        "requiredIntegrations": required_integrations or [],
+        "secretsReady": secrets_ready,
     }
 
 
@@ -860,8 +1206,24 @@ def create_blockers_state() -> dict[str, Any]:
     }
 
 
+def create_setup_pending_state(answers: dict[str, str], secret_status: dict[str, Any]) -> dict[str, Any]:
+    state = create_runtime_state(
+        answers,
+        setup_status="pending",
+        required_integrations=list(secret_status.get("requiredProviders", [])),
+        secrets_ready=False,
+    )
+    state["status"] = "setup-pending"
+    state["currentMilestone"] = "Integration setup"
+    state["currentTask"] = "Manager: collect the required external integration values before execution can start."
+    state["lastSuccessfulStep"] = "Locked intake and paused for upfront integration setup"
+    return state
+
+
 def bootstrap_workspace(workspace: Path, intake_answers: dict[str, str]) -> dict[str, Path]:
     answers = derive_defaults(intake_answers)
+    providers = detect_required_providers(answers)
+    secret_status = build_secrets_status(workspace, answers, providers)
 
     docs_dir = workspace / "docs"
     autopilot_dir = workspace / "autopilot"
@@ -872,16 +1234,31 @@ def bootstrap_workspace(workspace: Path, intake_answers: dict[str, str]) -> dict
     design_path = docs_dir / "design.md"
     progress_path = docs_dir / "progress.md"
     next_path = docs_dir / "next.md"
-    state_path = autopilot_dir / "state.json"
-    blockers_path = autopilot_dir / "blockers.json"
+    state_path = runtime_state_path(workspace)
+    blockers_path = blockers_state_path(workspace)
+    secrets_path = secrets_status_path(workspace)
 
     spec_path.write_text(create_spec_markdown(answers))
     if is_user_facing_project(answers):
         design_path.write_text(create_design_markdown(answers))
     progress_path.write_text(create_progress_markdown(answers))
     next_path.write_text(create_next_markdown(answers))
-    write_json(state_path, create_runtime_state(answers))
+    write_json(
+        state_path,
+        create_runtime_state(
+            answers,
+            setup_status="complete",
+            required_integrations=[provider.id for provider in providers],
+            secrets_ready=True,
+        ),
+    )
     write_json(blockers_path, create_blockers_state())
+    write_json(secrets_path, secret_status)
+    merge_env_values(
+        env_example_path(workspace),
+        {key: placeholder_for_env_key(key) for key in secret_status.get("requiredKeys", [])},
+        overwrite_existing=True,
+    )
 
     summary_path = intake_summary_path(workspace)
     write_json(summary_path, {"answers": answers})
@@ -893,5 +1270,110 @@ def bootstrap_workspace(workspace: Path, intake_answers: dict[str, str]) -> dict
         "next": next_path,
         "state": state_path,
         "blockers": blockers_path,
+        "secrets": secrets_path,
         "summary": summary_path,
+    }
+
+
+def prepare_workspace_after_intake(workspace: Path, intake_answers: dict[str, str]) -> dict[str, Any]:
+    answers = derive_defaults(intake_answers)
+    summary_path = intake_summary_path(workspace)
+    write_json(summary_path, {"answers": answers})
+
+    providers = detect_required_providers(answers)
+    secret_status = build_secrets_status(workspace, answers, providers)
+
+    if secret_status["status"] == "complete":
+        outputs = bootstrap_workspace(workspace, answers)
+        return {"mode": "execution", "outputs": outputs}
+
+    docs_dir = workspace / "docs"
+    autopilot_dir = workspace / "autopilot"
+    ensure_dir(docs_dir)
+    ensure_dir(autopilot_dir)
+
+    next_path = docs_dir / "next.md"
+    next_path.write_text(create_setup_pending_next_markdown(answers, secret_status))
+
+    state_path = runtime_state_path(workspace)
+    blockers_path = blockers_state_path(workspace)
+    secrets_path = secrets_status_path(workspace)
+    write_json(state_path, create_setup_pending_state(answers, secret_status))
+    write_json(blockers_path, create_blockers_state())
+    write_json(secrets_path, secret_status)
+    merge_env_values(
+        env_example_path(workspace),
+        {key: placeholder_for_env_key(key) for key in secret_status.get("requiredKeys", [])},
+        overwrite_existing=True,
+    )
+
+    return {
+        "mode": "setup-secrets",
+        "outputs": {
+            "next": next_path,
+            "state": state_path,
+            "blockers": blockers_path,
+            "secrets": secrets_path,
+            "summary": summary_path,
+        },
+        "message": setup_pending_message(secret_status),
+    }
+
+
+def require_intake_summary_answers(workspace: Path) -> dict[str, str]:
+    summary_path = intake_summary_path(workspace)
+    if not summary_path.exists():
+        raise FileNotFoundError("Intake summary not found. Complete intake before submitting secrets.")
+    summary = load_json(summary_path)
+    answers = summary.get("answers")
+    if not isinstance(answers, dict):
+        raise FileNotFoundError("Intake summary is missing answers.")
+    return {str(key): str(value) for key, value in answers.items()}
+
+
+def submit_secrets(workspace: Path, text: str) -> dict[str, Any]:
+    answers = require_intake_summary_answers(workspace)
+    providers = detect_required_providers(answers)
+    if not providers:
+        outputs = bootstrap_workspace(workspace, answers)
+        return {"mode": "execution", "outputs": outputs}
+
+    payload = parse_secret_input(text)
+    validation_errors = validate_secret_payload(payload, providers)
+    if validation_errors:
+        raise ValueError("\n".join(validation_errors))
+
+    env_path = choose_env_file(workspace, answers)
+    relevant_updates = {
+        key: value
+        for key, value in payload.items()
+        if key in set(required_secret_keys(providers))
+    }
+    if relevant_updates:
+        merge_env_values(env_path, relevant_updates, overwrite_existing=False)
+
+    secret_status = build_secrets_status(workspace, answers, providers)
+    write_json(secrets_status_path(workspace), secret_status)
+    merge_env_values(
+        env_example_path(workspace),
+        {key: placeholder_for_env_key(key) for key in secret_status.get("requiredKeys", [])},
+        overwrite_existing=True,
+    )
+
+    if secret_status["status"] == "complete":
+        outputs = bootstrap_workspace(workspace, answers)
+        return {"mode": "execution", "outputs": outputs}
+
+    next_path = workspace / "docs" / "next.md"
+    ensure_dir(next_path.parent)
+    next_path.write_text(create_setup_pending_next_markdown(answers, secret_status))
+    write_json(runtime_state_path(workspace), create_setup_pending_state(answers, secret_status))
+    return {
+        "mode": "setup-secrets",
+        "outputs": {
+            "next": next_path,
+            "state": runtime_state_path(workspace),
+            "secrets": secrets_status_path(workspace),
+        },
+        "message": setup_pending_message(secret_status),
     }

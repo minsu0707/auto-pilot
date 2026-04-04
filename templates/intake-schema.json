@@ -34,7 +34,7 @@
     {
       "index": 7,
       "key": "auth_mode",
-      "label": "Do you need login or authentication?"
+      "label": "Do you need login or authentication? If yes, name the provider (Google, Supabase Auth, Clerk, etc.)."
     },
     {
       "index": 8,
@@ -54,7 +54,7 @@
     {
       "index": 11,
       "key": "data_store",
-      "label": "Where should the data be stored?"
+      "label": "Where should the data be stored? If managed, name it (Supabase, Postgres, Neon, etc.)."
     },
     {
       "index": 12,

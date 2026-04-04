@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from autopilot_lib import intake_state_path, load_json
+from autopilot_lib import intake_state_path, load_json, secrets_status_path
 
 
 def parse_args() -> argparse.Namespace:
@@ -32,6 +32,19 @@ def main() -> None:
             print(f"completed: {intake.get('completed', False)}")
             return
 
+    setup_path = secrets_status_path(workspace)
+    if setup_path.exists():
+        secret_status = load_json(setup_path)
+        if secret_status.get("status") == "pending":
+            print("mode: setup-secrets")
+            print(f"env_file: {secret_status.get('envFilePath', '')}")
+            print(f"required_providers: {', '.join(secret_status.get('requiredProviders', []))}")
+            print(f"present_keys: {len(secret_status.get('presentKeys', []))}")
+            print(f"missing_keys: {len(secret_status.get('missingKeys', []))}")
+            if secret_status.get("missingKeys"):
+                print(f"missing_key_names: {', '.join(secret_status.get('missingKeys', []))}")
+            return
+
     if runtime_path.exists():
         state = load_json(runtime_path)
         blockers = load_json(blockers_path) if blockers_path.exists() else {"active": []}
@@ -45,6 +58,9 @@ def main() -> None:
         print(f"qa_verdict: {state.get('lastReviewerVerdict', '')}")
         print(f"role_results: {', '.join(sorted(state.get('lastRoleResults', {}).keys()))}")
         print(f"active_blockers: {len(blockers.get('active', []))}")
+        print(f"setup_status: {state.get('setupStatus', '')}")
+        print(f"required_integrations: {', '.join(state.get('requiredIntegrations', []))}")
+        print(f"secrets_ready: {state.get('secretsReady', False)}")
         return
 
     print("mode: idle")
