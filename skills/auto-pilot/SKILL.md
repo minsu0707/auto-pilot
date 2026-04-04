@@ -134,10 +134,10 @@ For the exact interaction format, follow `../autopilot-intake/SKILL.md`.
 4. Prefer working software over broad scaffolding with no validation.
 5. Run relevant verification after each meaningful change.
 6. Update progress and next-step files after each loop.
-7. Continue automatically after intake unless a true `human-required` blocker is active.
+7. Continue automatically after intake unless the run is waiting on the upfront integration setup phase or a true `human-required` blocker is active.
 8. Ask the user only when:
-   - secrets are required
-   - external account setup is required
+   - the upfront integration setup phase needs a consolidated env payload
+   - external account setup is required and no existing key can be provided yet
    - payment or production deployment approval is required
    - the product direction is ambiguous in a way that changes the build materially
 

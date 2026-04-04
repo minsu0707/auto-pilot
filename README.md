@@ -81,7 +81,8 @@ The goal is simple: less babysitting, more forward motion.
 
 - Converts a short project request into a structured intake session
 - Uses a `1. Question` / `Questions remaining: N` interaction pattern
-- Writes `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, and `autopilot/blockers.json`
+- Inserts an upfront integration setup phase when auth or managed services need env values
+- Writes `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, `autopilot/blockers.json`, and `autopilot/secrets-status.json`
 - Adds `docs/design.md` for user-facing projects so UI work starts from a concrete design brief instead of generic defaults
 - Keeps enough state for the next Codex session to resume from where it stopped
 - Keeps design research scoped to a brief and a curated reference stack instead of pretending broad web research already happened
@@ -112,7 +113,15 @@ python3 scripts/autopilot.py status \
   --workspace /tmp/my-project
 ```
 
-After the final answer, Auto Pilot generates:
+If the project needs upfront integration env values, submit them in one payload:
+
+```bash
+python3 scripts/autopilot.py secrets \
+  --workspace /tmp/my-project \
+  --text 'GOOGLE_CLIENT_ID=...'
+```
+
+After the final answer, Auto Pilot either moves into `setup-secrets` or generates:
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -120,15 +129,17 @@ After the final answer, Auto Pilot generates:
 - `docs/design.md` for user-facing projects
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
 
 ## How It Works
 
 1. A short prompt starts intake.
 2. Auto Pilot asks one question at a time.
 3. The answers are normalized into a project contract.
-4. User-facing projects also get a `docs/design.md` brief built from the selected theme, vibe, and design direction.
-5. Runtime state is created for future execution and resume.
-6. Codex can continue from saved files instead of rediscovering context.
+4. If required env values are missing, Auto Pilot pauses in a single `setup-secrets` phase and asks for them in one consolidated payload.
+5. User-facing projects also get a `docs/design.md` brief built from the selected theme, vibe, and design direction.
+6. Runtime state is created for future execution and resume.
+7. Codex can continue from saved files instead of rediscovering context.
 
 ## Repository Layout
 

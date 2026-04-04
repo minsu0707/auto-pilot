@@ -131,7 +131,7 @@ If the user says "use the defaults" or an equivalent phrase:
 - auth: none unless clearly required
 - payments: none unless clearly required
 - admin: lightweight admin page only if the use case implies operational control
-- blocker policy: retry technical failures automatically, defer low-risk polish, ask only for secrets, approvals, payments, OAuth, and production launch
+- blocker policy: retry technical failures automatically, defer low-risk polish, collect required integration env values in one upfront setup step, and ask later only for approvals, payments, OAuth console work, and production launch
 
 Record every inferred default in the final summary.
 
@@ -144,14 +144,22 @@ After the final question:
    - `team-product` for user-facing work, `Scalable` projects, or auth/payments/admin-heavy projects
    - `team-lite` for clearly CLI-only, backend-only, library-only, or simple internal utilities
    - `serial-fallback` only when the runtime later confirms native sub-agents are unavailable
-3. Write or update:
+3. Detect whether the selected auth or managed services require upfront integration env values.
+4. If all required env values are already present, write or update:
    - `docs/spec.md`
    - `docs/design.md` for user-facing products
    - `docs/progress.md`
    - `docs/next.md`
    - `autopilot/state.json`
    - `autopilot/blockers.json`
-4. Start execution immediately with the manager taking the first step and dispatching Planner.
+   - `autopilot/secrets-status.json`
+5. If any required env values are missing, switch to the `setup-secrets` phase and write or update:
+   - `docs/next.md`
+   - `autopilot/state.json`
+   - `autopilot/blockers.json`
+   - `autopilot/secrets-status.json`
+   - collect the missing env payload in one step before execution starts
+6. Start execution immediately with the manager taking the first step and dispatching Planner only after the required env values are ready.
 
 If script usage is appropriate, use:
 
@@ -161,6 +169,7 @@ python3 ../../scripts/record_answer.py --workspace <target-workspace> --answer "
 ```
 
 The second command should be repeated once per answer. On the final answer it will generate the spec, progress, next, and runtime state files automatically.
+If the project needs external integration env values, the final answer may instead move the workspace into `setup-secrets` and wait for one consolidated env payload before the full bootstrap finishes.
 
 ## Design Research Rule
 

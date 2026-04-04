@@ -28,7 +28,8 @@ Choose exactly one path:
    - Use the slash command arguments as the initial product prompt
    - Route into the intake-first Auto Pilot workflow
    - Ask one question at a time by default
-   - Start implementation automatically after the project contract is locked
+   - Run upfront integration setup after intake when auth or managed services require env values
+   - Start implementation automatically after the project contract is locked and required integration setup is complete
 2. **Existing project**: saved state exists
    - Read the saved state files
    - Resume from the highest-priority unfinished task
@@ -45,14 +46,21 @@ Follow the existing Auto Pilot skill behavior rather than inventing new runtime 
 - Apply the workflow defined in `skills/auto-pilot/SKILL.md`
 - Use the intake behavior from `skills/autopilot-intake/SKILL.md`
 - Collect the minimum required project contract one question at a time
-- Write:
+- If required integrations already have env values, write:
   - `docs/spec.md`
   - `docs/design.md` for user-facing projects
   - `docs/progress.md`
   - `docs/next.md`
   - `autopilot/state.json`
   - `autopilot/blockers.json`
-- Start implementation immediately after the spec is locked without waiting for extra user confirmation
+  - `autopilot/secrets-status.json`
+- If required integrations are missing env values:
+  - write `docs/next.md`
+  - write `autopilot/state.json`
+  - write `autopilot/blockers.json`
+  - write `autopilot/secrets-status.json`
+  - ask for the consolidated env payload in one step
+- Start implementation immediately after the spec is locked and the required env values are present
 
 ### Resume path
 
@@ -67,8 +75,8 @@ Before finishing, confirm the selected path behaved correctly:
 
 - **New project path**
   - intake started from the provided prompt
-  - state files were created or updated
-  - implementation moved forward after spec lock
+  - intake either moved into `setup-secrets` or created the execution files immediately
+  - implementation moved forward only after required integration setup was complete
 - **Resume path**
   - existing state was read
   - blocker status was checked
@@ -87,5 +95,6 @@ Return a concise status update:
 ## Next Steps
 
 - If intake just started: continue one question at a time until the project contract is locked
+- If setup is pending: collect the required env payload in one step before execution
 - If work resumed successfully: keep building and validating against the saved definition of done
 - If blocked: ask only for the smallest actionable human input

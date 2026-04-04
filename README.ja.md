@@ -83,7 +83,8 @@ Auto Pilot は次の要素でそのギャップを埋めます。
 
 - 短いプロジェクト依頼を構造化された intake セッションに変換する
 - `1. Question` / `Questions remaining: N` パターンで対話する
-- `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json` を生成する
+- auth や managed service に env 値が必要な場合は upfront integration setup を先に入れる
+- `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json`、`autopilot/secrets-status.json` を生成する
 - user-facing プロジェクトでは generic な初期UIではなく具体的なデザインブリーフから始めるために `docs/design.md` も生成する
 - 次の Codex セッションが止まった場所から再開できるだけの状態を残す
 - デザイン関連の説明は broad web research が完了したという意味ではなく、curated reference stack をもとにした design brief を作るという意味です
@@ -114,7 +115,15 @@ python3 scripts/autopilot.py status \
   --workspace /tmp/my-project
 ```
 
-最後の回答後、Auto Pilot は次のファイルを生成します。
+プロジェクトで upfront integration env 値が必要なら、1回でまとめて送れます。
+
+```bash
+python3 scripts/autopilot.py secrets \
+  --workspace /tmp/my-project \
+  --text 'GOOGLE_CLIENT_ID=...'
+```
+
+最後の回答後、Auto Pilot は `setup-secrets` に移るか、次のファイルを生成します。
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -122,15 +131,17 @@ python3 scripts/autopilot.py status \
 - user-facing プロジェクトなら `docs/design.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
 
 ## How It Works
 
 1. 短いプロンプトが intake を開始します。
 2. Auto Pilot は質問を一つずつ行います。
 3. 回答はプロジェクト契約として正規化されます。
-4. user-facing プロジェクトなら、選んだ theme、vibe、design direction をもとに `docs/design.md` ブリーフも生成されます。
-5. 将来の実行と再開のための runtime state が作られます。
-6. Codex は保存済みファイルから続行できます。
+4. 必要な env 値がまだなければ、Auto Pilot は1回の `setup-secrets` フェーズで不足分を集めます。
+5. user-facing プロジェクトなら、選んだ theme、vibe、design direction をもとに `docs/design.md` ブリーフも生成されます。
+6. 将来の実行と再開のための runtime state が作られます。
+7. Codex は保存済みファイルから続行できます。
 
 ## Repository Layout
 

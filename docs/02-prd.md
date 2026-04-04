@@ -45,23 +45,32 @@ The plugin collects the minimum data required for long-running execution.
 - out-of-scope items for this version
 - preferred stack or permission to use defaults
 - architecture preset
-- auth requirement
+- auth requirement and provider
 - payment requirement
 - admin requirement
 - deploy target
-- data store
+- data store and managed provider
 - theme preset
 - visual vibe
 - design direction
 - definition of done
 
-### 3. Spec Lock
+### 3. Upfront Integration Setup
+
+If the chosen auth or managed backend needs env values, the plugin switches into a single setup step before execution.
+
+- detect required providers from the intake answers
+- check whether the required env values already exist in the project
+- ask for the missing values in one consolidated payload
+- write only `.env` / `.env.local` and `.env.example`, never docs or runtime state
+
+### 4. Spec Lock
 
 The plugin writes a project brief and execution contract to disk.
 
 For user-facing products, it also writes a dedicated design brief before UI implementation starts.
 
-### 4. Execution Loop
+### 5. Execution Loop
 
 The plugin repeatedly:
 
@@ -72,7 +81,7 @@ The plugin repeatedly:
 5. QA validates the slice
 6. manager records progress and chooses the next task
 
-### 5. Blocker Handling
+### 6. Blocker Handling
 
 Blockers are classified into:
 
@@ -80,7 +89,7 @@ Blockers are classified into:
 - `deferable`
 - `human-required`
 
-### 6. Stop Condition
+### 7. Stop Condition
 
 The plugin stops when the full definition of done has been satisfied.
 
@@ -113,6 +122,7 @@ Files that should always be kept up to date:
 - `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
 
 ## Functional Requirements
 
@@ -122,6 +132,14 @@ Files that should always be kept up to date:
 - infer defaults where possible
 - require explicit input only for high-risk decisions
 - persist the captured brief
+
+### Upfront Integration Setup
+
+- detect secret-bearing providers such as Google OAuth and Supabase from intake answers
+- read existing `.env` / `.env.local` values before asking the user again
+- request missing env values in one consolidated payload
+- keep secret values out of `docs/*.md`, `autopilot/state.json`, `autopilot/blockers.json`, and intake summaries
+- update `.env.example` with placeholders only
 
 ### Planning
 
@@ -186,7 +204,8 @@ Behavior:
 
 Behavior:
 
-- pause only the blocked path
+- use the upfront setup phase first for known integration env values
+- pause only the blocked path when external console work or approvals are still missing
 - request the smallest necessary action
 
 ## Definition of Done

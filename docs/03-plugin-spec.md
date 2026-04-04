@@ -31,6 +31,7 @@ repo-root/
     record_answer.py
     status.py
   templates/
+    provider-secrets.json
   install.sh
   uninstall.sh
 ```
@@ -85,6 +86,7 @@ Hooks should handle routing only, not heavy logic.
 - `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
 
 ### `autopilot/state.json`
 
@@ -103,11 +105,20 @@ Recommended shape:
   "lastPlannerCheckpoint": "Pending initial planner pass.",
   "lastReviewerVerdict": "Pending QA review",
   "lastRoleResults": {},
+  "setupStatus": "complete | pending",
+  "requiredIntegrations": ["google-oauth", "supabase"],
+  "secretsReady": true,
   "retryCount": 0,
   "lastSuccessfulStep": "Created project brief",
   "definitionOfDoneMet": false
 }
 ```
+
+When upfront integration setup is still pending, the same file should remain present with:
+
+- `status: "setup-pending"`
+- `currentMilestone: "Integration setup"`
+- `currentTask` pointing at the missing env payload
 
 ### `autopilot/blockers.json`
 
@@ -122,6 +133,29 @@ Recommended shape:
     "classification": "retryable | deferable | human-required",
     "summary": "Short blocker summary"
   }
+}
+```
+
+### `autopilot/secrets-status.json`
+
+Recommended shape:
+
+```json
+{
+  "requiredProviders": ["google-oauth", "supabase"],
+  "envFilePath": "/workspace/.env.local",
+  "requiredKeys": ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET"],
+  "presentKeys": ["GOOGLE_CLIENT_ID"],
+  "missingKeys": ["GOOGLE_CLIENT_SECRET"],
+  "setupChecklist": [
+    {
+      "providerId": "google-oauth",
+      "displayName": "Google OAuth",
+      "items": ["Create the OAuth client"],
+      "docsLinks": ["https://console.cloud.google.com/apis/credentials"]
+    }
+  ],
+  "status": "pending | complete"
 }
 ```
 
@@ -155,16 +189,19 @@ Recommended fields:
 - `data_store`
 - `definition_of_done`
 
+The `auth_mode` and `data_store` answers should remain provider-aware so the setup phase can detect required integrations.
+
 ## Execution Rules
 
 1. Always read state before acting.
 2. Do not ask a question if a safe default is allowed by policy.
-3. Manager must confirm the real backend first: native specialist agents when available, otherwise `serial-fallback`.
-4. Route work through the manager-led team in this order: planner → builder → QA, with architect/designer added only when needed.
-5. Prefer the smallest shippable slice.
-6. Always validate after implementation.
-7. Save state after each loop.
-8. Stop only when the definition of done is met or a `human-required` blocker is active.
+3. Before execution begins, detect required integrations and complete the upfront env setup phase if needed.
+4. Manager must confirm the real backend first: native specialist agents when available, otherwise `serial-fallback`.
+5. Route work through the manager-led team in this order: planner → builder → QA, with architect/designer added only when needed.
+6. Prefer the smallest shippable slice.
+7. Always validate after implementation.
+8. Save state after each loop.
+9. Stop only when the definition of done is met or a `human-required` blocker is active.
 
 For user-facing projects, generate `docs/design.md` before implementing the first UI and treat it as the active design brief.
 

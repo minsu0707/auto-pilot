@@ -54,3 +54,5 @@ Build a diary app my friend Dohyeon would love ap
 ```
 
 تشرح الأقسام التالية سير العمل الحالي على `main`، وهو ما سيدخل في الإصدار stable القادم.
+
+يتضمن `main` الآن مرحلة upfront integration setup أيضًا: إذا احتاج المشروع إلى Google OAuth أو Supabase أو أي تكامل خارجي مشابه، فسيجمع Auto Pilot قيم `.env` الناقصة دفعة واحدة قبل بدء التنفيذ ويكتب الحالة في `autopilot/secrets-status.json`.

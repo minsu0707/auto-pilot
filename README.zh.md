@@ -54,3 +54,5 @@ Build a diary app my friend Dohyeon would love ap
 ```
 
 下面的内容描述的是 `main` 上当前仓库工作流，也就是下一次 stable release 将要包含的行为。
+
+当前 `main` 还新增了 upfront integration setup：如果项目需要 Google OAuth、Supabase 等外部集成，Auto Pilot 会在执行前一次性收集缺失的 `.env` 值，并把状态写入 `autopilot/secrets-status.json`。

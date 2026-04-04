@@ -91,11 +91,11 @@ The intake currently locks:
 4. non-goals
 5. stack preferences
 6. architecture preset
-7. auth requirement
+7. auth requirement and provider
 8. payments requirement
 9. admin requirement
 10. deploy target
-11. data store
+11. data store and managed provider
 12. theme preset
 13. visual vibe
 14. design direction
@@ -103,17 +103,36 @@ The intake currently locks:
 
 ### After the Final Answer
 
-Auto Pilot writes:
+Auto Pilot now checks whether the selected auth or managed services need upfront env values.
+
+If no env values are needed, or they are already present, Auto Pilot writes:
 
 - `docs/spec.md`
 - `docs/progress.md`
 - `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
 
 For user-facing projects, it also writes:
 
 - `docs/design.md`
+
+If required env values are missing, Auto Pilot switches to `setup-secrets` first and writes:
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+- `.env.example`
+
+At that point you submit the missing values in one payload with:
+
+```bash
+python3 scripts/autopilot.py secrets \
+  --workspace /tmp/my-project \
+  --text 'GOOGLE_CLIENT_ID=...'
+```
 
 ## What Each File Means
 
@@ -168,12 +187,17 @@ The runtime state.
 It tracks:
 
 - execution mode
+- setup status
+- required integrations
+- secrets readiness
 - active team roles
 - current owner
 - quality gates
 - last planner checkpoint
 - last reviewer verdict
 - last role results
+
+When setup is still pending, `status` becomes `setup-pending` and the current task points at the consolidated env payload.
 
 ### `autopilot/blockers.json`
 
@@ -183,6 +207,19 @@ Each blocker should carry:
 - `ownerRole`
 - `classification`
 - `summary`
+
+### `autopilot/secrets-status.json`
+
+The upfront integration setup status.
+It tracks:
+
+- required providers
+- chosen env file path
+- required keys
+- present keys
+- missing keys
+- provider setup checklist
+- setup status
 
 ## Team Execution Model
 
