@@ -74,15 +74,31 @@ Hooks should handle routing only, not heavy logic.
 - the user prompt contains `build`, `make`, `create`, `launch`, `ship`, or equivalent phrasing
 - the request looks like project creation, not a single isolated fix
 - no locked spec exists yet, so the request should route to intake
-- a spec exists and work is incomplete, so the request should route to resume
+- `autopilot/state.json` exists and work is incomplete, so the request should route to resume even if setup is still pending
 
 ## State Contract
 
-### Required Files
+### State Files That Define An Existing Project
+
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json` when upfront integration setup applies
+- `docs/next.md`
+
+Treat the project as existing if `autopilot/state.json` exists, even when `docs/spec.md` and `docs/progress.md` are not present yet.
+
+### Files Written Once Setup Is Complete
 
 - `docs/spec.md`
 - `docs/design.md` for user-facing projects
 - `docs/progress.md`
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+
+### Files Written While Setup Is Pending
+
 - `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
@@ -169,6 +185,8 @@ Use `scripts/team_checkpoint.py` to persist planner, architect, builder, designe
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 
+This helper applies after execution has started. It is not the mechanism for collecting upfront integration env values.
+
 ## Intake Data Model
 
 Recommended fields:
@@ -202,6 +220,8 @@ The `auth_mode` and `data_store` answers should remain provider-aware so the set
 7. Always validate after implementation.
 8. Save state after each loop.
 9. Stop only when the definition of done is met or a `human-required` blocker is active.
+
+Treat `setupStatus: "pending"` as a normal pre-execution phase, not as a blocker entry by itself.
 
 For user-facing projects, generate `docs/design.md` before implementing the first UI and treat it as the active design brief.
 

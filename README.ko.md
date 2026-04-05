@@ -82,7 +82,8 @@ Auto Pilot은 이 간극을 아래 요소로 메웁니다.
 - 짧은 프로젝트 요청을 구조화된 intake 세션으로 바꿉니다
 - `1. Question` / `Questions remaining: N` 패턴으로 상호작용합니다
 - 인증이나 managed service에 env 값이 필요하면 upfront integration setup 단계를 먼저 둡니다
-- `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, `autopilot/blockers.json`, `autopilot/secrets-status.json`를 생성합니다
+- 초기 runtime 계약으로 `autopilot/state.json`, `autopilot/blockers.json`, `autopilot/secrets-status.json`, `docs/next.md`를 생성합니다
+- setup이 끝나면 `docs/spec.md`, `docs/progress.md`도 생성합니다
 - user-facing 프로젝트에서는 generic 기본 UI 대신 구체적인 디자인 브리프로 시작하도록 `docs/design.md`도 생성합니다
 - 다음 Codex 세션이 멈춘 지점부터 이어갈 수 있을 만큼 상태를 남깁니다
 - 디자인 관련 설명은 broad web research를 끝냈다는 뜻이 아니라, curated reference stack을 바탕으로 한 디자인 브리프를 만든다는 뜻입니다
@@ -125,7 +126,9 @@ Codex 안에서 쓰는 일반 사용 흐름이라면 이 섹션 대신 `$auto-pi
   --text 'GOOGLE_CLIENT_ID=...'
 ```
 
-마지막 답변 후 Auto Pilot은 `setup-secrets`로 전환하거나 다음 파일을 생성합니다.
+마지막 답변 후 Auto Pilot은 두 경로 중 하나로 진행합니다.
+
+setup이 이미 끝났거나 upfront env 값이 필요 없으면 다음 파일을 생성합니다.
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -134,6 +137,16 @@ Codex 안에서 쓰는 일반 사용 흐름이라면 이 섹션 대신 `$auto-pi
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 - `autopilot/secrets-status.json`
+
+필요한 env 값이 아직 없으면 `setup-secrets` 단계로 전환하고 다음 파일을 먼저 씁니다.
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+- `.env.example`
+
+setup이 아직 pending이어도 `autopilot/state.json`이 이미 있으므로 그 프로젝트는 기존 Auto Pilot 프로젝트로 간주됩니다.
 
 ## How It Works
 

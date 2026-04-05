@@ -268,19 +268,22 @@ If the project already has saved state files, Auto Pilot should resume instead o
 
 It reads:
 
-- `docs/spec.md`
-- `docs/design.md` when present
-- `docs/progress.md`
-- `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json` when present
+- `docs/next.md`
+- `docs/spec.md` and `docs/progress.md` after setup is complete
+- `docs/design.md` when present and setup is complete
 
 Then it checks:
 
+- setup status
 - current owner
 - blocker status
 - pending quality gates
 - last reviewer verdict
+
+If `setupStatus` is still `pending`, resume means continuing the `setup-secrets` phase. That is still a valid existing project state even when `docs/spec.md` and `docs/progress.md` do not exist yet.
 
 ## Blocker Rules
 
@@ -294,6 +297,8 @@ Auto Pilot treats blockers in three classes:
   - ask only for the smallest missing decision
 
 The goal is to pause only the blocked path, not the whole project.
+
+`setup-secrets` is not itself a blocker record. It is a normal pre-execution phase for projects that still need integration env values.
 
 ## CLI Scripts
 
@@ -366,6 +371,8 @@ This script updates:
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 
+It is part of the execution loop after setup is complete. It is not the tool used to collect upfront integration env values.
+
 ## Recommended Reading Order
 
 If you want to understand the system in depth:
@@ -379,8 +386,9 @@ If you want to understand the system in depth:
 
 Think of Auto Pilot like this:
 
-- intake locks the contract
-- saved files become the source of truth
+- intake locks the contract inputs
+- setup may continue in `setup-secrets` before the full contract files exist
+- saved runtime files become the source of truth immediately
 - manager routes work through role checkpoints
 - blockers stay explicit
 - resume continues from files, not memory

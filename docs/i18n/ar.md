@@ -72,7 +72,9 @@ $auto-pilot Build a diary app my friend Dohyeon would love
 
 - يحول طلب مشروع قصير إلى جلسة intake منظمة
 - يستخدم نمط UX من نوع `1. Question` / `Questions remaining: N`
-- يكتب `docs/spec.md` و`docs/progress.md` و`docs/next.md` و`autopilot/state.json` و`autopilot/blockers.json`
+- إذا احتاج auth أو managed service إلى قيم env، فسيُدخل المشروع أولًا في upfront integration setup
+- يكتب أولًا `autopilot/state.json` و`autopilot/blockers.json` و`autopilot/secrets-status.json` و`docs/next.md` كعقد runtime أولي
+- وبعد اكتمال setup يكتب أيضًا `docs/spec.md` و`docs/progress.md`
 - وفي المشاريع ذات الواجهة للمستخدم ينشئ أيضًا `docs/design.md` بحيث يبدأ العمل من design brief واضح بدلًا من واجهة generic افتراضية
 - يحتفظ بحالة كافية لكي تستأنف جلسة Codex التالية من حيث توقفت
 - وصف التصميم هنا يعني إنشاء design brief مبني على curated references، وليس الادعاء بأنه أنهى بحثًا واسعًا عبر الويب
@@ -80,10 +82,14 @@ $auto-pilot Build a diary app my friend Dohyeon would love
 
 ## Quick Start
 
+أمثلة CLI هذه مخصصة لتطوير الإضافة أو التصحيح المحلي.
+يجب تشغيلها من جذر مستودع Auto Pilot أو من دليل الإضافة المثبّتة.
+إذا كنت تستخدم Auto Pilot بشكل عادي داخل Codex فاستعمل `$auto-pilot` أو `/auto-pilot:autopilot` بدلًا من هذا القسم.
+
 ابدأ جلسة intake جديدة:
 
 ```bash
-python3 scripts/autopilot.py start \
+./scripts/autopilot start \
   --workspace /tmp/my-project \
   --prompt "Build a diary app my friend Dohyeon would love"
 ```
@@ -91,7 +97,7 @@ python3 scripts/autopilot.py start \
 أجب عن السؤال الحالي:
 
 ```bash
-python3 scripts/autopilot.py answer \
+./scripts/autopilot answer \
   --workspace /tmp/my-project \
   --text "مستخدمون صغار السن يريدون تطبيق يوميات دافئًا وخاصًا يمكن تزيينه كل يوم"
 ```
@@ -99,11 +105,21 @@ python3 scripts/autopilot.py answer \
 تحقق من الوضع الحالي والحالة:
 
 ```bash
-python3 scripts/autopilot.py status \
+./scripts/autopilot status \
   --workspace /tmp/my-project
 ```
 
-بعد الإجابة الأخيرة، ينشئ Auto Pilot الملفات التالية:
+إذا احتاج المشروع إلى قيم env للتكاملات المسبقة، يمكنك إرسالها دفعة واحدة:
+
+```bash
+./scripts/autopilot secrets \
+  --workspace /tmp/my-project \
+  --text 'GOOGLE_CLIENT_ID=...'
+```
+
+بعد الإجابة الأخيرة، يسلك Auto Pilot واحدًا من مسارين.
+
+إذا كان setup مكتملًا بالفعل، أو لم تكن هناك حاجة إلى قيم env مسبقة، فإنه ينشئ:
 
 - `docs/spec.md`
 - `docs/design.md` للمشاريع ذات الواجهة للمستخدم
@@ -111,15 +127,27 @@ python3 scripts/autopilot.py status \
 - `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+
+أما إذا كانت قيم env المطلوبة ما تزال ناقصة، فإنه يدخل أولًا مرحلة `setup-secrets` ويكتب:
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+- `.env.example`
+
+وحتى لو بقي setup في حالة pending، فإن وجود `autopilot/state.json` يعني أن المشروع يُعد مشروع Auto Pilot موجودًا بالفعل.
 
 ## How It Works
 
 1. يبدأ prompt قصير عملية intake.
 2. يطرح Auto Pilot سؤالًا واحدًا في كل مرة.
 3. تُطبَّع الإجابات إلى عقد مشروع.
-4. وفي المشاريع ذات الواجهة للمستخدم، يُنشأ أيضًا `docs/design.md` اعتمادًا على theme وvibe وdesign direction.
-5. تُنشأ runtime state للتنفيذ والاستئناف لاحقًا.
-6. يمكن لـ Codex المتابعة من الملفات المحفوظة بدلًا من إعادة اكتشاف السياق.
+4. وإذا كانت قيم env المطلوبة مفقودة، فسيتوقف Auto Pilot أولًا في مرحلة `setup-secrets` واحدة لجمعها.
+5. وفي المشاريع ذات الواجهة للمستخدم، يُنشأ أيضًا `docs/design.md` اعتمادًا على theme وvibe وdesign direction.
+6. تُنشأ runtime state للتنفيذ والاستئناف لاحقًا.
+7. يمكن لـ Codex المتابعة من الملفات المحفوظة بدلًا من إعادة اكتشاف السياق.
 
 ## Repository Layout
 
@@ -135,7 +163,8 @@ python3 scripts/autopilot.py status \
 - `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
-- `scripts/autopilot.py`: recommended CLI entry point
+- `scripts/autopilot`: recommended CLI entry point
+- `scripts/autopilot.py`: Python backend الذي يستدعيه غلاف CLI
 - `scripts/*.py`: intake, answer recording, and status scripts
 - `templates/*.json`: state templates
 - `install.sh`: canonical installer

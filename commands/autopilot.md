@@ -12,13 +12,13 @@ Before doing any work:
 
 1. Treat the current workspace as the project root.
 2. Check whether these state files already exist:
-   - `docs/spec.md`
-   - `docs/progress.md`
-   - `docs/next.md`
    - `autopilot/state.json`
    - `autopilot/blockers.json`
-3. If `$ARGUMENTS` is empty and no state exists yet, ask the user for a short project prompt before proceeding.
-4. If state exists, prefer resume behavior even if the provided prompt is brief.
+   - `autopilot/secrets-status.json`
+   - `docs/next.md`
+3. Treat `autopilot/state.json` as the primary existing-project signal even when `docs/spec.md` and `docs/progress.md` are not present yet.
+4. If `$ARGUMENTS` is empty and no state exists yet, ask the user for a short project prompt before proceeding.
+5. If state exists, prefer resume behavior even if the provided prompt is brief.
 
 ## Plan
 
@@ -31,8 +31,9 @@ Choose exactly one path:
    - Run upfront integration setup after intake when auth or managed services require env values
    - Start implementation automatically after the project contract is locked and required integration setup is complete
 2. **Existing project**: saved state exists
-   - Read the saved state files
-   - Resume from the highest-priority unfinished task
+   - Read the saved runtime state first
+   - If setup is still pending, resume the `setup-secrets` phase instead of implementation
+   - Otherwise resume from the highest-priority unfinished task
 
 Keep `$auto-pilot` as the primary public entry point. Intake and resume remain internal routing decisions.
 
@@ -64,8 +65,9 @@ Follow the existing Auto Pilot skill behavior rather than inventing new runtime 
 
 ### Resume path
 
-- Read the existing state files first
+- Read `autopilot/state.json`, `autopilot/blockers.json`, `autopilot/secrets-status.json`, and `docs/next.md` first
 - Apply the resume workflow from `skills/autopilot-resume/SKILL.md`
+- If setup is still pending, collect only the missing env payload and treat that as the valid resume target
 - If a `human-required` blocker is active, surface only the next minimal action
 - Otherwise continue with the top unfinished task and update the same state files
 
@@ -79,18 +81,19 @@ Before finishing, confirm the selected path behaved correctly:
   - implementation moved forward only after required integration setup was complete
 - **Resume path**
   - existing state was read
-  - blocker status was checked
-  - work resumed from the next unfinished task or the minimal blocker was surfaced
+  - setup pending vs execution pending was distinguished correctly
+  - blocker status was checked only after setup was complete
+  - work resumed from the next unfinished task or the minimal setup/blocker action was surfaced
 
 ## Summary
 
 Return a concise status update:
 
-- **Mode**: intake | resume
+- **Mode**: intake | setup-secrets | resume
 - **Prompt**: the user-provided project brief, if present
 - **Current task**: what Auto Pilot is doing now
 - **Next**: the next task after this step
-- **Blocker**: none | retryable | deferable | human-required
+- **Blocker**: none | setup-pending | retryable | deferable | human-required
 
 ## Next Steps
 

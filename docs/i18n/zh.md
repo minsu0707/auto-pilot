@@ -72,7 +72,9 @@ Auto Pilot 通过以下能力填补这个缺口：
 
 - 把简短项目请求转换成结构化 intake 会话
 - 使用 `1. Question` / `Questions remaining: N` UX 模式
-- 写入 `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json`
+- 如果 auth 或 managed service 需要 env 值，会先进入 upfront integration setup
+- 先写入 `autopilot/state.json`、`autopilot/blockers.json`、`autopilot/secrets-status.json` 与 `docs/next.md` 作为初始 runtime 契约
+- setup 完成后再写入 `docs/spec.md` 与 `docs/progress.md`
 - 对 user-facing 项目还会生成 `docs/design.md`，让 UI 从明确的设计简报开始，而不是 generic 默认布局
 - 保留足够状态，让下一次 Codex 会话从停止处继续
 - 设计说明表示会生成基于 curated references 的设计简报，并不假装已经完成了广泛网页调研
@@ -80,10 +82,14 @@ Auto Pilot 通过以下能力填补这个缺口：
 
 ## Quick Start
 
+这些 CLI 示例用于插件开发或本地调试。
+请从 Auto Pilot 仓库根目录或已安装的插件目录执行它们。
+如果你是在 Codex 里正常使用，请优先使用 `$auto-pilot` 或 `/auto-pilot:autopilot`。
+
 启动新的 intake 会话：
 
 ```bash
-python3 scripts/autopilot.py start \
+./scripts/autopilot start \
   --workspace /tmp/my-project \
   --prompt "Build a diary app my friend Dohyeon would love"
 ```
@@ -91,7 +97,7 @@ python3 scripts/autopilot.py start \
 回答当前问题：
 
 ```bash
-python3 scripts/autopilot.py answer \
+./scripts/autopilot answer \
   --workspace /tmp/my-project \
   --text "想要一个温暖、私密、可以每天装饰的日记应用的年轻用户"
 ```
@@ -99,11 +105,21 @@ python3 scripts/autopilot.py answer \
 查看当前模式和状态：
 
 ```bash
-python3 scripts/autopilot.py status \
+./scripts/autopilot status \
   --workspace /tmp/my-project
 ```
 
-最后一个回答提交后，Auto Pilot 会生成以下文件：
+如果项目需要 upfront integration env 值，可以一次性提交：
+
+```bash
+./scripts/autopilot secrets \
+  --workspace /tmp/my-project \
+  --text 'GOOGLE_CLIENT_ID=...'
+```
+
+最后一个回答提交后，Auto Pilot 会进入以下两条路径之一。
+
+如果 setup 已完成，或者不需要 upfront env 值，就会生成：
 
 - `docs/spec.md`
 - `docs/design.md`（仅限 user-facing 项目）
@@ -111,15 +127,27 @@ python3 scripts/autopilot.py status \
 - `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+
+如果必需的 env 值仍然缺失，就会先进入 `setup-secrets` 并写入：
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+- `.env.example`
+
+即使 setup 仍然是 pending，只要 `autopilot/state.json` 已存在，这个项目也算是已有 Auto Pilot 项目。
 
 ## How It Works
 
 1. 一个简短提示启动 intake。
 2. Auto Pilot 一次只问一个问题。
 3. 回答会被归一化为项目契约。
-4. 对 user-facing 项目，还会根据 theme、vibe 和 design direction 生成 `docs/design.md`。
-5. 为后续执行和恢复创建 runtime state。
-6. Codex 不需要重新摸索上下文，直接从保存的文件继续。
+4. 如果缺少必要的 env 值，Auto Pilot 会先停在一次性的 `setup-secrets` 阶段并收集缺失值。
+5. 对 user-facing 项目，还会根据 theme、vibe 和 design direction 生成 `docs/design.md`。
+6. 为后续执行和恢复创建 runtime state。
+7. Codex 不需要重新摸索上下文，直接从保存的文件继续。
 
 ## Repository Layout
 
@@ -135,7 +163,8 @@ python3 scripts/autopilot.py status \
 - `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
-- `scripts/autopilot.py`: recommended CLI entry point
+- `scripts/autopilot`: recommended CLI entry point
+- `scripts/autopilot.py`: CLI wrapper 调用的 Python backend
 - `scripts/*.py`: intake, answer recording, and status scripts
 - `templates/*.json`: state templates
 - `install.sh`: canonical installer

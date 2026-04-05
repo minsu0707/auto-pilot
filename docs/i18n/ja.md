@@ -83,7 +83,9 @@ Auto Pilot は次の要素でそのギャップを埋めます。
 
 - 短いプロジェクト依頼を構造化された intake セッションに変換する
 - `1. Question` / `Questions remaining: N` パターンで対話する
-- `docs/spec.md`、`docs/progress.md`、`docs/next.md`、`autopilot/state.json`、`autopilot/blockers.json` を生成する
+- auth や managed service に env 値が必要な場合は upfront integration setup を先に入れる
+- 初期 runtime 契約として `autopilot/state.json`、`autopilot/blockers.json`、`autopilot/secrets-status.json`、`docs/next.md` を生成する
+- setup 完了後に `docs/spec.md` と `docs/progress.md` も生成する
 - user-facing プロジェクトでは generic な初期UIではなく具体的なデザインブリーフから始めるために `docs/design.md` も生成する
 - 次の Codex セッションが止まった場所から再開できるだけの状態を残す
 - デザイン関連の説明は broad web research が完了したという意味ではなく、curated reference stack をもとにした design brief を作るという意味です
@@ -91,10 +93,14 @@ Auto Pilot は次の要素でそのギャップを埋めます。
 
 ## Quick Start
 
+この CLI 例はプラグイン開発またはローカルデバッグ用です。
+必ず Auto Pilot のリポジトリルート、またはインストール済みプラグインディレクトリから実行してください。
+Codex 内で通常利用する場合は、この CLI セクションではなく `$auto-pilot` または `/auto-pilot:autopilot` を使ってください。
+
 新しい intake セッションを開始:
 
 ```bash
-python3 scripts/autopilot.py start \
+./scripts/autopilot start \
   --workspace /tmp/my-project \
   --prompt "Build a diary app my friend Dohyeon would love"
 ```
@@ -102,7 +108,7 @@ python3 scripts/autopilot.py start \
 現在の質問に回答:
 
 ```bash
-python3 scripts/autopilot.py answer \
+./scripts/autopilot answer \
   --workspace /tmp/my-project \
   --text "毎日飾りながら秘密の日記を書きたい10代のユーザー"
 ```
@@ -110,11 +116,21 @@ python3 scripts/autopilot.py answer \
 現在のモードと状態を確認:
 
 ```bash
-python3 scripts/autopilot.py status \
+./scripts/autopilot status \
   --workspace /tmp/my-project
 ```
 
-最後の回答後、Auto Pilot は次のファイルを生成します。
+プロジェクトで upfront integration env 値が必要なら、1回でまとめて送れます。
+
+```bash
+./scripts/autopilot secrets \
+  --workspace /tmp/my-project \
+  --text 'GOOGLE_CLIENT_ID=...'
+```
+
+最後の回答後、Auto Pilot は次の2つの経路のどちらかに進みます。
+
+setup がすでに完了しているか、upfront env 値が不要なら、次のファイルを生成します。
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -122,15 +138,27 @@ python3 scripts/autopilot.py status \
 - user-facing プロジェクトなら `docs/design.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+
+必要な env 値がまだ足りない場合は `setup-secrets` に入り、先に次のファイルを書きます。
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+- `.env.example`
+
+setup がまだ pending でも `autopilot/state.json` が存在するので、そのプロジェクトは既存の Auto Pilot プロジェクトとして扱われます。
 
 ## How It Works
 
 1. 短いプロンプトが intake を開始します。
 2. Auto Pilot は質問を一つずつ行います。
 3. 回答はプロジェクト契約として正規化されます。
-4. user-facing プロジェクトなら、選んだ theme、vibe、design direction をもとに `docs/design.md` ブリーフも生成されます。
-5. 将来の実行と再開のための runtime state が作られます。
-6. Codex は保存済みファイルから続行できます。
+4. 必要な env 値がまだなければ、Auto Pilot は1回の `setup-secrets` フェーズで不足分を集めます。
+5. user-facing プロジェクトなら、選んだ theme、vibe、design direction をもとに `docs/design.md` ブリーフも生成されます。
+6. 将来の実行と再開のための runtime state が作られます。
+7. Codex は保存済みファイルから続行できます。
 
 ## Repository Layout
 
@@ -147,7 +175,8 @@ python3 scripts/autopilot.py status \
 - `skills/auto-pilot/SKILL.md`: main orchestration skill
 - `skills/autopilot-intake/SKILL.md`: one-question-at-a-time intake skill
 - `skills/autopilot-resume/SKILL.md`: resume skill
-- `scripts/autopilot.py`: recommended CLI entry point
+- `scripts/autopilot`: recommended CLI entry point
+- `scripts/autopilot.py`: CLI ラッパーが呼び出す Python backend
 - `scripts/*.py`: intake, answer recording, and status scripts
 - `templates/*.json`: state templates
 - `install.sh`: canonical installer

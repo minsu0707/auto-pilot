@@ -7,8 +7,8 @@ Auto Pilot turns a short product request into a repeatable execution loop.
 It does four things in order:
 
 1. route the request into intake or resume
-2. lock a project contract on disk
-3. route the work through planner, builder, designer, and QA checkpoints
+2. decide whether upfront integration setup is needed
+3. lock the project contract and route the work through planner, builder, designer, and QA checkpoints
 4. recover from interruptions by reading saved state
 
 ## End-to-End Flow
@@ -19,27 +19,30 @@ flowchart TD
     B -- "No" --> C["Structured intake"]
     B -- "Yes" --> D["Resume from saved state"]
     C --> E["Normalize answers into project contract"]
-    E --> F["Write docs/spec.md"]
-    E --> G{"User-facing project?"}
-    G -- "Yes" --> H["Write docs/design.md"]
-    G -- "No" --> I["Skip design brief"]
-    F --> J["Create runtime state"]
-    H --> J
-    I --> J
-    D --> J
-    J --> K["Manager confirms real execution mode"]
-    K --> L["Planner defines the current slice"]
-    L --> M["Builder implements"]
-    M --> N{"Designer review needed?"}
-    N -- "Yes" --> O["Designer reviews UI direction"]
-    N -- "No" --> P["QA validates slice"]
-    O --> P
-    P --> Q{"Blocked?"}
-    Q -- "No" --> R["Manager updates progress, next, and state"]
-    R --> L
-    Q -- "Retryable / Deferable" --> S["Retry or defer with defaults"]
-    S --> R
-    Q -- "Human-required" --> T["Pause only the blocked path"]
+    E --> F{"Need upfront integration setup?"}
+    F -- "Yes, values missing" --> G["Write next/state/blockers/secrets-status"]
+    G --> H["Collect one consolidated env payload"]
+    H --> I{"Setup complete?"}
+    I -- "No" --> G
+    I -- "Yes" --> J["Write spec/progress/design and runtime state"]
+    F -- "No" --> J
+    D --> K{"setupStatus pending?"}
+    K -- "Yes" --> H
+    K -- "No" --> L["Read state/blockers/secrets-status/next, then spec/progress if setup is complete"]
+    J --> M["Manager confirms real execution mode"]
+    L --> M
+    M --> N["Planner defines the current slice"]
+    N --> O["Builder implements"]
+    O --> P{"Designer review needed?"}
+    P -- "Yes" --> Q["Designer reviews UI direction"]
+    P -- "No" --> R["QA validates slice"]
+    Q --> R
+    R --> S{"Blocked?"}
+    S -- "No" --> T["Manager updates progress, next, and state"]
+    T --> N
+    S -- "Retryable / Deferable" --> U["Retry or defer with defaults"]
+    U --> T
+    S -- "Human-required" --> V["Pause only the blocked path"]
 ```
 
 ## Routing Logic
@@ -54,7 +57,7 @@ flowchart LR
 ```
 
 - New requests go through intake first.
-- Existing projects skip repeated questions and resume from saved files.
+- Existing projects resume from `autopilot/state.json`, even if setup is still pending and `docs/spec.md` does not exist yet.
 - The public Codex entry point stays `$auto-pilot`.
 
 ## Team Model
@@ -87,11 +90,14 @@ The intake step does not just collect free text. It locks the operating contract
 - non-goals
 - stack preferences
 - architecture preset
+- auth requirement and provider
+- payments requirement
+- admin requirement
 - theme preset
 - visual vibe
 - design direction
 - deploy target
-- data store
+- data store and provider
 - definition of done
 
 These answers become the source of truth for later implementation decisions.
@@ -100,21 +106,30 @@ These answers become the source of truth for later implementation decisions.
 
 ```mermaid
 flowchart TD
-    A["docs/spec.md"] --> X["Product contract"]
+    A["docs/spec.md"] --> X["Product contract after setup is complete"]
     B["docs/design.md"] --> Y["Design brief for user-facing projects"]
     C["docs/progress.md"] --> Z["What has already been shipped"]
-    D["docs/next.md"] --> W["Next execution targets"]
-    E["autopilot/state.json"] --> V["Runtime execution state"]
+    D["docs/next.md"] --> W["Next execution targets or setup instructions"]
+    E["autopilot/state.json"] --> V["Runtime execution or setup state"]
     F["autopilot/blockers.json"] --> U["Active and resolved blockers"]
+    G["autopilot/secrets-status.json"] --> T["Upfront integration setup state"]
 ```
 
-### Always-generated files
+### Files generated once setup is complete
 
 - `docs/spec.md`
 - `docs/progress.md`
 - `docs/next.md`
 - `autopilot/state.json`
 - `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+
+### Files generated while setup is still pending
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
 
 ### Conditional file
 
@@ -132,7 +147,11 @@ sequenceDiagram
     participant Q as QA
     participant S as Saved State
     U->>A: Start or resume project
-    A->>S: Read spec, progress, next, state, blockers
+    A->>S: Read state, blockers, secrets-status, next
+    alt setupStatus pending
+        A-->>U: Request the missing env payload
+    else setup complete
+        A->>S: Read spec, progress, and design when relevant
     A->>A: Confirm native specialists or downgrade to serial-fallback
     A->>P: Define the next shippable slice
     P-->>A: Slice plan and quality gates
@@ -154,11 +173,12 @@ sequenceDiagram
 
 The execution loop is intentionally conservative:
 
-- always read state before acting
+- always read runtime state before acting
 - manager confirms the real backend before dispatching specialists
 - planner goes before builder
 - QA goes before completion
 - keep going with safe defaults where risk is low
+- treat setup pending as a normal pre-execution phase, not as a blocker by itself
 - only stop when the definition of done is met or a human-only blocker is unavoidable
 
 ## Design Path
@@ -184,10 +204,11 @@ Auto Pilot treats blockers in three buckets, and each blocker should record an `
 
 Resume works because the project is not reconstructed from memory. It is reconstructed from files.
 
-- `docs/spec.md` keeps the contract
-- `docs/progress.md` shows completed work
-- `docs/next.md` shows the next intended slice
 - `autopilot/state.json` tracks runtime context
+- `autopilot/secrets-status.json` tracks whether setup is still pending
+- `docs/next.md` shows either setup instructions or the next intended slice
+- `docs/spec.md` keeps the contract once setup is complete
+- `docs/progress.md` shows completed work once implementation has started
 - `autopilot/blockers.json` explains what is stopping forward motion
 
 That makes session restarts, long gaps, and interrupted runs much cheaper.

@@ -82,7 +82,8 @@ The goal is simple: less babysitting, more forward motion.
 - Converts a short project request into a structured intake session
 - Uses a `1. Question` / `Questions remaining: N` interaction pattern
 - Inserts an upfront integration setup phase when auth or managed services need env values
-- Writes `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, `autopilot/blockers.json`, and `autopilot/secrets-status.json`
+- Writes `autopilot/state.json`, `autopilot/blockers.json`, `autopilot/secrets-status.json`, and `docs/next.md` as the initial runtime contract
+- Writes `docs/spec.md` and `docs/progress.md` once setup is complete
 - Adds `docs/design.md` for user-facing projects so UI work starts from a concrete design brief instead of generic defaults
 - Keeps enough state for the next Codex session to resume from where it stopped
 - Keeps design research scoped to a brief and a curated reference stack instead of pretending broad web research already happened
@@ -125,7 +126,9 @@ If the project needs upfront integration env values, submit them in one payload:
   --text 'GOOGLE_CLIENT_ID=...'
 ```
 
-After the final answer, Auto Pilot either moves into `setup-secrets` or generates:
+After the final answer, Auto Pilot follows one of two paths.
+
+If setup is already complete, or no upfront env values are needed, it generates:
 
 - `docs/spec.md`
 - `docs/progress.md`
@@ -134,6 +137,16 @@ After the final answer, Auto Pilot either moves into `setup-secrets` or generate
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 - `autopilot/secrets-status.json`
+
+If required env values are still missing, it moves into `setup-secrets` and writes:
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+- `.env.example`
+
+If setup is still pending, that project still counts as an existing Auto Pilot project because `autopilot/state.json` already exists.
 
 ## How It Works
 

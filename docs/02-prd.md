@@ -114,7 +114,14 @@ The plugin stops when the full definition of done has been satisfied.
 
 ## System Output Files
 
-Files that should always be kept up to date:
+Files that define a valid existing Auto Pilot project:
+
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `docs/next.md`
+- `autopilot/secrets-status.json` when upfront integration setup applies
+
+Files written once setup is complete:
 
 - `docs/spec.md`
 - `docs/design.md` for user-facing projects
@@ -123,6 +130,15 @@ Files that should always be kept up to date:
 - `autopilot/state.json`
 - `autopilot/blockers.json`
 - `autopilot/secrets-status.json`
+
+Files written while setup is still pending:
+
+- `docs/next.md`
+- `autopilot/state.json`
+- `autopilot/blockers.json`
+- `autopilot/secrets-status.json`
+
+Treat the project as existing if `autopilot/state.json` exists, even when `docs/spec.md` and `docs/progress.md` are not present yet because setup is still pending.
 
 ## Functional Requirements
 

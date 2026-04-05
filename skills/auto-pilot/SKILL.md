@@ -68,22 +68,33 @@ Turn a short product request into a resumable execution loop that:
 1. Route to the intake workflow first.
 2. Ask only for high-impact decisions.
 3. Infer safe defaults for the rest.
-4. Write these files:
+4. After intake, detect whether the selected auth or managed services require upfront integration env values.
+5. If env values are already present, write:
    - `docs/spec.md`
    - `docs/design.md` for user-facing projects
    - `docs/progress.md`
    - `docs/next.md`
    - `autopilot/state.json`
    - `autopilot/blockers.json`
-5. Start implementation immediately after the spec is locked.
+   - `autopilot/secrets-status.json`
+6. If env values are still missing, treat the project as being in the normal `setup-secrets` phase and write:
+   - `docs/next.md`
+   - `autopilot/state.json`
+   - `autopilot/blockers.json`
+   - `autopilot/secrets-status.json`
+   - request the consolidated env payload
+7. Start implementation immediately only after the required env values are ready.
 
 ### If state already exists
 
-1. Read `docs/spec.md`, `docs/progress.md`, `docs/next.md`, `autopilot/state.json`, and `autopilot/blockers.json`.
-2. Read `executionMode`, `teamRoles`, `currentOwner`, `qualityGates`, and `lastReviewerVerdict` from runtime state.
-3. Confirm whether there is an active `human-required` blocker.
-4. If not blocked, continue with the top unfinished task.
-5. Save results back to the same files after each loop.
+1. Read `autopilot/state.json`, `autopilot/blockers.json`, and `autopilot/secrets-status.json` if it exists.
+2. If `setupStatus` is `pending` or `autopilot/secrets-status.json` is still pending, treat the project as an existing project waiting on setup continuation.
+3. In that setup continuation path, collect only the missing env payload and do not assume `docs/spec.md` or `docs/progress.md` already exist.
+4. Otherwise read `docs/spec.md`, `docs/progress.md`, `docs/next.md`, and `docs/design.md` when relevant.
+5. Read `executionMode`, `teamRoles`, `currentOwner`, `qualityGates`, and `lastReviewerVerdict` from runtime state.
+6. Confirm whether there is an active `human-required` blocker.
+7. If not blocked, continue with the top unfinished task.
+8. Save results back to the same files after each loop.
 
 ## Manager Runtime Contract
 
@@ -140,6 +151,8 @@ For the exact interaction format, follow `../autopilot-intake/SKILL.md`.
    - external account setup is required and no existing key can be provided yet
    - payment or production deployment approval is required
    - the product direction is ambiguous in a way that changes the build materially
+
+Treat `setup-secrets` pending as a normal pre-execution phase, not as a blocker entry by itself.
 
 ## Team Orchestration
 
