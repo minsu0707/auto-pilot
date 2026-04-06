@@ -378,6 +378,9 @@ For user-facing products, design synthesis is required before the first UI build
 - Use the `frontend-ui-ux` skill as the default design helper
 - Prefer Figma references when provided
 - Otherwise use curated design inspiration sources rather than broad web search
+- Keep the base UI bright: white or light-neutral surfaces, compact readable typography, and restrained chrome
+- Choose the navigation shell from the project type: landing pages use top headers, dashboard/admin surfaces use sidebars, and mobile-style products use app-header or bottom-tab shells
+- Treat theme and vibe as modulation of accent, contrast, spacing tone, and component shape rather than a full override of the base surface system
 - Run one explicit post-build design review after the first UI pass
 - Treat `docs/design.md` as the designer-owned binding brief
 

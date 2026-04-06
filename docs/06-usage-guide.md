@@ -157,6 +157,10 @@ This is the source of truth for:
 Created only for user-facing projects.
 This is the active design brief for:
 
+- white/light base surface direction
+- compact typography density
+- project-fit navigation structure and rationale
+- theme/vibe modulation rules
 - theme preset
 - visual vibe
 - UI tone

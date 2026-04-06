@@ -187,7 +187,7 @@ For user-facing projects, Auto Pilot adds one extra layer before the first UI bu
 
 1. read `theme_preset`, `visual_vibe`, and `design_direction`
 2. create `docs/design.md`
-3. use that brief as the active UI direction
+3. use that brief as the active UI direction, anchored to a white/light surface base, compact type, and project-fit navigation
 4. require one design review pass after the first UI implementation
 
 This is meant to reduce generic SaaS-looking output, not to pretend that every design decision is fully automated.

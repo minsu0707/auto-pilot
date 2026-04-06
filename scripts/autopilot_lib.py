@@ -644,24 +644,24 @@ def default_vibe_for_theme(value: str) -> str:
 
 def theme_guidance(value: str) -> str:
     if value == "Bold":
-        return "Use stronger contrast, assertive typography, and more prominent visual hierarchy."
+        return "Keep the white-base, compact-typography foundation, but raise contrast, accent confidence, and hierarchy emphasis."
     if value == "Playful":
-        return "Use a friendlier, more expressive visual language with softer shapes and lighter tone."
+        return "Keep the restrained base layout, but soften shapes, warm the accent palette, and add a more expressive tone."
     if value == "Premium":
-        return "Use polished spacing, refined hierarchy, and a more upscale, composed presentation."
-    return "Use restrained styling, clear spacing, and a calm visual system with low decoration."
+        return "Keep the light surface and smaller type foundation, but make spacing, polish, and contrast feel more refined and upscale."
+    return "Use a white or very light neutral base, compact readable type, and restrained chrome with low decoration."
 
 
 def vibe_guidance(value: str) -> str:
     if value == "Editorial":
-        return "Favor strong layout composition, confident whitespace, and typography-led presentation over generic dashboard chrome."
+        return "Keep the light base and modest body type, but let typography, section rhythm, and composition lead the interface."
     if value == "Playful":
-        return "Use softer corners, friendlier shapes, warmer accents, and more expressive UI moments without becoming childish."
+        return "Keep the white-base foundation, then add softer corners, warmer accents, and a friendlier tone without oversizing the UI."
     if value == "Premium":
-        return "Use refined hierarchy, richer surfaces, elegant contrast, and restrained motion that feels polished."
+        return "Keep the default light surface and compact density, then refine spacing, contrast, and motion so the product feels polished."
     if value == "Techy":
-        return "Use sharper contrast, structured layout rhythm, and a more product-forward feel with crisp visual hierarchy."
-    return "Keep the interface calm, spacious, and restrained with low decoration and clear hierarchy."
+        return "Keep the default white/light shell, but sharpen contrast, layout rhythm, and information structure so the product feels more precise."
+    return "Keep the interface calm, white-based, and restrained with modest type size, low decoration, and clear hierarchy."
 
 
 def is_user_facing_project(answers: dict[str, str]) -> bool:
@@ -757,27 +757,56 @@ def color_direction(answers: dict[str, str]) -> str:
     theme = answers["theme_preset"]
     vibe = answers["visual_vibe"]
     if theme == "Bold" or vibe == "Techy":
-        return "High-contrast neutrals with one assertive accent; avoid washed-out grays and low-energy palettes."
+        return "Use a white or near-white neutral canvas with one assertive accent and crisp borders; avoid dark-heavy palettes and muddy grays."
     if theme == "Playful" or vibe == "Playful":
-        return "Warm or cheerful accents with softer neutrals; keep contrast accessible and avoid rainbow overload."
+        return "Keep the base surface white, then add warm or cheerful accents with soft neutrals; keep contrast accessible and avoid rainbow overload."
     if theme == "Premium" or vibe == "Premium":
-        return "Restrained palette with richer dark neutrals, refined highlights, and limited accent usage."
+        return "Use a bright neutral foundation with refined stone or warm-gray supporting tones and very limited accent usage."
     if vibe == "Editorial":
-        return "Minimal palette driven by typography and whitespace; use color sparingly for emphasis."
-    return "Calm neutral foundation with one muted accent and clean contrast boundaries."
+        return "Use an almost-white editorial base with minimal accent usage; let typography and whitespace do most of the work."
+    return "Use a calm white or light-neutral foundation with one muted accent and clean contrast boundaries."
 
 
 def typography_direction(answers: dict[str, str]) -> str:
+    theme = answers["theme_preset"]
     vibe = answers["visual_vibe"]
     if vibe == "Editorial":
-        return "Typography should carry the design with stronger scale contrast and more intentional heading rhythm."
+        return "Default to slightly smaller body text with compact UI labels, then use stronger heading rhythm and editorial spacing to carry the design."
     if vibe == "Premium":
-        return "Use refined, elegant type hierarchy with comfortable line lengths and higher perceived polish."
+        return "Keep the base typography compact and clean, then refine line length, weight contrast, and heading cadence for a more polished feel."
     if vibe == "Techy":
-        return "Use crisp, structured typography with stronger information density and sharper hierarchy."
+        return "Use compact, crisp typography with tighter information density and sharper hierarchy, but avoid oversized dashboard headings."
     if vibe == "Playful":
-        return "Use approachable, friendly type scale with slightly softer rhythm and less rigid structure."
-    return "Use restrained, highly readable typography with modest but clear hierarchy."
+        return "Keep the type slightly small and readable, then soften the rhythm and labeling so the product feels friendly without becoming oversized."
+    if theme == "Bold":
+        return "Keep body copy and controls compact, but allow headings and key metrics to gain more contrast without making the entire interface large."
+    return "Use slightly smaller-than-generic UI typography with restrained but clear hierarchy and strong readability."
+
+
+def base_surface_direction(answers: dict[str, str]) -> str:
+    vibe = answers["visual_vibe"]
+    if vibe == "Premium":
+        return "Start from a white or very light neutral surface system, then add subtle tonal separation so cards and sections feel refined rather than flat."
+    if vibe == "Techy":
+        return "Keep the product on a clean white or pale neutral base; use light separators, borders, and surface steps instead of dark shells."
+    if vibe == "Playful":
+        return "Keep the main canvas white or very light, then let accents and small surface tints carry warmth without changing the overall bright base."
+    if vibe == "Editorial":
+        return "Use a white editorial canvas with minimal tinting so typography and composition remain the primary visual drivers."
+    return "Use a white or very light neutral canvas as the default base for all primary surfaces."
+
+
+def typography_density(answers: dict[str, str]) -> str:
+    vibe = answers["visual_vibe"]
+    if vibe == "Techy":
+        return "Favor a compact information density with slightly smaller labels, table text, and metadata, while preserving clear line-height and touch targets."
+    if vibe == "Premium":
+        return "Keep type generally compact, but pair it with more disciplined spacing so the UI feels polished instead of crowded."
+    if vibe == "Playful":
+        return "Keep the default type a touch smaller than generic app UIs, then use warmth and shape rather than oversized typography for character."
+    if vibe == "Editorial":
+        return "Keep body and utility text compact, but allow deliberate contrast between small supporting text and more intentional headings."
+    return "Favor slightly smaller body text and control labels than typical starter UIs, while keeping hierarchy clear and readable."
 
 
 def spacing_direction(answers: dict[str, str]) -> str:
@@ -794,23 +823,67 @@ def spacing_direction(answers: dict[str, str]) -> str:
 def component_tone(answers: dict[str, str]) -> str:
     vibe = answers["visual_vibe"]
     if vibe == "Techy":
-        return "Components should feel crisp and product-driven, with clearer borders, tighter grouping, and stronger state emphasis."
+        return "Components should feel crisp and product-driven, with light surfaces, clearer borders, tighter grouping, and stronger state emphasis."
     if vibe == "Premium":
-        return "Components should feel polished and upscale, with subtle surfaces and restrained visual noise."
+        return "Components should feel polished and upscale, with subtle light surfaces and restrained visual noise."
     if vibe == "Playful":
-        return "Components should feel friendly and expressive, with softer shapes and warmer micro-details."
+        return "Components should feel friendly and expressive, with softer shapes and warmer micro-details on top of a bright neutral base."
     if vibe == "Editorial":
-        return "Components should defer to layout and typography; avoid over-decorated cards and heavy widget framing."
-    return "Components should stay minimal and unobtrusive, supporting clarity over decoration."
+        return "Components should defer to layout and typography; avoid over-decorated cards, dark blocks, and heavy widget framing."
+    return "Components should stay minimal and unobtrusive, using light surfaces and restrained borders to support clarity over decoration."
 
 
 def layout_pattern(answers: dict[str, str]) -> str:
-    summary = answers["product_summary"].lower()
+    shell = navigation_structure(answers)
+    if shell.startswith("Top header"):
+        return "Use a section-first layout with clear vertical pacing, restrained cards, and a top-down reading flow instead of app-shell chrome."
+    if shell.startswith("Sidebar"):
+        return "Use a structured application shell with persistent navigation, compact content density, and fewer but more purposeful overview panels."
+    if shell.startswith("Mobile app"):
+        return "Use a mobile-first screen rhythm with one primary task per screen, compact type, and navigation that stays within thumb-friendly reach."
+    return "Use a task-first product layout with a bright app shell, clear hierarchy, and navigation selected to match the real information architecture."
+
+
+def navigation_structure(answers: dict[str, str]) -> str:
+    summary = " ".join(
+        [
+            answers.get("product_summary", ""),
+            answers.get("core_features", ""),
+            answers.get("target_user", ""),
+        ]
+    ).lower()
     if any(token in summary for token in ("landing", "marketing", "brand", "promo", "homepage", "랜딩")):
-        return "Use a composition-first marketing layout with more variation in section rhythm and stronger visual pacing."
-    if any(token in summary for token in ("dashboard", "admin", "portal", "대시보드", "관리")):
-        return "Use a structured app shell with clear navigation, prioritized overview panels, and fewer throwaway cards."
-    return "Use a product-focused app layout with strong hierarchy, intentional empty space, and one standout primary screen."
+        return "Top header with section-driven page flow."
+    if any(token in summary for token in ("dashboard", "admin", "portal", "backoffice", "대시보드", "관리")):
+        return "Sidebar shell with persistent navigation and a dense primary content canvas."
+    if any(token in summary for token in ("mobile", "consumer", "diary", "journal", "habit", "일기", "모바일", "앱")):
+        return "Mobile app shell with a top app header or bottom-tab navigation."
+    return "Task-fit app shell: use a top header for shallow navigation and only introduce a sidebar when multiple persistent sections require it."
+
+
+def navigation_rationale(answers: dict[str, str]) -> str:
+    structure = navigation_structure(answers)
+    if structure.startswith("Top header"):
+        return "This project reads more like a guided page sequence than a multi-workspace tool, so a top header keeps navigation light and lets sections carry the flow."
+    if structure.startswith("Sidebar"):
+        return "This project has multiple persistent sections and operational views, so a sidebar supports faster switching without forcing each screen back through a top-level landing page."
+    if structure.startswith("Mobile app"):
+        return "This project is better served by mobile-style navigation, so persistent desktop sidebars should be avoided unless the product later grows into a true multi-panel admin surface."
+    return "Choose the shell from the actual information architecture: use a header-first shell when navigation is shallow, and add a sidebar only when several persistent sections need to stay visible."
+
+
+def theme_modulation(answers: dict[str, str]) -> str:
+    theme = answers["theme_preset"]
+    vibe = answers["visual_vibe"]
+    if theme == "Bold" or vibe == "Techy":
+        return "Modulate the base with stronger contrast, firmer borders, sharper accents, and slightly tighter structure, while keeping the overall surface bright and the body type compact."
+    if theme == "Playful" or vibe == "Playful":
+        return "Modulate the base with warmer accents, softer radii, and friendlier micro-details, while keeping the overall shell bright, calm, and controlled."
+    if theme == "Premium" or vibe == "Premium":
+        return "Modulate the base with finer spacing discipline, elegant contrast, and restrained polish, while keeping the overall composition light and uncluttered."
+    if vibe == "Editorial":
+        return "Modulate the base through typography rhythm, whitespace, and composition instead of color-heavy surfaces or oversized interface chrome."
+    return "Treat theme and vibe as adjustments to accent, contrast, spacing tone, and component shape, not as permission to abandon the white-base, compact-type foundation."
 
 
 def motion_guidance(answers: dict[str, str]) -> str:
@@ -885,6 +958,26 @@ Review the planned research stack below and refine this brief before implementin
 
 {target_reference_summary(answers)}
 
+## Base Surface
+
+{base_surface_direction(answers)}
+
+## Typography Density
+
+{typography_density(answers)}
+
+## Navigation Structure
+
+{navigation_structure(answers)}
+
+## Navigation Rationale
+
+{navigation_rationale(answers)}
+
+## Theme Modulation
+
+{theme_modulation(answers)}
+
 ## Color Direction
 
 {color_direction(answers)}
@@ -910,6 +1003,8 @@ Review the planned research stack below and refine this brief before implementin
 {motion_guidance(answers)}
 
 ## Design Direction Refinement
+
+Treat the note below as a project-specific override only when it explicitly asks to break the default white-base, compact-type, or project-fit navigation baseline.
 
 {answers['design_direction']}
 

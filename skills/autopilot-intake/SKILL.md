@@ -178,6 +178,9 @@ If the project is user-facing, design synthesis is mandatory before the first UI
 - Use the local `frontend-ui-ux` skill as the default design helper
 - Use Figma first when a Figma reference exists
 - Otherwise rely on curated inspiration sources such as Mobbin, Refero, Land-book, and Page Collective
+- Keep the default UI base on white or light-neutral surfaces with slightly compact typography
+- Choose header, sidebar, or mobile navigation from the project type instead of defaulting every app to a sidebar shell
+- Treat theme and vibe as modulation of accent, spacing tone, contrast, and component shape rather than a full base override
 - Write the result into `docs/design.md`
 
 ## Team Handoff Rule
