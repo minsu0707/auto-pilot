@@ -19,6 +19,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Codex plugin quality gate
-        uses: hashgraph-online/hol-codex-plugin-scanner-action@v1
+        uses: hashgraph-online/hol-codex-plugin-scanner-action@df9c8a41eefff30cc430344c2a32c7a96bf37645
         with:
           plugin_dir: "."
