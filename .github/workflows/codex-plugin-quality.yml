@@ -14,11 +14,21 @@ on:
 jobs:
   scan:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
-      - name: Codex plugin quality gate
-        uses: hashgraph-online/hol-codex-plugin-scanner-action@v1
-        with:
-          plugin_dir: "."
+      - name: Validate plugin structure
+        run: python3 scripts/validate_plugin_repo.py
+
+      - name: Validate Python entrypoints
+        run: |
+          python3 -m py_compile \
+            scripts/autopilot.py \
+            scripts/record_answer.py \
+            scripts/autopilot_lib.py \
+            scripts/validate_plugin_repo.py \
+            scripts/status.py \
+            scripts/team_checkpoint.py
